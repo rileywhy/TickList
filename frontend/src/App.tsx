@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import TicketCard from "./components/TicketCard";
 import CreateTicketForm from "./components/CreateTicketForm";
+import "./App.css"
 
 type Ticket = {
   id: number;
@@ -15,6 +16,9 @@ type Ticket = {
 
 function App() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const [priorityFilter, setPriorityFilter] = useState("ALL");
+
 
 
   function loadTickets() {
@@ -26,10 +30,33 @@ function App() {
     loadTickets();
   }, []);
 
+  const filteredTickets = tickets.filter((ticket) => {
+    const matchesStatus = 
+      statusFilter === "ALL" || ticket.status === statusFilter;
+    const matchesPriority =
+    priorityFilter === "ALL" || ticket.priority === priorityFilter;
+
+  return matchesStatus && matchesPriority;
+  });
   return (
     <main>
       <h1>Issue Tracker</h1>
-      {tickets.map((ticket) => (
+      <div className="filters">
+        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+          <option value="ALL">All Statuses</option>
+          <option value="OPEN">Open</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="CLOSED">Closed</option>
+        </select>
+        <select value={priorityFilter} onChange={(e) => setPriorityFilter(e.target.value)}>
+          <option value="ALL">All Priorities</option>
+          <option value="LOW">Low</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HIGH">High</option>
+          <option value="CRITICAL">Critical</option>
+        </select>
+      </div>
+      {filteredTickets.map((ticket) => (
         <TicketCard
           key={ticket.id}
           id={ticket.id}
@@ -41,9 +68,10 @@ function App() {
           createdAt={ticket.createdAt}
           updatedAt={ticket.updatedAt}
           onDelete={loadTickets}
+          onUpdate={loadTickets}
         />
       ))}
-      <CreateTicketForm loadTickets={loadTickets} onDelete={loadTickets}/>
+      <CreateTicketForm loadTickets={loadTickets} onDelete={loadTickets} />
     </main>
   );
 }

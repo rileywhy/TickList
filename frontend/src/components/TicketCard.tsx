@@ -1,4 +1,5 @@
 import { useState } from "react";
+import EditTicketForm from "./EditTicketForm";
 
 
 type TicketCardProps = {
@@ -11,6 +12,7 @@ type TicketCardProps = {
   updatedAt: string;
   id: number;
   onDelete: () => void;
+  onUpdate: () => void;
 };
 
 
@@ -26,35 +28,63 @@ function TicketCard({
   updatedAt,
   id,
   onDelete,
+  onUpdate,
 
 
 }: TicketCardProps) {
 
   const [expanded, setExpanded] = useState(false);
+  const [editing, setEditing] = useState(false);
+
   return (
     <div className="ticket-card">
-      <h2>{title}</h2>
+  <h2>{title}</h2>
 
-      <button onClick={() => setExpanded(!expanded)}>
-        {expanded ? "Hide Details" : "Show Details"}
-      </button>
+  <button className="delete-button" onClick={deleteTicket}>
+    Delete Ticket
+  </button>
 
-      {expanded && <p>{description}</p>}
+  <button onClick={() => setExpanded(!expanded)}>
+    {expanded ? "Hide Details" : "Show Details"}
+  </button>
 
-      <p>
-        {status} - {priority}
-      </p>
+  {expanded && <p>{description}</p>}
 
-      <p>Assigned to: {assignee}</p>
+  <p>{status} - {priority}</p>
 
-      <p>Created at: {new Date(createdAt).toLocaleString()}</p>
+  <p>Assigned to: {assignee}</p>
 
-      <p>Last updated: {new Date(updatedAt).toLocaleString()}</p>
-      <button onClick={() => deleteTicket()}>
-        Delete Ticket
-      </button>
-    </div>
+  <p>Created at: {new Date(createdAt).toLocaleString()}</p>
+
+  <p>Last updated: {new Date(updatedAt).toLocaleString()}</p>
+
+  {editing ? (<EditTicketForm
+    ticket={{
+      id,
+      title,
+      description,
+      status,
+      priority,
+      assignee,
+    }}
+    onUpdate={onUpdate}
+    onCancel={() => setEditing(false)}
+  />
+
+  ) : (
+    <button onClick={() => setEditing(true)}>Edit Ticket</button>
+  )}
+</div>
   );
+  function updateTicket() {
+    fetch(`http://localhost:8080/ticket/${id}`, {
+      method: "PUT",
+    }).then(() => {
+      onUpdate();
+    });
+
+  }
+
   function deleteTicket() {
     fetch(`http://localhost:8080/ticket/${id}`, {
       method: "DELETE",
