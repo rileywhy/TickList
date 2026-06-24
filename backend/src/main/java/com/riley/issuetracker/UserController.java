@@ -56,5 +56,12 @@ public class UserController {
 
     return "Invalid email or password";
     }
+
+    @PostMapping("/register")
+    public User register(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+}
+
     
 }

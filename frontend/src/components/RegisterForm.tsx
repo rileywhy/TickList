@@ -1,0 +1,56 @@
+import {useState} from "react";
+
+type RegisterFormProps = {
+    onRegister: () => void;
+}
+
+function RegisterForm({ onRegister }: RegisterFormProps) {
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    function handleSubmit(event: React.FormEvent) {
+        event.preventDefault();
+
+        fetch("http://localhost:8080/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                password,
+            }),
+        }).then(() => {
+            onRegister();
+        });
+    }
+    
+    return (
+        <form className="register-form" onSubmit={handleSubmit}>
+            <h2>Register</h2>
+            <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="submit">Register</button>
+        </form>
+    );
+}
+
+export default RegisterForm;

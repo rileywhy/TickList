@@ -191,3 +191,22 @@
   right: 10px;
   background-color: red;
 }
+.navbar {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #333;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.navbar a:hover {
+  background-color: #333;
+}
