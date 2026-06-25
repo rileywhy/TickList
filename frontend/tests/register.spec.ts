@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test";
-import { registerUser } from "./helpers/users";
+import { makeTestUser, registerUser } from "./helpers/users";
 
 test("register a user", async ({ page }) => {
-    await registerUser(page);
+    const User = makeTestUser();
+    await registerUser(page, User);
+
     //<p>Account created successfully!</p>
     await expect(page.getByText("Account created successfully!"));
 });
