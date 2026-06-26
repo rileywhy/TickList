@@ -8,7 +8,7 @@ import "./App.css";
 
 function App() {
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
-  const [userName, setUserName] = useState("");
+
 
   type CurrentUser = {
     firstName: string;
@@ -18,7 +18,7 @@ function App() {
 
   function handleLogout() {
     setCurrentUser(null);
-    setUserName("");
+    
   }
 
   return (

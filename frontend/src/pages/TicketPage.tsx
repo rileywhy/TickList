@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import TicketCard from "../components/TicketCard";
-import RegisterForm from "../components/RegisterForm";
 import CreateTicketForm from "../components/CreateTicketForm";
 import "../App.css"
-import { Routes, Route, Link } from "react-router-dom";
-import LoginPage from "../pages/LoginPage";
 
 type Ticket = {
   id: number;
