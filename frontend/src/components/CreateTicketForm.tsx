@@ -8,7 +8,7 @@ type CreateTicketFormProps = {
 }
 
 
-function CreateTicketForm({ loadTickets, onDelete
+function CreateTicketForm({ loadTickets
     
 }: CreateTicketFormProps) {
 

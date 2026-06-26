@@ -76,14 +76,7 @@ function TicketCard({
   )}
 </div>
   );
-  function updateTicket() {
-    fetch(`http://localhost:8080/ticket/${id}`, {
-      method: "PUT",
-    }).then(() => {
-      onUpdate();
-    });
-
-  }
+  
 
   function deleteTicket() {
     fetch(`http://localhost:8080/ticket/${id}`, {
