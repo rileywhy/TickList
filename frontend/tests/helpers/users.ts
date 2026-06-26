@@ -1,5 +1,5 @@
 
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 
 export type TestUser = {
   firstName: string;
@@ -51,5 +51,8 @@ export async function loginUser(page: Page, user: TestUser) {
     ),
     page.getByRole('button', { name: 'Log In' }).click(),
   ]);
-}
 
+  await expect(
+    page.locator('.account-menu').getByText(`${user.firstName} ${user.lastName}`)
+  ).toBeVisible();
+}
