@@ -44,6 +44,7 @@ jobs:
         working-directory: backend
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/issuetracker
+          JWT_SECRET: ci-only-jwt-secret-change-me-1234567890
           SPRING_DATASOURCE_USERNAME: user
           SPRING_DATASOURCE_PASSWORD: password
           SPRING_JPA_HIBERNATE_DDL_AUTO: update
