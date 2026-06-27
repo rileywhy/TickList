@@ -15,7 +15,7 @@
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
+  font: 22px/145% var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light dark;
   color: var(--text);
@@ -97,8 +97,7 @@ p {
   margin: 0;
 }
 
-code,
-.counter {
+code {
   font-family: var(--mono);
   display: inline-flex;
   border-radius: 4px;
@@ -112,13 +111,6 @@ code {
   background: var(--code-bg);
 }
 
-.ticket-card {
-  background-color: #383a40;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 12px 0;
-}
-
-.ticket-card:hover {
+.ticket-row:hover {
   background-color: #3f4147;
 }

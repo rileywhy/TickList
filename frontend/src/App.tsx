@@ -39,7 +39,16 @@ function App() {
 
         <Route
           path="/tickets"
-          element={currentUser !== null ? <TicketPage token={currentUser.token} /> : <Navigate to="/login" />}
+          element={
+            currentUser !== null ? (
+              <TicketPage
+                token={currentUser.token}
+                onAuthExpired={handleLogout}
+              />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
       </Routes>
     </>
