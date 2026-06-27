@@ -5,16 +5,11 @@ import RegisterPage from "./pages/RegisterPage";
 import TicketPage from "./pages/TicketPage";
 import AccountMenu from "./pages/AccountMenu";
 import "./App.css";
+import type { CurrentUser } from "./types";
 
 function App() {
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
 
-
-  type CurrentUser = {
-    firstName: string;
-    lastName: string;
-    email: string;
-  }
 
   function handleLogout() {
     setCurrentUser(null);
@@ -40,11 +35,11 @@ function App() {
           element={<LoginPage setCurrentUser={setCurrentUser} />}
         />
 
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/register" element={<RegisterPage  />} />
 
         <Route
           path="/tickets"
-          element={currentUser !== null ? <TicketPage /> : <Navigate to="/login" />}
+          element={currentUser !== null ? <TicketPage token={currentUser.token} /> : <Navigate to="/login" />}
         />
       </Routes>
     </>

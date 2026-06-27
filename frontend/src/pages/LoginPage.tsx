@@ -1,11 +1,5 @@
 import { useState } from "react";
-
-type CurrentUser = {
-  firstName: string;
-  lastName: string;
-  email: string;
-};
-
+import type { CurrentUser } from "../types";
 type LoginPageProps = {
   setCurrentUser: (user: CurrentUser) => void;
 };

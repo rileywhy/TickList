@@ -2,9 +2,10 @@ import {useState} from "react";
 
 type RegisterFormProps = {
     onRegister: () => void;
+    token: string;
 }
 
-function RegisterForm({ onRegister }: RegisterFormProps) {
+function RegisterForm({ onRegister, token }: RegisterFormProps) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -16,6 +17,7 @@ function RegisterForm({ onRegister }: RegisterFormProps) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 username,

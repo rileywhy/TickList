@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TicketCard from "../components/TicketCard";
 import CreateTicketForm from "../components/CreateTicketForm";
-import "../App.css"
+import "../App.css";
 
 type Ticket = {
   id: number;
@@ -14,15 +14,22 @@ type Ticket = {
   updatedAt: string;
 };
 
-function TicketPage() {
+type TicketPageProps = {
+  token: string;
+};
+
+function TicketPage({ token }: TicketPageProps) {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [priorityFilter, setPriorityFilter] = useState("ALL");
   const [searchFilter, setSearchFilter] = useState("");
 
-
   function loadTickets() {
-    fetch("/tickets")
+    fetch("/tickets", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setTickets(data));
   }
@@ -31,35 +38,40 @@ function TicketPage() {
   }, []);
 
   const filteredTickets = tickets.filter((ticket) => {
-    const matchesStatus = 
+    const matchesStatus =
       statusFilter === "ALL" || ticket.status === statusFilter;
     const matchesPriority =
-    priorityFilter === "ALL" || ticket.priority === priorityFilter;
-    const matchesSearch = 
-      searchFilter === "" || ticket.description.toLowerCase().includes(searchFilter) || ticket.title.toLowerCase().includes(searchFilter); 
+      priorityFilter === "ALL" || ticket.priority === priorityFilter;
+    const matchesSearch =
+      searchFilter === "" ||
+      ticket.description.toLowerCase().includes(searchFilter) ||
+      ticket.title.toLowerCase().includes(searchFilter);
 
-  return matchesStatus && matchesPriority && matchesSearch;
-
-
-
+    return matchesStatus && matchesPriority && matchesSearch;
   });
   return (
     <main>
       <h1>Issue Tracker</h1>
       <div className="filters">
-      <input
-            type="text"
-            placeholder="Search"
-            value={searchFilter}
-            onChange={(e) => setSearchFilter(e.target.value)}
-        /> 
-        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchFilter}
+          onChange={(e) => setSearchFilter(e.target.value)}
+        />
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
           <option value="ALL">All Statuses</option>
           <option value="OPEN">Open</option>
           <option value="IN_PROGRESS">In Progress</option>
           <option value="CLOSED">Closed</option>
         </select>
-        <select value={priorityFilter} onChange={(e) => setPriorityFilter(e.target.value)}>
+        <select
+          value={priorityFilter}
+          onChange={(e) => setPriorityFilter(e.target.value)}
+        >
           <option value="ALL">All Priorities</option>
           <option value="LOW">Low</option>
           <option value="MEDIUM">Medium</option>
@@ -80,12 +92,16 @@ function TicketPage() {
           updatedAt={ticket.updatedAt}
           onDelete={loadTickets}
           onUpdate={loadTickets}
+          token={token}
         />
       ))}
-      <CreateTicketForm loadTickets={loadTickets} onDelete={loadTickets} />
+      <CreateTicketForm
+        loadTickets={loadTickets}
+        onDelete={loadTickets}
+        token={token}
+      />
     </main>
   );
 }
-
 
 export default TicketPage;

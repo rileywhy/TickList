@@ -13,6 +13,7 @@ type TicketCardProps = {
   id: number;
   onDelete: () => void;
   onUpdate: () => void;
+  token: string;
 };
 
 
@@ -29,6 +30,7 @@ function TicketCard({
   id,
   onDelete,
   onUpdate,
+  token
 
 
 }: TicketCardProps) {
@@ -69,6 +71,7 @@ function TicketCard({
     }}
     onUpdate={onUpdate}
     onCancel={() => setEditing(false)}
+    token = {token}
   />
 
   ) : (
@@ -80,7 +83,10 @@ function TicketCard({
 
   function deleteTicket() {
     fetch(`/ticket/${id}`, {
-      method: "DELETE",
+      method: "DELETE", 
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     }).then(() => {
       onDelete();
     });

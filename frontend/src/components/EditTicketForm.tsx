@@ -11,9 +11,14 @@ type EditTicketFormProps = {
   };
   onUpdate: () => void;
   onCancel: () => void;
+  token: string;
+
 };
 
-function EditTicketForm({ ticket, onUpdate, onCancel }: EditTicketFormProps) {
+
+
+
+function EditTicketForm({ ticket, onUpdate, onCancel, token }: EditTicketFormProps) {
   const [editedTitle, setEditedTitle] = useState(ticket.title);
   const [editedDescription, setEditedDescription] = useState(ticket.description);
   const [editedStatus, setEditedStatus] = useState(ticket.status);
@@ -25,6 +30,7 @@ function EditTicketForm({ ticket, onUpdate, onCancel }: EditTicketFormProps) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         title: editedTitle,

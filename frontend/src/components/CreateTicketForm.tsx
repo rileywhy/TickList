@@ -5,10 +5,11 @@ import { useState } from "react";
 type CreateTicketFormProps = {
     loadTickets: () => void;
     onDelete:() => void;
+    token: string;
 }
 
 
-function CreateTicketForm({ loadTickets
+function CreateTicketForm({ loadTickets, token
     
 }: CreateTicketFormProps) {
 
@@ -17,6 +18,7 @@ function CreateTicketForm({ loadTickets
     const [status, setStatus] = useState("");
     const [priority, setPriority] = useState("");
     const [assignee, setAssignee] = useState("");
+    
 
 
     function handleSubmit(event: React.FormEvent) {
@@ -25,7 +27,8 @@ function CreateTicketForm({ loadTickets
   fetch("/ticket", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json", 
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       title,
