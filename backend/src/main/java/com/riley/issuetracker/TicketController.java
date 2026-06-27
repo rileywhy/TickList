@@ -1,7 +1,6 @@
 package com.riley.issuetracker;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +26,7 @@ public class TicketController {
     }
 
     @GetMapping("/ticket/{id}")
-    public Ticket getTicket(@PathVariable Long id) {
+    public Ticket getTicket(@PathVariable("id") Long id) {
         return ticketRepository.findById(id).orElse(null);
     }
 
@@ -43,7 +42,10 @@ public class TicketController {
     }
 
     @PutMapping("/ticket/{id}")
-    public Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket updatedTicket) {
+    public Ticket updateTicket(
+        @PathVariable("id") Long id,
+        @RequestBody Ticket updatedTicket
+    ) {
         Ticket existingTicket = ticketRepository.findById(id).orElse(null);
 
         if (existingTicket == null) {
@@ -60,7 +62,7 @@ public class TicketController {
     }
 
     @DeleteMapping("/ticket/{id}")
-    public void deleteTicket(@PathVariable Long id) {
+    public void deleteTicket(@PathVariable("id") Long id) {
         ticketRepository.deleteById(id);
     }
     

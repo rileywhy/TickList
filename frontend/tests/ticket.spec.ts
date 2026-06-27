@@ -1,5 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import { makeTestUser, registerUser, loginUser } from './helpers/users';
+
+function getTicketRow(page: Page, title: string) {
+  return page.locator('.ticket-row').filter({ hasText: title });
+}
 
 test.beforeEach(async ({ page }) => {
   const user = makeTestUser();
@@ -40,14 +44,15 @@ test('creates a ticket', async ({ page }) => {
     form.getByRole('button', { name: 'Create Ticket' }).click(),
   ]);
 
-  const card = page.locator('.ticket-card').filter({ hasText: title });
+  const card = getTicketRow(page, title);
 
   await expect(card).toBeVisible({ timeout: 10000 });
-  await expect(card).toContainText('OPEN - HIGH');
-  await expect(card).toContainText('Assigned to: QA Bot');
+  await expect(card).toContainText('Open');
+  await expect(card).toContainText('High');
+  await expect(card).toContainText('QA Bot');
 
   await card.getByRole('button', { name: 'Show Details' }).click();
-  await expect(card).toContainText('Playwright created this ticket');
+  await expect(page.getByRole('dialog')).toContainText('Playwright created this ticket');
 });
 
 test('filters tickets by search, status, and priority', async ({ page }) => {
@@ -100,29 +105,94 @@ test('filters tickets by search, status, and priority', async ({ page }) => {
 
   await filters.getByPlaceholder('Search').fill('outage');
   await expect(
-    page.locator('.ticket-card').filter({ hasText: secondTitle })
+    getTicketRow(page, secondTitle)
   ).toBeVisible();
   await expect(
-    page.locator('.ticket-card').filter({ hasText: firstTitle })
+    getTicketRow(page, firstTitle)
   ).toHaveCount(0);
 
   await filters.getByPlaceholder('Search').fill('');
   await filters.locator('select').nth(0).selectOption('IN_PROGRESS');
   await expect(
-    page.locator('.ticket-card').filter({ hasText: secondTitle })
+    getTicketRow(page, secondTitle)
   ).toBeVisible();
   await expect(
-    page.locator('.ticket-card').filter({ hasText: firstTitle })
+    getTicketRow(page, firstTitle)
   ).toHaveCount(0);
 
   await filters.locator('select').nth(0).selectOption('ALL');
   await filters.locator('select').nth(1).selectOption('CRITICAL');
   await expect(
-    page.locator('.ticket-card').filter({ hasText: secondTitle })
+    getTicketRow(page, secondTitle)
   ).toBeVisible();
   await expect(
-    page.locator('.ticket-card').filter({ hasText: firstTitle })
+    getTicketRow(page, firstTitle)
   ).toHaveCount(0);
+});
+
+test('edits a ticket', async ({ page }) => {
+  const originalTitle = `Edit Me ${Date.now()}`;
+  const updatedTitle = `${originalTitle} Updated`;
+
+  const form = page.locator('form.create-ticket-form');
+
+  await form.getByPlaceholder('Title').fill(originalTitle);
+  await form.getByPlaceholder('Description').fill(
+    'This ticket will be updated'
+  );
+  await form.locator('select').nth(0).selectOption('OPEN');
+  await form.locator('select').nth(1).selectOption('LOW');
+  await form.getByPlaceholder('Assignee').fill('Original Owner');
+
+  await Promise.all([
+    page.waitForResponse(
+      response =>
+        response.url().includes('/ticket') &&
+        response.request().method() === 'POST'
+    ),
+    page.waitForResponse(
+      response =>
+        response.url().includes('/tickets') &&
+        response.request().method() === 'GET'
+    ),
+    form.getByRole('button', { name: 'Create Ticket' }).click(),
+  ]);
+
+  const card = getTicketRow(page, originalTitle);
+
+  await expect(card).toBeVisible({ timeout: 10000 });
+  await card.getByRole('button', { name: 'Edit Ticket' }).click();
+
+  const editForm = card.locator('form');
+
+  await editForm.getByPlaceholder('Title').fill(updatedTitle);
+  await editForm.getByPlaceholder('Description').fill(
+    'This ticket was updated by Playwright'
+  );
+  await editForm.locator('select').nth(0).selectOption('IN_REVIEW');
+  await editForm.locator('select').nth(1).selectOption('CRITICAL');
+  await editForm.getByPlaceholder('Assignee').fill('Updated Owner');
+
+  await Promise.all([
+    page.waitForResponse(
+      response =>
+        response.url().includes('/ticket/') &&
+        response.request().method() === 'PUT'
+    ),
+    page.waitForResponse(
+      response =>
+        response.url().includes('/tickets') &&
+        response.request().method() === 'GET'
+    ),
+    editForm.getByRole('button', { name: 'Save' }).click(),
+  ]);
+
+  const updatedCard = getTicketRow(page, updatedTitle);
+
+  await expect(updatedCard).toBeVisible({ timeout: 10000 });
+  await expect(updatedCard).toContainText('In Review');
+  await expect(updatedCard).toContainText('Critical');
+  await expect(updatedCard).toContainText('Updated Owner');
 });
 
 test('deletes a ticket', async ({ page }) => {
@@ -152,7 +222,7 @@ test('deletes a ticket', async ({ page }) => {
     form.getByRole('button', { name: 'Create Ticket' }).click(),
   ]);
 
-  const card = page.locator('.ticket-card').filter({ hasText: title });
+  const card = getTicketRow(page, title);
 
   await expect(card).toBeVisible({ timeout: 10000 });
 
@@ -171,6 +241,6 @@ test('deletes a ticket', async ({ page }) => {
   ]);
 
   await expect(
-    page.locator('.ticket-card').filter({ hasText: title })
+    getTicketRow(page, title)
   ).toHaveCount(0);
 });
