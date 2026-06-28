@@ -1,67 +1,64 @@
 import { useState, type ReactNode } from "react";
-import TicketForm from "./TicketForm";
+import SendForm from "./SendForm";
 import {
   formatEnumLabel,
-  getStatusMeta,
-  type TicketFormValues,
-} from "../ticketConfig";
+  getSourceMeta,
+  toSendPayload,
+  type SendFormValues,
+  type SendRecord,
+} from "../sendConfig";
 
-type TicketCardProps = {
-  title: string;
-  description: string;
-  status: string;
-  priority: string;
-  assignee: string;
-  createdAt: string;
-  updatedAt: string;
-  id: number;
+type SendCardProps = {
+  send: SendRecord;
   onAuthExpired: () => void;
   onDelete: () => Promise<void>;
   onUpdate: () => Promise<void>;
   token: string;
 };
 
-function TicketCard({
-  title,
-  description,
-  status,
-  priority,
-  assignee,
-  createdAt,
-  updatedAt,
-  id,
+function SendCard({
+  send,
   onAuthExpired,
   onDelete,
   onUpdate,
-  token
-}: TicketCardProps) {
+  token,
+}: SendCardProps) {
   const [showDetails, setShowDetails] = useState(false);
   const [editing, setEditing] = useState(false);
   const [deleteError, setDeleteError] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const statusMeta = getStatusMeta(status);
+  const sourceMeta = getSourceMeta(send.sourceApp);
+  const gradeLabel = send.grade
+    ? `${send.grade} (${formatEnumLabel(send.gradeSystem)})`
+    : formatEnumLabel(send.gradeSystem);
   const details = [
-    ["Priority", formatEnumLabel(priority)],
-    ["Assignee", assignee || "Unassigned"],
-    ["Created", new Date(createdAt).toLocaleString()],
-    ["Updated", new Date(updatedAt).toLocaleString()],
+    ["Area", send.areaName || "Unknown"],
+    ["Grade", gradeLabel],
+    ["Source", sourceMeta.label],
+    ["Send style", formatEnumLabel(send.sendStyle)],
+    ["Send date", formatDate(send.sendDate)],
+    ["Attempts", send.attempts?.toString() ?? "Unknown"],
+    ["External ID", send.externalId || "None"],
+    ["Climb ID", send.climbId || "None"],
+    ["Created", formatDateTime(send.createdAt)],
+    ["Updated", formatDateTime(send.updatedAt)],
   ];
 
   return (
-    <div className="ticket-card ticket-row">
-      <div className="ticket-row__main">
-        <div className="ticket-row__header">
-          <div className="ticket-row__title-group">
-            <h3 className="ticket-row__title">{title}</h3>
-            <span className={`ticket-status ticket-status--${statusMeta.tone}`}>
-              <span className="ticket-status__icon" aria-hidden="true">
-                {statusMeta.icon}
+    <div className="send-card send-row">
+      <div className="send-row__main">
+        <div className="send-row__header">
+          <div className="send-row__title-group">
+            <h3 className="send-row__title">{send.climbName}</h3>
+            <span className={`send-source send-source--${sourceMeta.tone}`}>
+              <span className="send-source__icon" aria-hidden="true">
+                {sourceMeta.icon}
               </span>
-              <span>{statusMeta.label}</span>
+              <span>{sourceMeta.label}</span>
             </span>
           </div>
 
-          <div className="ticket-row__actions">
+          <div className="send-row__actions">
             <ActionButton label="Show Details" onClick={() => setShowDetails(true)}>
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <path d="M12 5c5.23 0 9.27 4.1 10.7 6.02a1.6 1.6 0 0 1 0 1.96C21.27 14.9 17.23 19 12 19S2.73 14.9 1.3 12.98a1.6 1.6 0 0 1 0-1.96C2.73 9.1 6.77 5 12 5Zm0 2C8.3 7 5.23 9.73 3.42 12 5.23 14.27 8.3 17 12 17s6.77-2.73 8.58-5C18.77 9.73 15.7 7 12 7Zm0 2.25A2.75 2.75 0 1 1 9.25 12 2.75 2.75 0 0 1 12 9.25Z" />
@@ -70,7 +67,7 @@ function TicketCard({
 
             {!editing && (
               <ActionButton
-                label="Edit Ticket"
+                label="Edit send"
                 onClick={() => {
                   setDeleteError("");
                   setEditing(true);
@@ -85,8 +82,8 @@ function TicketCard({
             <ActionButton
               danger
               disabled={isDeleting}
-              label={isDeleting ? "Deleting Ticket" : "Delete Ticket"}
-              onClick={deleteTicket}
+              label={isDeleting ? "Deleting send" : "Delete send"}
+              onClick={deleteSend}
             >
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <path d="M6.7 5.3 12 10.59l5.3-5.3 1.4 1.41L13.41 12l5.3 5.29-1.41 1.41L12 13.41l-5.29 5.3-1.41-1.42L10.59 12 5.3 6.71 6.7 5.3Z" />
@@ -95,13 +92,13 @@ function TicketCard({
           </div>
         </div>
 
-        <p className="ticket-row__description">{description}</p>
+        {send.notes && <p className="send-row__description">{send.notes}</p>}
         {deleteError && <p role="alert">{deleteError}</p>}
 
-        <div className="ticket-row__meta">
-          {details.map(([label, value]) => (
-            <div key={label} className="ticket-row__meta-item">
-              <span className="ticket-row__meta-label">{label}</span>
+        <div className="send-row__meta">
+          {details.slice(0, 6).map(([label, value]) => (
+            <div key={label} className="send-row__meta-item">
+              <span className="send-row__meta-label">{label}</span>
               <span>{value}</span>
             </div>
           ))}
@@ -109,21 +106,25 @@ function TicketCard({
       </div>
 
       {showDetails && (
-        <div className="ticket-modal-backdrop" onClick={() => setShowDetails(false)}>
+        <div className="send-modal-backdrop" onClick={() => setShowDetails(false)}>
           <div
-            aria-labelledby={`ticket-details-title-${id}`}
+            aria-labelledby={`send-details-title-${send.id}`}
             aria-modal="true"
-            className="ticket-modal"
+            className="send-modal"
             onClick={(event) => event.stopPropagation()}
             role="dialog"
           >
-            <div className="ticket-modal__header">
-              <h2 id={`ticket-details-title-${id}`}>{title}</h2>
+            <div className="send-modal__header">
+              <h2 id={`send-details-title-${send.id}`}>{send.climbName}</h2>
               <button onClick={() => setShowDetails(false)}>Close</button>
             </div>
 
-            <p>{description}</p>
-            <p>Status: {statusMeta.label}</p>
+            {send.notes && <p>{send.notes}</p>}
+            {send.sourceUrl && (
+              <p>
+                Source URL: <a href={send.sourceUrl}>{send.sourceUrl}</a>
+              </p>
+            )}
             {details.map(([label, value]) => (
               <p key={label}>
                 {label}: {value}
@@ -134,11 +135,11 @@ function TicketCard({
       )}
 
       {editing && (
-        <div className="ticket-row__edit-form">
-          <TicketForm
-            initialValues={{ title, description, status, priority, assignee }}
+        <div className="send-row__edit-form">
+          <SendForm
+            initialValues={toFormValues(send)}
             submitLabel="Save"
-            onSubmit={updateTicket}
+            onSubmit={updateSend}
             onCancel={() => {
               setDeleteError("");
               setEditing(false);
@@ -149,7 +150,7 @@ function TicketCard({
     </div>
   );
 
-  async function deleteTicket() {
+  async function deleteSend() {
     if (isDeleting) {
       return;
     }
@@ -157,8 +158,8 @@ function TicketCard({
     setDeleteError("");
     setIsDeleting(true);
 
-    const response = await fetch(`/ticket/${id}`, {
-      method: "DELETE", 
+    const response = await fetch(`/sends/${send.id}`, {
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -176,7 +177,7 @@ function TicketCard({
       }
 
       if (!response.ok) {
-        setDeleteError(`Could not delete ticket (${response.status}).`);
+        setDeleteError(`Could not delete send (${response.status}).`);
         return;
       }
 
@@ -186,14 +187,14 @@ function TicketCard({
     }
   }
 
-  async function updateTicket(values: TicketFormValues) {
-    const response = await fetch(`/ticket/${id}`, {
+  async function updateSend(values: SendFormValues) {
+    const response = await fetch(`/sends/${send.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify(toSendPayload(values)),
     });
 
     if (!response.ok) {
@@ -206,7 +207,7 @@ function TicketCard({
         throw new Error("The backend rejected the edit request (403).");
       }
 
-      throw new Error(`Could not update ticket (${response.status}).`);
+      throw new Error(`Could not update send (${response.status}).`);
     }
 
     await onUpdate();
@@ -214,7 +215,40 @@ function TicketCard({
   }
 }
 
-export default TicketCard;
+export default SendCard;
+
+function toFormValues(send: SendRecord): SendFormValues {
+  return {
+    climbName: send.climbName ?? "",
+    climbId: send.climbId ?? "",
+    areaName: send.areaName ?? "",
+    grade: send.grade ?? "",
+    gradeSystem: send.gradeSystem ?? "UNKNOWN",
+    sourceApp: send.sourceApp ?? "UNKNOWN",
+    externalId: send.externalId ?? "",
+    sourceUrl: send.sourceUrl ?? "",
+    sendDate: send.sendDate ?? "",
+    sendStyle: send.sendStyle ?? "UNKNOWN",
+    attempts: send.attempts?.toString() ?? "",
+    notes: send.notes ?? "",
+  };
+}
+
+function formatDate(value: string | null | undefined) {
+  if (!value) {
+    return "Unknown";
+  }
+
+  return new Date(`${value}T00:00:00`).toLocaleDateString();
+}
+
+function formatDateTime(value: string | null | undefined) {
+  if (!value) {
+    return "Unknown";
+  }
+
+  return new Date(value).toLocaleString();
+}
 
 type ActionButtonProps = {
   children: ReactNode;

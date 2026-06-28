@@ -1,4 +1,4 @@
-package com.riley.issuetracker;
+package com.riley.ticklist;
 
 import java.util.List;
 import org.springframework.http.HttpStatus;

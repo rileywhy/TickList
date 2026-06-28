@@ -111,6 +111,6 @@ code {
   background: var(--code-bg);
 }
 
-.ticket-row:hover {
+.send-row:hover {
   background-color: #3f4147;
 }

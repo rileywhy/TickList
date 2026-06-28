@@ -1,4 +1,4 @@
-package com.riley.issuetracker;
+package com.riley.ticklist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

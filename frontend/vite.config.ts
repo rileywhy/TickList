@@ -30,8 +30,8 @@ export default defineConfig({
     proxy: {
       '/login': apiProxy(),
       '/register': apiProxy(),
-      '/tickets': apiProxy(),
-      '/ticket': apiProxy(),
+      '/sends': apiProxy(),
+      '/send': apiProxy(),
     },
   },
 })
