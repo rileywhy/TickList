@@ -26,13 +26,22 @@ public class Send {
     private String climbName;
 
     private String climbId;
+    @Enumerated(EnumType.STRING)
+    private Discipline discipline = Discipline.UNKNOWN;
 
     @ManyToOne
     private User user;
 
-    private String areaName;
+    private String location;
 
     private String grade;
+
+    private Integer gradeValue;
+
+    private Integer stars;
+
+    private Integer climbHeight;
+
 
     @Enumerated(EnumType.STRING)
     private GradeSystem gradeSystem = GradeSystem.UNKNOWN;
@@ -47,12 +56,20 @@ public class Send {
 
     private String sourceUrl;
 
+    private String style;
+
     @Enumerated(EnumType.STRING)
-    private SendStyle sendStyle = SendStyle.UNKNOWN;
+    private RopeSendStyle ropeSendStyle = RopeSendStyle.UNKNOWN;
 
     private LocalDate sendDate;
 
     private Integer attempts;
+
+    private Integer pitches;
+
+    private Integer userStars;
+
+    private String personalGrade;
 
     @Column(length = 2000)
     private String notes;
@@ -94,12 +111,21 @@ public class Send {
         this.user = user;
     }
 
-    public String getAreaName() {
-        return areaName;
+    public Integer getGradeValue() {
+        return gradeValue;
     }
 
-    public void setAreaName(String areaName) {
-        this.areaName = areaName;
+    public void setGradeValue(Integer gradeValue) {
+        this.gradeValue = gradeValue;
+    }
+
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getGrade() {
@@ -112,6 +138,14 @@ public class Send {
 
     public GradeSystem getGradeSystem() {
         return gradeSystem;
+    }
+
+    public Integer getPitches() {
+        return pitches;
+    }
+
+    public void setPitches(Integer pitches) {
+        this.pitches = pitches;
     }
 
     public void setGradeSystem(GradeSystem gradeSystem) {
@@ -150,13 +184,14 @@ public class Send {
         this.sourceUrl = sourceUrl;
     }
 
-    public SendStyle getSendStyle() {
-        return sendStyle;
+    public RopeSendStyle getRopeSendStyle() {
+        return ropeSendStyle;
     }
 
-    public void setSendStyle(SendStyle sendStyle) {
-        this.sendStyle = sendStyle;
+    public void setRopeSendStyle(RopeSendStyle ropeSendStyle) {
+        this.ropeSendStyle = ropeSendStyle;
     }
+
 
     public LocalDate getSendDate() {
         return sendDate;
@@ -189,4 +224,60 @@ public class Send {
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
+
+    public void setStars(Integer stars) {
+        this.stars = stars;
+    }
+
+    public Integer getStars() {
+        return stars;
+    }
+
+    public Integer getUserStars() {
+        return userStars;
+    }
+
+    public void setUserStars(Integer userStars) {
+        this.userStars = userStars;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public Discipline getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(Discipline discipline) {
+        this.discipline = discipline;
+    }
+
+    public String getPersonalGrade() {
+        return personalGrade;
+    }
+
+    public void setPersonalGrade(String personalGrade) {
+        this.personalGrade = personalGrade;
+    }
+
+    public Integer getClimbHeight() {
+        return this.climbHeight;
+    }
+
+    public void setClimbHeight(Integer climbHeight) {
+        this.climbHeight = climbHeight;
+    }
+
+
+
+
+
+
+
+
 }
