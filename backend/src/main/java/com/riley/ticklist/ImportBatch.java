@@ -25,4 +25,6 @@ public class ImportBatch {
 
     @CreationTimestamp
     private LocalDateTime importedAt;
+
+    
 }

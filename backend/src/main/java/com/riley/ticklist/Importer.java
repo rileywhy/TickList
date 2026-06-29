@@ -5,19 +5,27 @@ import org.apache.commons.csv.CSVRecord;
  */
 import org.springframework.stereotype.Service;
 
-import java.io.FileReader;
 import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Locale;
 
 @Service
 public class Importer {
     //function to import the csv file and parse the data
+    private static final Path DEFAULT_CSV_PATH = Path.of("inputs", "ticks.csv");
+    private static final Path BACKEND_DEFAULT_CSV_PATH = Path.of("..", "inputs", "ticks.csv");
      private final SendRepository sendRepository;
 
     public Importer(SendRepository sendRepository) {
         this.sendRepository = sendRepository;
     }
     public void importCSV() throws Exception {
-    Reader reader = new FileReader("ticks.csv");
+        importCSV(defaultCsvPath());
+    }
+
+    void importCSV(Path csvPath) throws Exception {
+    Reader reader = Files.newBufferedReader(csvPath);
         Iterable<CSVRecord> records = CSVFormat.DEFAULT
                 .builder()
                 .setHeader()
@@ -48,13 +56,13 @@ public class Importer {
 
             if (leadStyle.equals("Fell/Hung"))
             {
-                // not actually a send
+               System.out.println("Skipping send for route " + route + " on date " + date + " because lead style is Fell/Hung");
             }
-            if (style.equals("TR"))
+            else if (style.equals("TR"))
             {
                 // not a true send,
             }
-
+            else {
             // these "should" all be actual sends.
             Send send = new Send();
             
@@ -63,22 +71,59 @@ public class Importer {
             send.setGrade(rating);
             send.setNotes(notes);
             send.setSourceUrl(url);
-            send.setPitches(Integer.parseInt(pitches));
+            send.setPitches(parseOptionalInteger(pitches));
             send.setLocation(Location);
-            send.setStars(Integer.parseInt(avgStars));
-            send.setUserStars(Integer.parseInt(yourStars));
-            send.setRopeSendStyle(RopeSendStyle.valueOf(style.toUpperCase()));
-            send.setRopeSendStyle(RopeSendStyle.valueOf(leadStyle.toUpperCase()));
+            send.setStars(parseOptionalDouble(avgStars));
+            send.setUserStars(parseOptionalDouble(yourStars));
+            send.setStyle((style));
+            send.setRopeSendStyle(parseRopeSendStyle(leadStyle));
             
             Discipline discipline = DisciplineParser.parsePrimaryDiscipline(routeType, rating);
             send.setDiscipline(discipline);
             
             send.setPersonalGrade(yourRating);
-            send.setClimbHeight(Integer.parseInt(length));
+            send.setClimbHeight(parseOptionalDouble(length));
 
             sendRepository.save(send);
 
         }
+    }
         reader.close();
+    }
+
+    private Path defaultCsvPath() {
+        if (Files.exists(DEFAULT_CSV_PATH)) {
+            return DEFAULT_CSV_PATH;
+        }
+
+        return BACKEND_DEFAULT_CSV_PATH;
+    }
+
+    private static Double parseOptionalDouble(String rawValue) {
+        if (rawValue == null || rawValue.trim().isEmpty()) {
+            return null;
+        }
+
+        return Double.valueOf(rawValue.trim());
+    }
+
+    private static Integer parseOptionalInteger(String rawValue) {
+        if (rawValue == null || rawValue.trim().isEmpty()) {
+            return null;
+        }
+
+        return Integer.valueOf(rawValue.trim());
+    }
+
+    private static RopeSendStyle parseRopeSendStyle(String rawValue) {
+        if (rawValue == null || rawValue.trim().isEmpty()) {
+            return RopeSendStyle.UNKNOWN;
+        }
+
+        try {
+            return RopeSendStyle.valueOf(rawValue.trim().toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException error) {
+            return RopeSendStyle.UNKNOWN;
+        }
     }
 }

@@ -36,11 +36,11 @@ public class Send {
 
     private String grade;
 
-    private Integer gradeValue;
+    private Double gradeValue;
 
-    private Integer stars;
+    private Double stars;
 
-    private Integer climbHeight;
+    private Double climbHeight;
 
 
     @Enumerated(EnumType.STRING)
@@ -67,7 +67,7 @@ public class Send {
 
     private Integer pitches;
 
-    private Integer userStars;
+    private Double userStars;
 
     private String personalGrade;
 
@@ -111,11 +111,11 @@ public class Send {
         this.user = user;
     }
 
-    public Integer getGradeValue() {
+    public Double getGradeValue() {
         return gradeValue;
     }
 
-    public void setGradeValue(Integer gradeValue) {
+    public void setGradeValue(Double gradeValue) {
         this.gradeValue = gradeValue;
     }
 
@@ -225,19 +225,19 @@ public class Send {
         return updatedAt;
     }
 
-    public void setStars(Integer stars) {
+    public void setStars(Double stars) {
         this.stars = stars;
     }
 
-    public Integer getStars() {
+    public Double getStars() {
         return stars;
     }
 
-    public Integer getUserStars() {
+    public Double getUserStars() {
         return userStars;
     }
 
-    public void setUserStars(Integer userStars) {
+    public void setUserStars(Double userStars) {
         this.userStars = userStars;
     }
 
@@ -265,11 +265,11 @@ public class Send {
         this.personalGrade = personalGrade;
     }
 
-    public Integer getClimbHeight() {
+    public Double getClimbHeight() {
         return this.climbHeight;
     }
 
-    public void setClimbHeight(Integer climbHeight) {
+    public void setClimbHeight(Double climbHeight) {
         this.climbHeight = climbHeight;
     }
 
