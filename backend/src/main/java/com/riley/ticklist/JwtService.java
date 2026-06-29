@@ -1,4 +1,4 @@
-package com.riley.issuetracker;
+package com.riley.ticklist;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import TicketPage from "./pages/TicketPage";
+import SendPage from "./pages/SendPage";
 import AccountMenu from "./pages/AccountMenu";
 import "./App.css";
 import type { CurrentUser } from "./types";
@@ -22,7 +22,7 @@ function App() {
         <Link to="/">Home</Link>
         <Link to="/login">Login</Link>
         <Link to="/register">Register</Link>
-        <Link to="/tickets">Tickets</Link>
+        <Link to="/sends">Sends</Link>
       </nav>
 
       {currentUser!== null && <AccountMenu name={currentUser.firstName+" "+currentUser.lastName} onLogout={handleLogout} />}
@@ -38,10 +38,10 @@ function App() {
         <Route path="/register" element={<RegisterPage  />} />
 
         <Route
-          path="/tickets"
+          path="/sends"
           element={
             currentUser !== null ? (
-              <TicketPage
+              <SendPage
                 token={currentUser.token}
                 onAuthExpired={handleLogout}
               />

@@ -96,7 +96,7 @@ form select {
   width: 100%;
 }
 
-.create-ticket-form {
+.create-send-form {
   display: grid;
   gap: 6px;
   max-width: 1160px;
@@ -126,11 +126,11 @@ form select {
   font-size: 1rem;
 }
 
-.ticket-row button {
+.send-row button {
   width: auto;
 }
 
-.ticket-row {
+.send-row {
   display: grid;
   gap: 16px;
   padding: 20px;
@@ -143,13 +143,13 @@ form select {
   overflow: hidden;
 }
 
-.ticket-row__main {
+.send-row__main {
   display: grid;
   gap: 14px;
   min-width: 0;
 }
 
-.ticket-row__header {
+.send-row__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -157,37 +157,37 @@ form select {
   flex-wrap: wrap;
 }
 
-.ticket-row__title-group {
+.send-row__title-group {
   display: grid;
   gap: 10px;
   min-width: 0;
 }
 
-.ticket-row__title {
+.send-row__title {
   margin: 0;
   word-break: break-word;
 }
 
-.ticket-row__description {
+.send-row__description {
   color: var(--text-h);
   line-height: 1.55;
   white-space: normal;
   word-break: break-word;
 }
 
-.ticket-row__meta {
+.send-row__meta {
   display: grid;
   gap: 12px;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
 
-.ticket-row__meta-item {
+.send-row__meta-item {
   display: grid;
   gap: 4px;
   min-width: 0;
 }
 
-.ticket-row__meta-label {
+.send-row__meta-label {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -195,14 +195,14 @@ form select {
   color: var(--text);
 }
 
-.ticket-row__actions {
+.send-row__actions {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.ticket-status {
+.send-source {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -215,7 +215,7 @@ form select {
   letter-spacing: 0.03em;
 }
 
-.ticket-status__icon {
+.send-source__icon {
   display: inline-grid;
   place-items: center;
   width: 1.35rem;
@@ -225,57 +225,57 @@ form select {
   font-weight: 800;
 }
 
-.ticket-status--open {
-  color: #fca5a5;
-  background: rgba(127, 29, 29, 0.18);
-  border-color: rgba(248, 113, 113, 0.35);
-}
-
-.ticket-status--open .ticket-status__icon {
-  background: #dc2626;
-  color: #fff;
-}
-
-.ticket-status--progress {
+.send-source--manual {
   color: #facc15;
   background: rgba(133, 77, 14, 0.2);
   border-color: rgba(250, 204, 21, 0.35);
 }
 
-.ticket-status--progress .ticket-status__icon {
+.send-source--manual .send-source__icon {
   background: #facc15;
   color: #422006;
 }
 
-.ticket-status--done {
+.send-source--mountain-project {
   color: #86efac;
   background: rgba(20, 83, 45, 0.2);
   border-color: rgba(74, 222, 128, 0.35);
 }
 
-.ticket-status--done .ticket-status__icon {
+.send-source--mountain-project .send-source__icon {
   background: #22c55e;
   color: #052e16;
 }
 
-.ticket-status--review {
+.send-source--kaya {
   color: #93c5fd;
   background: rgba(30, 64, 175, 0.18);
   border-color: rgba(96, 165, 250, 0.35);
 }
 
-.ticket-status--review .ticket-status__icon {
+.send-source--kaya .send-source__icon {
   background: #3b82f6;
   color: #eff6ff;
 }
 
-.ticket-status--neutral {
+.send-source--eight-a {
+  color: #fca5a5;
+  background: rgba(127, 29, 29, 0.18);
+  border-color: rgba(248, 113, 113, 0.35);
+}
+
+.send-source--eight-a .send-source__icon {
+  background: #dc2626;
+  color: #fff;
+}
+
+.send-source--unknown {
   color: var(--text-h);
   background: var(--code-bg);
   border-color: var(--border);
 }
 
-.ticket-status--neutral .ticket-status__icon {
+.send-source--unknown .send-source__icon {
   background: var(--border);
   color: var(--text-h);
 }
@@ -314,7 +314,7 @@ form select {
   background: rgba(127, 29, 29, 0.28);
 }
 
-.ticket-modal-backdrop {
+.send-modal-backdrop {
   position: fixed;
   inset: 0;
   display: grid;
@@ -324,7 +324,7 @@ form select {
   z-index: 2000;
 }
 
-.ticket-modal {
+.send-modal {
   display: grid;
   gap: 12px;
   width: min(90vw, 680px);
@@ -339,7 +339,7 @@ form select {
   text-align: left;
 }
 
-.ticket-modal__header {
+.send-modal__header {
   display: flex;
   align-items: start;
   justify-content: space-between;
@@ -347,19 +347,19 @@ form select {
 }
 
 @media (max-width: 720px) {
-  .ticket-row {
+  .send-row {
     padding: 16px;
   }
 
-  .ticket-row__header {
+  .send-row__header {
     flex-direction: column;
   }
 
-  .ticket-row__actions {
+  .send-row__actions {
     width: 100%;
   }
 
-  .ticket-row__meta {
+  .send-row__meta {
     grid-template-columns: 1fr;
   }
 }
