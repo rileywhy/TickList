@@ -1,14 +1,16 @@
 export type SendFormValues = {
   climbName: string;
   climbId: string;
-  areaName: string;
+  location: string;
+  discipline: string;
   grade: string;
   gradeSystem: string;
   sourceApp: string;
   externalId: string;
   sourceUrl: string;
   sendDate: string;
-  sendStyle: string;
+  style: string;
+  ropeSendStyle: string;
   attempts: string;
   notes: string;
 };
@@ -16,14 +18,16 @@ export type SendFormValues = {
 export type SendPayload = {
   climbName: string;
   climbId: string | null;
-  areaName: string | null;
+  location: string | null;
+  discipline: string;
   grade: string | null;
   gradeSystem: string;
   sourceApp: string;
   externalId: string | null;
   sourceUrl: string | null;
   sendDate: string | null;
-  sendStyle: string;
+  style: string | null;
+  ropeSendStyle: string;
   attempts: number | null;
   notes: string | null;
 };
@@ -38,14 +42,16 @@ export type SendRecord = Omit<SendPayload, "attempts"> & {
 export const DEFAULT_SEND_VALUES: SendFormValues = {
   climbName: "",
   climbId: "",
-  areaName: "",
+  location: "",
+  discipline: "UNKNOWN",
   grade: "",
   gradeSystem: "UNKNOWN",
   sourceApp: "MANUAL",
   externalId: "",
   sourceUrl: "",
   sendDate: "",
-  sendStyle: "UNKNOWN",
+  style: "",
+  ropeSendStyle: "UNKNOWN",
   attempts: "",
   notes: "",
 };
@@ -75,13 +81,31 @@ export const SOURCE_APP_OPTIONS = [
   { value: "UNKNOWN", label: "Unknown", tone: "unknown", icon: "?" },
 ] as const;
 
-export const SEND_STYLE_OPTIONS = [
+export const DISCIPLINE_OPTIONS = [
+  { value: "UNKNOWN", label: "Unknown" },
+  { value: "BOULDER", label: "Boulder" },
+  { value: "SPORT", label: "Sport" },
+  { value: "TRAD", label: "Trad" },
+  { value: "ICE", label: "Ice" },
+  { value: "MIXED", label: "Mixed" },
+  { value: "AID", label: "Aid" },
+  { value: "GYM", label: "Gym" },
+] as const;
+
+export const ROPE_SEND_STYLE_OPTIONS = [
   { value: "UNKNOWN", label: "Unknown" },
   { value: "FLASH", label: "Flash" },
   { value: "ONSIGHT", label: "Onsight" },
   { value: "REDPOINT", label: "Redpoint" },
   { value: "PINKPOINT", label: "Pinkpoint" },
   { value: "REPEAT", label: "Repeat" },
+  { value: "SOLO", label: "Solo" },
+  { value: "LRS", label: "Lead rope solo" },
+  { value: "FS", label: "Free solo" },
+  { value: "OSFS", label: "Onsight free solo" },
+  { value: "DS", label: "Daisy solo" },
+  { value: "FB", label: "Freebase" },
+  { value: "DWS", label: "Deep water solo" },
 ] as const;
 
 export const FILTER_OPTIONS = {
@@ -118,14 +142,16 @@ export function toSendPayload(values: SendFormValues): SendPayload {
   return {
     climbName: values.climbName.trim(),
     climbId: optionalText(values.climbId),
-    areaName: optionalText(values.areaName),
+    location: optionalText(values.location),
+    discipline: values.discipline,
     grade: optionalText(values.grade),
     gradeSystem: values.gradeSystem,
     sourceApp: values.sourceApp,
     externalId: optionalText(values.externalId),
     sourceUrl: optionalText(values.sourceUrl),
     sendDate: optionalText(values.sendDate),
-    sendStyle: values.sendStyle,
+    style: optionalText(values.style),
+    ropeSendStyle: values.ropeSendStyle,
     attempts: Number.isFinite(attempts) && values.attempts.trim() !== "" ? attempts : null,
     notes: optionalText(values.notes),
   };

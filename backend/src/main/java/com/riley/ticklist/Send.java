@@ -36,40 +36,42 @@ public class Send {
 
     private String grade;
 
+    private String rawGrade;
+
     private Double gradeValue;
-
+    
+    private String personalGrade;
     private Double stars;
-
+    
     private Double climbHeight;
 
 
     @Enumerated(EnumType.STRING)
     private GradeSystem gradeSystem = GradeSystem.UNKNOWN;
-
+    
     @ManyToOne
     private GradeMapping gradeMapping;
-
+    
     @Enumerated(EnumType.STRING)
     private SourceApp sourceApp = SourceApp.UNKNOWN;
-
+    
     private String externalId;
-
+    
     private String sourceUrl;
-
+    
     private String style;
-
+    
     @Enumerated(EnumType.STRING)
     private RopeSendStyle ropeSendStyle = RopeSendStyle.UNKNOWN;
-
+    
     private LocalDate sendDate;
-
+    
     private Integer attempts;
-
+    
     private Integer pitches;
 
     private Double userStars;
 
-    private String personalGrade;
 
     @Column(length = 2000)
     private String notes;
@@ -134,6 +136,17 @@ public class Send {
 
     public void setGrade(String grade) {
         this.grade = grade;
+        if (this.rawGrade == null) {
+            this.rawGrade = grade;
+        }
+    }
+
+    public String getRawGrade() {
+        return rawGrade;
+    }
+
+    public void setRawGrade(String rawGrade) {
+        this.rawGrade = rawGrade;
     }
 
     public GradeSystem getGradeSystem() {

@@ -1,7 +1,8 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import {
+  DISCIPLINE_OPTIONS,
   GRADE_SYSTEM_OPTIONS,
-  SEND_STYLE_OPTIONS,
+  ROPE_SEND_STYLE_OPTIONS,
   SOURCE_APP_OPTIONS,
   type SendFormValues,
 } from "../sendConfig";
@@ -72,11 +73,18 @@ function SendForm({
         onChange={handleChange}
       />
       <input
-        name="areaName"
-        placeholder="Area"
-        value={values.areaName}
+        name="location"
+        placeholder="Location"
+        value={values.location}
         onChange={handleChange}
       />
+      <select name="discipline" value={values.discipline} onChange={handleChange}>
+        {DISCIPLINE_OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
       <input
         name="grade"
         placeholder="Grade"
@@ -116,8 +124,14 @@ function SendForm({
         value={values.sendDate}
         onChange={handleChange}
       />
-      <select name="sendStyle" value={values.sendStyle} onChange={handleChange}>
-        {SEND_STYLE_OPTIONS.map((option) => (
+      <input
+        name="style"
+        placeholder="Send style"
+        value={values.style}
+        onChange={handleChange}
+      />
+      <select name="ropeSendStyle" value={values.ropeSendStyle} onChange={handleChange}>
+        {ROPE_SEND_STYLE_OPTIONS.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

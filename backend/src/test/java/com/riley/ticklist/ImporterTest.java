@@ -73,6 +73,8 @@ class ImporterTest {
         assertThat(send.getSendDate()).isEqualTo(LocalDate.of(2026, 6, 15));
         assertThat(send.getClimbName()).isEqualTo("The Bulge");
         assertThat(send.getGrade()).isEqualTo("5.10a");
+        assertThat(send.getRawGrade()).isEqualTo("5.10a");
+        assertThat(send.getGradeSystem()).isEqualTo(GradeSystem.YDS);
         assertThat(send.getNotes()).isEqualTo("Great movement, bad feet");
         assertThat(send.getSourceUrl()).isEqualTo("https://mountainproject.com/route/123");
         assertThat(send.getPitches()).isEqualTo(1);

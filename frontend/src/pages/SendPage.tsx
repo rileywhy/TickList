@@ -94,7 +94,10 @@ function SendPage({ onAuthExpired, token }: SendPageProps) {
       normalizedSearch === "" ||
       [
         send.climbName,
-        send.areaName,
+        send.location,
+        send.discipline,
+        send.style,
+        send.ropeSendStyle,
         send.grade,
         send.notes,
         send.externalId,

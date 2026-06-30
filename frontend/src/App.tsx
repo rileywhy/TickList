@@ -3,6 +3,7 @@ import { Routes, Route, Link, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import SendPage from "./pages/SendPage";
+import UploadPage from "./pages/UploadPage";
 import AccountMenu from "./pages/AccountMenu";
 import "./App.css";
 import type { CurrentUser } from "./types";
@@ -23,6 +24,7 @@ function App() {
         <Link to="/login">Login</Link>
         <Link to="/register">Register</Link>
         <Link to="/sends">Sends</Link>
+        <Link to="/upload">Import</Link>
       </nav>
 
       {currentUser!== null && <AccountMenu name={currentUser.firstName+" "+currentUser.lastName} onLogout={handleLogout} />}
@@ -42,6 +44,19 @@ function App() {
           element={
             currentUser !== null ? (
               <SendPage
+                token={currentUser.token}
+                onAuthExpired={handleLogout}
+              />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            currentUser !== null ? (
+              <UploadPage
                 token={currentUser.token}
                 onAuthExpired={handleLogout}
               />

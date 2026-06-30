@@ -32,10 +32,12 @@ function SendCard({
     ? `${send.grade} (${formatEnumLabel(send.gradeSystem)})`
     : formatEnumLabel(send.gradeSystem);
   const details = [
-    ["Area", send.areaName || "Unknown"],
+    ["Location", send.location || "Unknown"],
     ["Grade", gradeLabel],
+    ["Discipline", formatEnumLabel(send.discipline)],
     ["Source", sourceMeta.label],
-    ["Send style", formatEnumLabel(send.sendStyle)],
+    ["Send style", send.style || "Unknown"],
+    ["Rope style", formatEnumLabel(send.ropeSendStyle)],
     ["Send date", formatDate(send.sendDate)],
     ["Attempts", send.attempts?.toString() ?? "Unknown"],
     ["External ID", send.externalId || "None"],
@@ -96,7 +98,7 @@ function SendCard({
         {deleteError && <p role="alert">{deleteError}</p>}
 
         <div className="send-row__meta">
-          {details.slice(0, 6).map(([label, value]) => (
+          {details.slice(0, 7).map(([label, value]) => (
             <div key={label} className="send-row__meta-item">
               <span className="send-row__meta-label">{label}</span>
               <span>{value}</span>
@@ -221,14 +223,16 @@ function toFormValues(send: SendRecord): SendFormValues {
   return {
     climbName: send.climbName ?? "",
     climbId: send.climbId ?? "",
-    areaName: send.areaName ?? "",
+    location: send.location ?? "",
+    discipline: send.discipline ?? "UNKNOWN",
     grade: send.grade ?? "",
     gradeSystem: send.gradeSystem ?? "UNKNOWN",
     sourceApp: send.sourceApp ?? "UNKNOWN",
     externalId: send.externalId ?? "",
     sourceUrl: send.sourceUrl ?? "",
     sendDate: send.sendDate ?? "",
-    sendStyle: send.sendStyle ?? "UNKNOWN",
+    style: send.style ?? "",
+    ropeSendStyle: send.ropeSendStyle ?? "UNKNOWN",
     attempts: send.attempts?.toString() ?? "",
     notes: send.notes ?? "",
   };

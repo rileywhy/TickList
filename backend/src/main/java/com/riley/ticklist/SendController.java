@@ -48,13 +48,17 @@ public class SendController {
         existingSend.setClimbName(updatedSend.getClimbName());
         existingSend.setClimbId(updatedSend.getClimbId());
         existingSend.setUser(updatedSend.getUser());
+        existingSend.setLocation(updatedSend.getLocation());
+        existingSend.setDiscipline(updatedSend.getDiscipline());
         existingSend.setGradeValue(updatedSend.getGradeValue());
         existingSend.setGrade(updatedSend.getGrade());
+        existingSend.setRawGrade(updatedSend.getRawGrade());
         existingSend.setGradeSystem(updatedSend.getGradeSystem());
         existingSend.setGradeMapping(updatedSend.getGradeMapping());
         existingSend.setSourceApp(updatedSend.getSourceApp());
         existingSend.setExternalId(updatedSend.getExternalId());
         existingSend.setSourceUrl(updatedSend.getSourceUrl());
+        existingSend.setStyle(updatedSend.getStyle());
         existingSend.setRopeSendStyle(updatedSend.getRopeSendStyle());
         existingSend.setSendDate(updatedSend.getSendDate());
         existingSend.setAttempts(updatedSend.getAttempts());

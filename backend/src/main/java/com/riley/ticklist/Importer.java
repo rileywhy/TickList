@@ -5,6 +5,7 @@ import org.apache.commons.csv.CSVRecord;
  */
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,8 +25,13 @@ public class Importer {
         importCSV(defaultCsvPath());
     }
 
-    void importCSV(Path csvPath) throws Exception {
-    Reader reader = Files.newBufferedReader(csvPath);
+    ImportResult importCSV(Path csvPath) throws Exception {
+        try (Reader reader = Files.newBufferedReader(csvPath)) {
+            return importCSV(reader);
+        }
+    }
+
+    public ImportResult importCSV(Reader reader) throws IOException {
         Iterable<CSVRecord> records = CSVFormat.DEFAULT
                 .builder()
                 .setHeader()
@@ -34,6 +40,9 @@ public class Importer {
                 .parse(reader);
 
 //Date	Route	Rating	Notes	URL	Pitches	Location	Avg Stars	Your Stars	Style	Lead Style	Route Type	Your Rating	Length	Rating Code
+
+        int importedRows = 0;
+        int skippedRows = 0;
 
         for (CSVRecord record : records) {
             
@@ -57,10 +66,12 @@ public class Importer {
             if (leadStyle.equals("Fell/Hung"))
             {
                System.out.println("Skipping send for route " + route + " on date " + date + " because lead style is Fell/Hung");
+               skippedRows++;
             }
             else if (style.equals("TR"))
             {
                 // not a true send,
+                skippedRows++;
             }
             else {
             // these "should" all be actual sends.
@@ -68,7 +79,10 @@ public class Importer {
             
             send.setSendDate(DateParser.parse(date));
             send.setClimbName(route);
-            send.setGrade(rating);
+            GradeParser.ParsedGrade parsedGrade = GradeParser.parse(rating);
+            send.setRawGrade(parsedGrade.rawGrade());
+            send.setGrade(parsedGrade.rawGrade());
+            send.setGradeSystem(parsedGrade.gradeSystem());
             send.setNotes(notes);
             send.setSourceUrl(url);
             send.setPitches(parseOptionalInteger(pitches));
@@ -83,12 +97,18 @@ public class Importer {
             
             send.setPersonalGrade(yourRating);
             send.setClimbHeight(parseOptionalDouble(length));
+            send.setSourceApp(SourceApp.MOUNTAIN_PROJECT);
 
             sendRepository.save(send);
+            importedRows++;
 
         }
     }
-        reader.close();
+
+        return new ImportResult(importedRows, skippedRows);
+    }
+
+    public record ImportResult(int importedRows, int skippedRows) {
     }
 
     private Path defaultCsvPath() {
