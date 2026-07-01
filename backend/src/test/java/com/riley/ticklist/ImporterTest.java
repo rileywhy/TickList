@@ -48,44 +48,45 @@ class ImporterTest {
     private Path tempDir;
 
     private Path testCsv;
-    private SendRepository sendRepository;
+    private TickRepository tickRepository;
     private Importer importer;
 
     @BeforeEach
     void setUp() {
         testCsv = tempDir.resolve("ticks.csv");
-        sendRepository = mock(SendRepository.class);
-        importer = new Importer(sendRepository);
+        tickRepository = mock(TickRepository.class);
+        importer = new Importer(tickRepository);
     }
 
     @Test
-    void importsCompleteCsvRowIntoSend() throws Exception {
+    void importsCompleteCsvRowIntoTick() throws Exception {
         writeTicksCsv(
             "2026-06-15,The Bulge,5.10a,\"Great movement, bad feet\",https://mountainproject.com/route/123,1,Eldorado Canyon,4.5,3,Lead,Redpoint,Trad,5.10b,80,"
         );
 
         importer.importCSV(testCsv);
 
-        ArgumentCaptor<Send> sendCaptor = ArgumentCaptor.forClass(Send.class);
-        verify(sendRepository).save(sendCaptor.capture());
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
 
-        Send send = sendCaptor.getValue();
-        assertThat(send.getSendDate()).isEqualTo(LocalDate.of(2026, 6, 15));
-        assertThat(send.getClimbName()).isEqualTo("The Bulge");
-        assertThat(send.getGrade()).isEqualTo("5.10a");
-        assertThat(send.getRawGrade()).isEqualTo("5.10a");
-        assertThat(send.getGradeSystem()).isEqualTo(GradeSystem.YDS);
-        assertThat(send.getNotes()).isEqualTo("Great movement, bad feet");
-        assertThat(send.getSourceUrl()).isEqualTo("https://mountainproject.com/route/123");
-        assertThat(send.getPitches()).isEqualTo(1);
-        assertThat(send.getLocation()).isEqualTo("Eldorado Canyon");
-        assertThat(send.getStars()).isEqualTo(4.5);
-        assertThat(send.getUserStars()).isEqualTo(3.0);
-        assertThat(send.getStyle()).isEqualTo("Lead");
-        assertThat(send.getRopeSendStyle()).isEqualTo(RopeSendStyle.REDPOINT);
-        assertThat(send.getDiscipline()).isEqualTo(Discipline.TRAD);
-        assertThat(send.getPersonalGrade()).isEqualTo("5.10b");
-        assertThat(send.getClimbHeight()).isEqualTo(80.0);
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getTickDate()).isEqualTo(LocalDate.of(2026, 6, 15));
+        assertThat(tick.getClimbName()).isEqualTo("The Bulge");
+        assertThat(tick.getGrade()).isEqualTo("5.10a");
+        assertThat(tick.getRawGrade()).isEqualTo("5.10a");
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.YDS);
+        assertThat(tick.getNotes()).isEqualTo("Great movement, bad feet");
+        assertThat(tick.getSourceUrl()).isEqualTo("https://mountainproject.com/route/123");
+        assertThat(tick.getPitches()).isEqualTo(1);
+        assertThat(tick.getLocation()).isEqualTo("Eldorado Canyon");
+        assertThat(tick.getStars()).isEqualTo(4.5);
+        assertThat(tick.getUserStars()).isEqualTo(3.0);
+        assertThat(tick.getStyle()).isEqualTo("Lead");
+        assertThat(tick.getRopeStyle()).isEqualTo(RopeStyle.REDPOINT);
+        assertThat(tick.getTickType()).isEqualTo(TickType.SEND);
+        assertThat(tick.getDiscipline()).isEqualTo(Discipline.TRAD);
+        assertThat(tick.getPersonalGrade()).isEqualTo("5.10b");
+        assertThat(tick.getClimbHeight()).isEqualTo(80.0);
     }
 
     @Test
@@ -96,14 +97,14 @@ class ImporterTest {
 
         importer.importCSV(testCsv);
 
-        ArgumentCaptor<Send> sendCaptor = ArgumentCaptor.forClass(Send.class);
-        verify(sendRepository).save(sendCaptor.capture());
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
 
-        Send send = sendCaptor.getValue();
-        assertThat(send.getPitches()).isNull();
-        assertThat(send.getStars()).isNull();
-        assertThat(send.getUserStars()).isNull();
-        assertThat(send.getClimbHeight()).isNull();
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getPitches()).isNull();
+        assertThat(tick.getStars()).isNull();
+        assertThat(tick.getUserStars()).isNull();
+        assertThat(tick.getClimbHeight()).isNull();
     }
 
     @Test
@@ -113,7 +114,7 @@ class ImporterTest {
         assertThatThrownBy(() -> importer.importCSV(testCsv))
             .isInstanceOf(NoSuchFileException.class);
 
-        verify(sendRepository, never()).save(any(Send.class));
+        verify(tickRepository, never()).save(any(Tick.class));
     }
 
     @Test
@@ -125,21 +126,53 @@ class ImporterTest {
         assertThatThrownBy(() -> importer.importCSV(testCsv))
             .isInstanceOf(NumberFormatException.class);
 
-        verify(sendRepository, never()).save(any(Send.class));
+        verify(tickRepository, never()).save(any(Tick.class));
     }
 
     @Test
-    void importsBlankLeadStyleAsUnknownRopeSendStyle() throws Exception {
+    void importsBlankLeadStyleAsUnknownRopeStyle() throws Exception {
         writeTicksCsv(
             "2026-06-15,Hi-C,V1,Fun boulder,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,Send,,Boulder,,,"
         );
 
         importer.importCSV(testCsv);
 
-        ArgumentCaptor<Send> sendCaptor = ArgumentCaptor.forClass(Send.class);
-        verify(sendRepository).save(sendCaptor.capture());
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
 
-        assertThat(sendCaptor.getValue().getRopeSendStyle()).isEqualTo(RopeSendStyle.UNKNOWN);
+        assertThat(tickCaptor.getValue().getRopeStyle()).isEqualTo(RopeStyle.UNKNOWN);
+    }
+
+    @Test
+    void importsFellHungRowsAsAttempts() throws Exception {
+        writeTicksCsv(
+            "2026-06-15,The Bulge,5.10a,Worked moves,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,Lead,Fell/Hung,Trad,5.10b,80,"
+        );
+
+        Importer.ImportResult result = importer.importCSV(testCsv);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        assertThat(result.importedRows()).isEqualTo(1);
+        assertThat(result.skippedRows()).isZero();
+        assertThat(tickCaptor.getValue().getTickType()).isEqualTo(TickType.ATTEMPT);
+    }
+
+    @Test
+    void importsTopRopeRowsAsCleanTrTicks() throws Exception {
+        writeTicksCsv(
+            "2026-06-15,The Bulge,5.10a,TR lap,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,TR,,Trad,5.10b,80,"
+        );
+
+        Importer.ImportResult result = importer.importCSV(testCsv);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        assertThat(result.importedRows()).isEqualTo(1);
+        assertThat(result.skippedRows()).isZero();
+        assertThat(tickCaptor.getValue().getTickType()).isEqualTo(TickType.CLEAN_TR);
     }
 
     @Test
@@ -152,33 +185,33 @@ class ImporterTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Unsupported date format");
 
-        verify(sendRepository, never()).save(any(Send.class));
+        verify(tickRepository, never()).save(any(Tick.class));
     }
     // main test method to run the importer against the actual inputs/ticks.csv file for inspection
     @Test
     @EnabledIfSystemProperty(named = "importer.inspectInputs", matches = "true")
     void fullCSVTest() throws Exception {
-        List<Send> savedSends = new ArrayList<>();
-        when(sendRepository.save(any(Send.class))).thenAnswer(invocation -> {
-            Send send = invocation.getArgument(0);
-            savedSends.add(send);
-            printImportedSend(send);
-            return send;
+        List<Tick> savedTicks = new ArrayList<>();
+        when(tickRepository.save(any(Tick.class))).thenAnswer(invocation -> {
+            Tick tick = invocation.getArgument(0);
+            savedTicks.add(tick);
+            printImportedTick(tick);
+            return tick;
         });
 
         try {
             importer.importCSV();
         } catch (Exception error) {
             System.out.printf(
-                "Importer failed while reading inputs/ticks.csv after %d saved send(s): %s: %s%n",
-                savedSends.size(),
+                "Importer failed while reading inputs/ticks.csv after %d saved tick(s): %s: %s%n",
+                savedTicks.size(),
                 error.getClass().getSimpleName(),
                 error.getMessage()
             );
             throw error;
         }
 
-        assertThat(savedSends).isNotEmpty();
+        assertThat(savedTicks).isNotEmpty();
     }
 
     private void writeTicksCsv(String... rows) throws IOException {
@@ -187,19 +220,20 @@ class ImporterTest {
             + System.lineSeparator());
     }
 
-    private void printImportedSend(Send send) {
+    private void printImportedTick(Tick tick) {
         System.out.printf(
-            "Imported send: climbName=%s, date=%s, grade=%s, discipline=%s, ropeSendStyle=%s, pitches=%s, stars=%s, userStars=%s, height=%s, url=%s%n",
-            send.getClimbName(),
-            send.getSendDate(),
-            send.getGrade(),
-            send.getDiscipline(),
-            send.getRopeSendStyle(),
-            send.getPitches(),
-            send.getStars(),
-            send.getUserStars(),
-            send.getClimbHeight(),
-            send.getSourceUrl()
+            "Imported tick: climbName=%s, type=%s, date=%s, grade=%s, discipline=%s, ropeStyle=%s, pitches=%s, stars=%s, userStars=%s, height=%s, url=%s%n",
+            tick.getClimbName(),
+            tick.getTickType(),
+            tick.getTickDate(),
+            tick.getGrade(),
+            tick.getDiscipline(),
+            tick.getRopeStyle(),
+            tick.getPitches(),
+            tick.getStars(),
+            tick.getUserStars(),
+            tick.getClimbHeight(),
+            tick.getSourceUrl()
         );
     }
 }

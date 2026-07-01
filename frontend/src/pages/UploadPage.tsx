@@ -63,7 +63,7 @@ function UploadPage({ onAuthExpired, token }: UploadPageProps) {
 
       const result = (await response.json()) as ImportResponse;
       setMessage(
-        `Imported ${result.importedRows} sends from ${result.filename ?? file.name}. Skipped ${result.skippedRows}.`
+        `Imported ${result.importedRows} ticks from ${result.filename ?? file.name}. Skipped ${result.skippedRows}.`
       );
       setFile(null);
       form.reset();

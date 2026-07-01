@@ -2,22 +2,23 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import {
   DISCIPLINE_OPTIONS,
   GRADE_SYSTEM_OPTIONS,
-  ROPE_SEND_STYLE_OPTIONS,
+  ROPE_STYLE_OPTIONS,
   SOURCE_APP_OPTIONS,
-  type SendFormValues,
-} from "../sendConfig";
+  TICK_TYPE_OPTIONS,
+  type TickFormValues,
+} from "../tickConfig";
 
-type SendFormProps = {
+type TickFormProps = {
   className?: string;
   heading?: string;
-  initialValues: SendFormValues;
+  initialValues: TickFormValues;
   resetOnSubmit?: boolean;
   submitLabel: string;
-  onSubmit: (values: SendFormValues) => Promise<void> | void;
+  onSubmit: (values: TickFormValues) => Promise<void> | void;
   onCancel?: () => void;
 };
 
-function SendForm({
+function TickForm({
   className,
   heading,
   initialValues,
@@ -25,7 +26,7 @@ function SendForm({
   submitLabel,
   onSubmit,
   onCancel,
-}: SendFormProps) {
+}: TickFormProps) {
   const [values, setValues] = useState(() => ({ ...initialValues }));
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,7 +55,7 @@ function SendForm({
       setError(
         submitError instanceof Error
           ? submitError.message
-          : "Could not save send changes."
+          : "Could not save tick changes."
       );
     } finally {
       setIsSubmitting(false);
@@ -105,6 +106,13 @@ function SendForm({
           </option>
         ))}
       </select>
+      <select name="tickType" value={values.tickType} onChange={handleChange}>
+        {TICK_TYPE_OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
       <input
         name="externalId"
         placeholder="External ID"
@@ -118,20 +126,20 @@ function SendForm({
         onChange={handleChange}
       />
       <input
-        name="sendDate"
-        placeholder="Send date"
+        name="tickDate"
+        placeholder="Tick date"
         type="date"
-        value={values.sendDate}
+        value={values.tickDate}
         onChange={handleChange}
       />
       <input
         name="style"
-        placeholder="Send style"
+        placeholder="Tick style"
         value={values.style}
         onChange={handleChange}
       />
-      <select name="ropeSendStyle" value={values.ropeSendStyle} onChange={handleChange}>
-        {ROPE_SEND_STYLE_OPTIONS.map((option) => (
+      <select name="ropeStyle" value={values.ropeStyle} onChange={handleChange}>
+        {ROPE_STYLE_OPTIONS.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
@@ -169,4 +177,4 @@ function SendForm({
   );
 }
 
-export default SendForm;
+export default TickForm;

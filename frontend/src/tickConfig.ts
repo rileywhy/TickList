@@ -1,4 +1,4 @@
-export type SendFormValues = {
+export type TickFormValues = {
   climbName: string;
   climbId: string;
   location: string;
@@ -6,16 +6,17 @@ export type SendFormValues = {
   grade: string;
   gradeSystem: string;
   sourceApp: string;
+  tickType: string;
   externalId: string;
   sourceUrl: string;
-  sendDate: string;
+  tickDate: string;
   style: string;
-  ropeSendStyle: string;
+  ropeStyle: string;
   attempts: string;
   notes: string;
 };
 
-export type SendPayload = {
+export type TickPayload = {
   climbName: string;
   climbId: string | null;
   location: string | null;
@@ -23,23 +24,24 @@ export type SendPayload = {
   grade: string | null;
   gradeSystem: string;
   sourceApp: string;
+  tickType: string;
   externalId: string | null;
   sourceUrl: string | null;
-  sendDate: string | null;
+  tickDate: string | null;
   style: string | null;
-  ropeSendStyle: string;
+  ropeStyle: string;
   attempts: number | null;
   notes: string | null;
 };
 
-export type SendRecord = Omit<SendPayload, "attempts"> & {
+export type TickRecord = Omit<TickPayload, "attempts"> & {
   id: number;
   attempts: number | null;
   createdAt: string | null;
   updatedAt: string | null;
 };
 
-export const DEFAULT_SEND_VALUES: SendFormValues = {
+export const DEFAULT_TICK_VALUES: TickFormValues = {
   climbName: "",
   climbId: "",
   location: "",
@@ -47,11 +49,12 @@ export const DEFAULT_SEND_VALUES: SendFormValues = {
   grade: "",
   gradeSystem: "UNKNOWN",
   sourceApp: "MANUAL",
+  tickType: "SEND",
   externalId: "",
   sourceUrl: "",
-  sendDate: "",
+  tickDate: "",
   style: "",
-  ropeSendStyle: "UNKNOWN",
+  ropeStyle: "UNKNOWN",
   attempts: "",
   notes: "",
 };
@@ -66,6 +69,13 @@ export const GRADE_SYSTEM_OPTIONS = [
   { value: "MIXED_M", label: "Mixed M" },
   { value: "AID", label: "Aid" },
   { value: "E_Grade", label: "E Grade" },
+] as const;
+
+export const TICK_TYPE_OPTIONS = [
+  { value: "SEND", label: "Send" },
+  { value: "ATTEMPT", label: "Attempt" },
+  { value: "CLEAN_TR", label: "Clean TR" },
+  { value: "UNKNOWN", label: "Unknown" },
 ] as const;
 
 export const SOURCE_APP_OPTIONS = [
@@ -92,7 +102,7 @@ export const DISCIPLINE_OPTIONS = [
   { value: "GYM", label: "Gym" },
 ] as const;
 
-export const ROPE_SEND_STYLE_OPTIONS = [
+export const ROPE_STYLE_OPTIONS = [
   { value: "UNKNOWN", label: "Unknown" },
   { value: "FLASH", label: "Flash" },
   { value: "ONSIGHT", label: "Onsight" },
@@ -136,7 +146,7 @@ export function getSourceMeta(sourceApp: string | null | undefined) {
   );
 }
 
-export function toSendPayload(values: SendFormValues): SendPayload {
+export function toTickPayload(values: TickFormValues): TickPayload {
   const attempts = Number(values.attempts);
 
   return {
@@ -147,11 +157,12 @@ export function toSendPayload(values: SendFormValues): SendPayload {
     grade: optionalText(values.grade),
     gradeSystem: values.gradeSystem,
     sourceApp: values.sourceApp,
+    tickType: values.tickType,
     externalId: optionalText(values.externalId),
     sourceUrl: optionalText(values.sourceUrl),
-    sendDate: optionalText(values.sendDate),
+    tickDate: optionalText(values.tickDate),
     style: optionalText(values.style),
-    ropeSendStyle: values.ropeSendStyle,
+    ropeStyle: values.ropeStyle,
     attempts: Number.isFinite(attempts) && values.attempts.trim() !== "" ? attempts : null,
     notes: optionalText(values.notes),
   };

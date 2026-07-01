@@ -1,66 +1,67 @@
 import { useState, type ReactNode } from "react";
-import SendForm from "./SendForm";
+import TickForm from "./TickForm";
 import {
   formatEnumLabel,
   getSourceMeta,
-  toSendPayload,
-  type SendFormValues,
-  type SendRecord,
-} from "../sendConfig";
+  toTickPayload,
+  type TickFormValues,
+  type TickRecord,
+} from "../tickConfig";
 
-type SendCardProps = {
-  send: SendRecord;
+type TickCardProps = {
+  tick: TickRecord;
   onAuthExpired: () => void;
   onDelete: () => Promise<void>;
   onUpdate: () => Promise<void>;
   token: string;
 };
 
-function SendCard({
-  send,
+function TickCard({
+  tick,
   onAuthExpired,
   onDelete,
   onUpdate,
   token,
-}: SendCardProps) {
+}: TickCardProps) {
   const [showDetails, setShowDetails] = useState(false);
   const [editing, setEditing] = useState(false);
   const [deleteError, setDeleteError] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const sourceMeta = getSourceMeta(send.sourceApp);
-  const gradeLabel = send.grade
-    ? `${send.grade} (${formatEnumLabel(send.gradeSystem)})`
-    : formatEnumLabel(send.gradeSystem);
+  const sourceMeta = getSourceMeta(tick.sourceApp);
+  const gradeLabel = tick.grade
+    ? `${tick.grade} (${formatEnumLabel(tick.gradeSystem)})`
+    : formatEnumLabel(tick.gradeSystem);
   const details = [
-    ["Location", send.location || "Unknown"],
+    ["Location", tick.location || "Unknown"],
     ["Grade", gradeLabel],
-    ["Discipline", formatEnumLabel(send.discipline)],
+    ["Discipline", formatEnumLabel(tick.discipline)],
     ["Source", sourceMeta.label],
-    ["Send style", send.style || "Unknown"],
-    ["Rope style", formatEnumLabel(send.ropeSendStyle)],
-    ["Send date", formatDate(send.sendDate)],
-    ["Attempts", send.attempts?.toString() ?? "Unknown"],
-    ["External ID", send.externalId || "None"],
-    ["Climb ID", send.climbId || "None"],
-    ["Created", formatDateTime(send.createdAt)],
-    ["Updated", formatDateTime(send.updatedAt)],
+    ["Type", formatEnumLabel(tick.tickType)],
+    ["Tick style", tick.style || "Unknown"],
+    ["Rope style", formatEnumLabel(tick.ropeStyle)],
+    ["Tick date", formatDate(tick.tickDate)],
+    ["Attempts", tick.attempts?.toString() ?? "Unknown"],
+    ["External ID", tick.externalId || "None"],
+    ["Climb ID", tick.climbId || "None"],
+    ["Created", formatDateTime(tick.createdAt)],
+    ["Updated", formatDateTime(tick.updatedAt)],
   ];
 
   return (
-    <div className="send-card send-row">
-      <div className="send-row__main">
-        <div className="send-row__header">
-          <div className="send-row__title-group">
-            <h3 className="send-row__title">{send.climbName}</h3>
-            <span className={`send-source send-source--${sourceMeta.tone}`}>
-              <span className="send-source__icon" aria-hidden="true">
+    <div className="tick-card tick-row">
+      <div className="tick-row__main">
+        <div className="tick-row__header">
+          <div className="tick-row__title-group">
+            <h3 className="tick-row__title">{tick.climbName}</h3>
+            <span className={`tick-source tick-source--${sourceMeta.tone}`}>
+              <span className="tick-source__icon" aria-hidden="true">
                 {sourceMeta.icon}
               </span>
               <span>{sourceMeta.label}</span>
             </span>
           </div>
 
-          <div className="send-row__actions">
+          <div className="tick-row__actions">
             <ActionButton label="Show Details" onClick={() => setShowDetails(true)}>
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <path d="M12 5c5.23 0 9.27 4.1 10.7 6.02a1.6 1.6 0 0 1 0 1.96C21.27 14.9 17.23 19 12 19S2.73 14.9 1.3 12.98a1.6 1.6 0 0 1 0-1.96C2.73 9.1 6.77 5 12 5Zm0 2C8.3 7 5.23 9.73 3.42 12 5.23 14.27 8.3 17 12 17s6.77-2.73 8.58-5C18.77 9.73 15.7 7 12 7Zm0 2.25A2.75 2.75 0 1 1 9.25 12 2.75 2.75 0 0 1 12 9.25Z" />
@@ -69,7 +70,7 @@ function SendCard({
 
             {!editing && (
               <ActionButton
-                label="Edit send"
+                label="Edit tick"
                 onClick={() => {
                   setDeleteError("");
                   setEditing(true);
@@ -84,8 +85,8 @@ function SendCard({
             <ActionButton
               danger
               disabled={isDeleting}
-              label={isDeleting ? "Deleting send" : "Delete send"}
-              onClick={deleteSend}
+              label={isDeleting ? "Deleting tick" : "Delete tick"}
+              onClick={deleteTick}
             >
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <path d="M6.7 5.3 12 10.59l5.3-5.3 1.4 1.41L13.41 12l5.3 5.29-1.41 1.41L12 13.41l-5.29 5.3-1.41-1.42L10.59 12 5.3 6.71 6.7 5.3Z" />
@@ -94,13 +95,13 @@ function SendCard({
           </div>
         </div>
 
-        {send.notes && <p className="send-row__description">{send.notes}</p>}
+        {tick.notes && <p className="tick-row__description">{tick.notes}</p>}
         {deleteError && <p role="alert">{deleteError}</p>}
 
-        <div className="send-row__meta">
+        <div className="tick-row__meta">
           {details.slice(0, 7).map(([label, value]) => (
-            <div key={label} className="send-row__meta-item">
-              <span className="send-row__meta-label">{label}</span>
+            <div key={label} className="tick-row__meta-item">
+              <span className="tick-row__meta-label">{label}</span>
               <span>{value}</span>
             </div>
           ))}
@@ -108,23 +109,23 @@ function SendCard({
       </div>
 
       {showDetails && (
-        <div className="send-modal-backdrop" onClick={() => setShowDetails(false)}>
+        <div className="tick-modal-backdrop" onClick={() => setShowDetails(false)}>
           <div
-            aria-labelledby={`send-details-title-${send.id}`}
+            aria-labelledby={`tick-details-title-${tick.id}`}
             aria-modal="true"
-            className="send-modal"
+            className="tick-modal"
             onClick={(event) => event.stopPropagation()}
             role="dialog"
           >
-            <div className="send-modal__header">
-              <h2 id={`send-details-title-${send.id}`}>{send.climbName}</h2>
+            <div className="tick-modal__header">
+              <h2 id={`tick-details-title-${tick.id}`}>{tick.climbName}</h2>
               <button onClick={() => setShowDetails(false)}>Close</button>
             </div>
 
-            {send.notes && <p>{send.notes}</p>}
-            {send.sourceUrl && (
+            {tick.notes && <p>{tick.notes}</p>}
+            {tick.sourceUrl && (
               <p>
-                Source URL: <a href={send.sourceUrl}>{send.sourceUrl}</a>
+                Source URL: <a href={tick.sourceUrl}>{tick.sourceUrl}</a>
               </p>
             )}
             {details.map(([label, value]) => (
@@ -137,11 +138,11 @@ function SendCard({
       )}
 
       {editing && (
-        <div className="send-row__edit-form">
-          <SendForm
-            initialValues={toFormValues(send)}
+        <div className="tick-row__edit-form">
+          <TickForm
+            initialValues={toFormValues(tick)}
             submitLabel="Save"
-            onSubmit={updateSend}
+            onSubmit={updateTick}
             onCancel={() => {
               setDeleteError("");
               setEditing(false);
@@ -152,7 +153,7 @@ function SendCard({
     </div>
   );
 
-  async function deleteSend() {
+  async function deleteTick() {
     if (isDeleting) {
       return;
     }
@@ -160,7 +161,7 @@ function SendCard({
     setDeleteError("");
     setIsDeleting(true);
 
-    const response = await fetch(`/sends/${send.id}`, {
+    const response = await fetch(`/ticks/${tick.id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -179,7 +180,7 @@ function SendCard({
       }
 
       if (!response.ok) {
-        setDeleteError(`Could not delete send (${response.status}).`);
+        setDeleteError(`Could not delete tick (${response.status}).`);
         return;
       }
 
@@ -189,14 +190,14 @@ function SendCard({
     }
   }
 
-  async function updateSend(values: SendFormValues) {
-    const response = await fetch(`/sends/${send.id}`, {
+  async function updateTick(values: TickFormValues) {
+    const response = await fetch(`/ticks/${tick.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(toSendPayload(values)),
+      body: JSON.stringify(toTickPayload(values)),
     });
 
     if (!response.ok) {
@@ -209,7 +210,7 @@ function SendCard({
         throw new Error("The backend rejected the edit request (403).");
       }
 
-      throw new Error(`Could not update send (${response.status}).`);
+      throw new Error(`Could not update tick (${response.status}).`);
     }
 
     await onUpdate();
@@ -217,24 +218,25 @@ function SendCard({
   }
 }
 
-export default SendCard;
+export default TickCard;
 
-function toFormValues(send: SendRecord): SendFormValues {
+function toFormValues(tick: TickRecord): TickFormValues {
   return {
-    climbName: send.climbName ?? "",
-    climbId: send.climbId ?? "",
-    location: send.location ?? "",
-    discipline: send.discipline ?? "UNKNOWN",
-    grade: send.grade ?? "",
-    gradeSystem: send.gradeSystem ?? "UNKNOWN",
-    sourceApp: send.sourceApp ?? "UNKNOWN",
-    externalId: send.externalId ?? "",
-    sourceUrl: send.sourceUrl ?? "",
-    sendDate: send.sendDate ?? "",
-    style: send.style ?? "",
-    ropeSendStyle: send.ropeSendStyle ?? "UNKNOWN",
-    attempts: send.attempts?.toString() ?? "",
-    notes: send.notes ?? "",
+    climbName: tick.climbName ?? "",
+    climbId: tick.climbId ?? "",
+    location: tick.location ?? "",
+    discipline: tick.discipline ?? "UNKNOWN",
+    grade: tick.grade ?? "",
+    gradeSystem: tick.gradeSystem ?? "UNKNOWN",
+    sourceApp: tick.sourceApp ?? "UNKNOWN",
+    tickType: tick.tickType ?? "UNKNOWN",
+    externalId: tick.externalId ?? "",
+    sourceUrl: tick.sourceUrl ?? "",
+    tickDate: tick.tickDate ?? "",
+    style: tick.style ?? "",
+    ropeStyle: tick.ropeStyle ?? "UNKNOWN",
+    attempts: tick.attempts?.toString() ?? "",
+    notes: tick.notes ?? "",
   };
 }
 

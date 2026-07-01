@@ -31,8 +31,8 @@ export default defineConfig({
       '/login': apiProxy(),
       '/register': apiProxy(),
       '/imports': apiProxy(),
-      '/sends': apiProxy(),
-      '/send': apiProxy(),
+      '/ticks': apiProxy(),
+      '/tick': apiProxy(),
     },
   },
 })

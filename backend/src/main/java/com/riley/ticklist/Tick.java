@@ -17,7 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Send {
+public class Tick {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +28,9 @@ public class Send {
     private String climbId;
     @Enumerated(EnumType.STRING)
     private Discipline discipline = Discipline.UNKNOWN;
+
+    @Enumerated(EnumType.STRING)
+    private TickType tickType = TickType.UNKNOWN;
 
     @ManyToOne
     private User user;
@@ -62,9 +65,9 @@ public class Send {
     private String style;
     
     @Enumerated(EnumType.STRING)
-    private RopeSendStyle ropeSendStyle = RopeSendStyle.UNKNOWN;
+    private RopeStyle ropeStyle = RopeStyle.UNKNOWN;
     
-    private LocalDate sendDate;
+    private LocalDate tickDate;
     
     private Integer attempts;
     
@@ -82,7 +85,7 @@ public class Send {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Send() {
+    public Tick() {
     }
 
     public Long getId() {
@@ -103,6 +106,14 @@ public class Send {
 
     public void setClimbId(String climbId) {
         this.climbId = climbId;
+    }
+
+    public TickType getTickType() {
+        return tickType;
+    }
+
+    public void setTickType(TickType tickType) {
+        this.tickType = tickType;
     }
 
     public User getUser() {
@@ -197,21 +208,21 @@ public class Send {
         this.sourceUrl = sourceUrl;
     }
 
-    public RopeSendStyle getRopeSendStyle() {
-        return ropeSendStyle;
+    public RopeStyle getRopeStyle() {
+        return ropeStyle;
     }
 
-    public void setRopeSendStyle(RopeSendStyle ropeSendStyle) {
-        this.ropeSendStyle = ropeSendStyle;
+    public void setRopeStyle(RopeStyle ropeStyle) {
+        this.ropeStyle = ropeStyle;
     }
 
 
-    public LocalDate getSendDate() {
-        return sendDate;
+    public LocalDate getTickDate() {
+        return tickDate;
     }
 
-    public void setSendDate(LocalDate sendDate) {
-        this.sendDate = sendDate;
+    public void setTickDate(LocalDate tickDate) {
+        this.tickDate = tickDate;
     }
 
     public Integer getAttempts() {

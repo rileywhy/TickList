@@ -16,10 +16,10 @@ public class Importer {
     //function to import the csv file and parse the data
     private static final Path DEFAULT_CSV_PATH = Path.of("inputs", "ticks.csv");
     private static final Path BACKEND_DEFAULT_CSV_PATH = Path.of("..", "inputs", "ticks.csv");
-     private final SendRepository sendRepository;
+     private final TickRepository tickRepository;
 
-    public Importer(SendRepository sendRepository) {
-        this.sendRepository = sendRepository;
+    public Importer(TickRepository tickRepository) {
+        this.tickRepository = tickRepository;
     }
     public void importCSV() throws Exception {
         importCSV(defaultCsvPath());
@@ -63,47 +63,33 @@ public class Importer {
             String length = record.get("Length");
             //String ratingCode = record.get("Rating Code");
 
-            if (leadStyle.equals("Fell/Hung"))
-            {
-               System.out.println("Skipping send for route " + route + " on date " + date + " because lead style is Fell/Hung");
-               skippedRows++;
-            }
-            else if (style.equals("TR"))
-            {
-                // not a true send,
-                skippedRows++;
-            }
-            else {
-            // these "should" all be actual sends.
-            Send send = new Send();
-            
-            send.setSendDate(DateParser.parse(date));
-            send.setClimbName(route);
+            Tick tick = new Tick();
+            tick.setTickType(classifyTickType(style, leadStyle));
+            tick.setTickDate(DateParser.parse(date));
+            tick.setClimbName(route);
             GradeParser.ParsedGrade parsedGrade = GradeParser.parse(rating);
-            send.setRawGrade(parsedGrade.rawGrade());
-            send.setGrade(parsedGrade.rawGrade());
-            send.setGradeSystem(parsedGrade.gradeSystem());
-            send.setNotes(notes);
-            send.setSourceUrl(url);
-            send.setPitches(parseOptionalInteger(pitches));
-            send.setLocation(Location);
-            send.setStars(parseOptionalDouble(avgStars));
-            send.setUserStars(parseOptionalDouble(yourStars));
-            send.setStyle((style));
-            send.setRopeSendStyle(parseRopeSendStyle(leadStyle));
+            tick.setRawGrade(parsedGrade.rawGrade());
+            tick.setGrade(parsedGrade.rawGrade());
+            tick.setGradeSystem(parsedGrade.gradeSystem());
+            tick.setNotes(notes);
+            tick.setSourceUrl(url);
+            tick.setPitches(parseOptionalInteger(pitches));
+            tick.setLocation(Location);
+            tick.setStars(parseOptionalDouble(avgStars));
+            tick.setUserStars(parseOptionalDouble(yourStars));
+            tick.setStyle(style);
+            tick.setRopeStyle(parseRopeStyle(leadStyle));
             
             Discipline discipline = DisciplineParser.parsePrimaryDiscipline(routeType, rating);
-            send.setDiscipline(discipline);
+            tick.setDiscipline(discipline);
             
-            send.setPersonalGrade(yourRating);
-            send.setClimbHeight(parseOptionalDouble(length));
-            send.setSourceApp(SourceApp.MOUNTAIN_PROJECT);
+            tick.setPersonalGrade(yourRating);
+            tick.setClimbHeight(parseOptionalDouble(length));
+            tick.setSourceApp(SourceApp.MOUNTAIN_PROJECT);
 
-            sendRepository.save(send);
+            tickRepository.save(tick);
             importedRows++;
-
         }
-    }
 
         return new ImportResult(importedRows, skippedRows);
     }
@@ -135,15 +121,35 @@ public class Importer {
         return Integer.valueOf(rawValue.trim());
     }
 
-    private static RopeSendStyle parseRopeSendStyle(String rawValue) {
+    private static TickType classifyTickType(String style, String leadStyle) {
+        if (rawValueEquals(leadStyle, "Fell/Hung")) {
+            return TickType.ATTEMPT;
+        }
+
+        if (rawValueEquals(style, "TR")) {
+            return TickType.CLEAN_TR;
+        }
+
+        if ((style == null || style.trim().isEmpty()) && (leadStyle == null || leadStyle.trim().isEmpty())) {
+            return TickType.UNKNOWN;
+        }
+
+        return TickType.SEND;
+    }
+
+    private static boolean rawValueEquals(String rawValue, String expected) {
+        return rawValue != null && rawValue.trim().equalsIgnoreCase(expected);
+    }
+
+    private static RopeStyle parseRopeStyle(String rawValue) {
         if (rawValue == null || rawValue.trim().isEmpty()) {
-            return RopeSendStyle.UNKNOWN;
+            return RopeStyle.UNKNOWN;
         }
 
         try {
-            return RopeSendStyle.valueOf(rawValue.trim().toUpperCase(Locale.ROOT));
+            return RopeStyle.valueOf(rawValue.trim().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException error) {
-            return RopeSendStyle.UNKNOWN;
+            return RopeStyle.UNKNOWN;
         }
     }
 }
