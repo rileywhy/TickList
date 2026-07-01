@@ -1,29 +1,29 @@
 import { useCallback, useEffect, useState } from "react";
-import SendCard from "../components/SendCard";
-import SendForm from "../components/SendForm";
+import TickCard from "../components/TickCard";
+import TickForm from "../components/TickForm";
 import {
-  DEFAULT_SEND_VALUES,
+  DEFAULT_TICK_VALUES,
   FILTER_OPTIONS,
-  toSendPayload,
-  type SendFormValues,
-  type SendRecord,
-} from "../sendConfig";
+  toTickPayload,
+  type TickFormValues,
+  type TickRecord,
+} from "../tickConfig";
 import "../App.css";
 
-type SendPageProps = {
+type TickPageProps = {
   onAuthExpired: () => void;
   token: string;
 };
 
-function SendPage({ onAuthExpired, token }: SendPageProps) {
-  const [sends, setSends] = useState<SendRecord[]>([]);
+function TickPage({ onAuthExpired, token }: TickPageProps) {
+  const [ticks, setTicks] = useState<TickRecord[]>([]);
   const [sourceFilter, setSourceFilter] = useState("ALL");
   const [gradeSystemFilter, setGradeSystemFilter] = useState("ALL");
   const [searchFilter, setSearchFilter] = useState("");
   const [message, setMessage] = useState("");
 
-  const loadSends = useCallback(async () => {
-    const response = await fetch("/sends", {
+  const loadTicks = useCallback(async () => {
+    const response = await fetch("/ticks", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -41,31 +41,31 @@ function SendPage({ onAuthExpired, token }: SendPageProps) {
         return;
       }
 
-      setMessage(`Could not load sends (${response.status}).`);
+      setMessage(`Could not load ticks (${response.status}).`);
       return;
     }
 
     const data = await response.json();
-    setSends(data);
+    setTicks(data);
     setMessage("");
   }, [onAuthExpired, token]);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
-      loadSends();
+      loadTicks();
     }, 0);
 
     return () => window.clearTimeout(timeoutId);
-  }, [loadSends]);
+  }, [loadTicks]);
 
-  async function createSend(values: SendFormValues) {
-    const response = await fetch("/sends", {
+  async function createTick(values: TickFormValues) {
+    const response = await fetch("/ticks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(toSendPayload(values)),
+      body: JSON.stringify(toTickPayload(values)),
     });
 
     if (!response.ok) {
@@ -78,41 +78,45 @@ function SendPage({ onAuthExpired, token }: SendPageProps) {
         throw new Error("The backend rejected the create request (403).");
       }
 
-      throw new Error(`Could not create send (${response.status}).`);
+      throw new Error(`Could not create tick (${response.status}).`);
     }
 
-    await loadSends();
+    await loadTicks();
   }
 
   const normalizedSearch = searchFilter.toLowerCase();
-  const filteredSends = sends.filter((send) => {
+  const filteredTicks = ticks.filter((tick) => {
     const matchesSource =
-      sourceFilter === "ALL" || send.sourceApp === sourceFilter;
+      sourceFilter === "ALL" || tick.sourceApp === sourceFilter;
     const matchesGradeSystem =
-      gradeSystemFilter === "ALL" || send.gradeSystem === gradeSystemFilter;
+      gradeSystemFilter === "ALL" || tick.gradeSystem === gradeSystemFilter;
     const matchesSearch =
       normalizedSearch === "" ||
       [
-        send.climbName,
-        send.areaName,
-        send.grade,
-        send.notes,
-        send.externalId,
-        send.climbId,
+        tick.climbName,
+        tick.location,
+        tick.discipline,
+        tick.tickType,
+        tick.style,
+        tick.ropeStyle,
+        tick.grade,
+        tick.notes,
+        tick.externalId,
+        tick.climbId,
       ].some((value) => value?.toLowerCase().includes(normalizedSearch));
 
     return matchesSource && matchesGradeSystem && matchesSearch;
   });
 
   return (
-    <main className="send-page">
-      <SendForm
-        className="create-send-form"
-        heading="Log Send"
-        initialValues={DEFAULT_SEND_VALUES}
+    <main className="tick-page">
+      <TickForm
+        className="create-tick-form"
+        heading="Log Tick"
+        initialValues={DEFAULT_TICK_VALUES}
         resetOnSubmit
-        submitLabel="Log Send"
-        onSubmit={createSend}
+        submitLabel="Log Tick"
+        onSubmit={createTick}
       />
       <div className="filters">
         <input
@@ -143,13 +147,13 @@ function SendPage({ onAuthExpired, token }: SendPageProps) {
         </select>
       </div>
       {message && <p role="alert">{message}</p>}
-      {filteredSends.map((send) => (
-        <SendCard
-          key={send.id}
-          send={send}
+      {filteredTicks.map((tick) => (
+        <TickCard
+          key={tick.id}
+          tick={tick}
           onAuthExpired={onAuthExpired}
-          onDelete={loadSends}
-          onUpdate={loadSends}
+          onDelete={loadTicks}
+          onUpdate={loadTicks}
           token={token}
         />
       ))}
@@ -157,4 +161,4 @@ function SendPage({ onAuthExpired, token }: SendPageProps) {
   );
 }
 
-export default SendPage;
+export default TickPage;

@@ -1,51 +1,60 @@
-export type SendFormValues = {
+export type TickFormValues = {
   climbName: string;
   climbId: string;
-  areaName: string;
+  location: string;
+  discipline: string;
   grade: string;
   gradeSystem: string;
   sourceApp: string;
+  tickType: string;
   externalId: string;
   sourceUrl: string;
-  sendDate: string;
-  sendStyle: string;
+  tickDate: string;
+  style: string;
+  ropeStyle: string;
   attempts: string;
   notes: string;
 };
 
-export type SendPayload = {
+export type TickPayload = {
   climbName: string;
   climbId: string | null;
-  areaName: string | null;
+  location: string | null;
+  discipline: string;
   grade: string | null;
   gradeSystem: string;
   sourceApp: string;
+  tickType: string;
   externalId: string | null;
   sourceUrl: string | null;
-  sendDate: string | null;
-  sendStyle: string;
+  tickDate: string | null;
+  style: string | null;
+  ropeStyle: string;
   attempts: number | null;
   notes: string | null;
 };
 
-export type SendRecord = Omit<SendPayload, "attempts"> & {
+export type TickRecord = Omit<TickPayload, "attempts"> & {
   id: number;
   attempts: number | null;
   createdAt: string | null;
   updatedAt: string | null;
 };
 
-export const DEFAULT_SEND_VALUES: SendFormValues = {
+export const DEFAULT_TICK_VALUES: TickFormValues = {
   climbName: "",
   climbId: "",
-  areaName: "",
+  location: "",
+  discipline: "UNKNOWN",
   grade: "",
   gradeSystem: "UNKNOWN",
   sourceApp: "MANUAL",
+  tickType: "SEND",
   externalId: "",
   sourceUrl: "",
-  sendDate: "",
-  sendStyle: "UNKNOWN",
+  tickDate: "",
+  style: "",
+  ropeStyle: "UNKNOWN",
   attempts: "",
   notes: "",
 };
@@ -62,6 +71,13 @@ export const GRADE_SYSTEM_OPTIONS = [
   { value: "E_Grade", label: "E Grade" },
 ] as const;
 
+export const TICK_TYPE_OPTIONS = [
+  { value: "SEND", label: "Send" },
+  { value: "ATTEMPT", label: "Attempt" },
+  { value: "CLEAN_TR", label: "Clean TR" },
+  { value: "UNKNOWN", label: "Unknown" },
+] as const;
+
 export const SOURCE_APP_OPTIONS = [
   { value: "MANUAL", label: "Manual", tone: "manual", icon: "M" },
   {
@@ -75,13 +91,31 @@ export const SOURCE_APP_OPTIONS = [
   { value: "UNKNOWN", label: "Unknown", tone: "unknown", icon: "?" },
 ] as const;
 
-export const SEND_STYLE_OPTIONS = [
+export const DISCIPLINE_OPTIONS = [
+  { value: "UNKNOWN", label: "Unknown" },
+  { value: "BOULDER", label: "Boulder" },
+  { value: "SPORT", label: "Sport" },
+  { value: "TRAD", label: "Trad" },
+  { value: "ICE", label: "Ice" },
+  { value: "MIXED", label: "Mixed" },
+  { value: "AID", label: "Aid" },
+  { value: "GYM", label: "Gym" },
+] as const;
+
+export const ROPE_STYLE_OPTIONS = [
   { value: "UNKNOWN", label: "Unknown" },
   { value: "FLASH", label: "Flash" },
   { value: "ONSIGHT", label: "Onsight" },
   { value: "REDPOINT", label: "Redpoint" },
   { value: "PINKPOINT", label: "Pinkpoint" },
   { value: "REPEAT", label: "Repeat" },
+  { value: "SOLO", label: "Solo" },
+  { value: "LRS", label: "Lead rope solo" },
+  { value: "FS", label: "Free solo" },
+  { value: "OSFS", label: "Onsight free solo" },
+  { value: "DS", label: "Daisy solo" },
+  { value: "FB", label: "Freebase" },
+  { value: "DWS", label: "Deep water solo" },
 ] as const;
 
 export const FILTER_OPTIONS = {
@@ -112,20 +146,23 @@ export function getSourceMeta(sourceApp: string | null | undefined) {
   );
 }
 
-export function toSendPayload(values: SendFormValues): SendPayload {
+export function toTickPayload(values: TickFormValues): TickPayload {
   const attempts = Number(values.attempts);
 
   return {
     climbName: values.climbName.trim(),
     climbId: optionalText(values.climbId),
-    areaName: optionalText(values.areaName),
+    location: optionalText(values.location),
+    discipline: values.discipline,
     grade: optionalText(values.grade),
     gradeSystem: values.gradeSystem,
     sourceApp: values.sourceApp,
+    tickType: values.tickType,
     externalId: optionalText(values.externalId),
     sourceUrl: optionalText(values.sourceUrl),
-    sendDate: optionalText(values.sendDate),
-    sendStyle: values.sendStyle,
+    tickDate: optionalText(values.tickDate),
+    style: optionalText(values.style),
+    ropeStyle: values.ropeStyle,
     attempts: Number.isFinite(attempts) && values.attempts.trim() !== "" ? attempts : null,
     notes: optionalText(values.notes),
   };

@@ -111,6 +111,6 @@ code {
   background: var(--code-bg);
 }
 
-.send-row:hover {
+.tick-row:hover {
   background-color: #3f4147;
 }

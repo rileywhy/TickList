@@ -1,6 +1,6 @@
 package com.riley.ticklist;
 
-public enum RopeSendStyle {
+public enum RopeStyle {
     FLASH,
     ONSIGHT,
     REDPOINT,

@@ -17,9 +17,9 @@ public class GradeMapping {
     @Enumerated(EnumType.STRING)
     private Discipline discipline;
 
-    private Double systemOrder;
+    private Double systemOrder; //
 
-    private Double difficultyScore;
+    private Double difficultyScore; //
 
     private Double confidence; // optional: 1.0 = confident, 0.5 = fuzzy conversion
 
