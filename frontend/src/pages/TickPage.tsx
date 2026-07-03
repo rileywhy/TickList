@@ -22,7 +22,8 @@ function TickPage({ onAuthExpired, token }: TickPageProps) {
   const [searchFilter, setSearchFilter] = useState("");
   const [message, setMessage] = useState("");
 
-  const loadTicks = useCallback(async () => {
+   const loadTicks = useCallback(async () => {
+    try {
     const response = await fetch("/ticks", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -44,11 +45,14 @@ function TickPage({ onAuthExpired, token }: TickPageProps) {
       setMessage(`Could not load ticks (${response.status}).`);
       return;
     }
-
     const data = await response.json();
     setTicks(data);
     setMessage("");
+  } catch (error) {
+    setMessage(`Could not load ticks: ${error}`);
+  }
   }, [onAuthExpired, token]);
+
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {

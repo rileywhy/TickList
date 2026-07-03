@@ -31,6 +31,7 @@ public class TickController {
 
     @PostMapping({"/ticks", "/tick"})
     public Tick createTick(@RequestBody Tick tick) {
+        tick.setGradeValue(resolveGradeValue(tick));
         return tickRepository.save(tick);
     }
 
@@ -51,7 +52,7 @@ public class TickController {
         existingTick.setLocation(updatedTick.getLocation());
         existingTick.setDiscipline(updatedTick.getDiscipline());
         existingTick.setTickType(updatedTick.getTickType());
-        existingTick.setGradeValue(updatedTick.getGradeValue());
+        existingTick.setGradeValue(resolveGradeValue(updatedTick));
         existingTick.setGrade(updatedTick.getGrade());
         existingTick.setRawGrade(updatedTick.getRawGrade());
         existingTick.setGradeSystem(updatedTick.getGradeSystem());
@@ -71,5 +72,15 @@ public class TickController {
     @DeleteMapping({"/ticks/{id}", "/tick/{id}"})
     public void deleteTick(@PathVariable("id") Long id) {
         tickRepository.deleteById(id);
+    }
+
+    // gradeValue is derived from the grade string unless the client supplies one,
+    // so ticks created or edited through the UI stay sortable by grade.
+    private static Double resolveGradeValue(Tick tick) {
+        if (tick.getGradeValue() != null) {
+            return tick.getGradeValue();
+        }
+
+        return GradeParser.parseGradeValue(tick.getGrade());
     }
 }

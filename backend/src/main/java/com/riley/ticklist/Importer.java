@@ -71,6 +71,7 @@ public class Importer {
             tick.setRawGrade(parsedGrade.rawGrade());
             tick.setGrade(parsedGrade.rawGrade());
             tick.setGradeSystem(parsedGrade.gradeSystem());
+            tick.setGradeValue(parsedGrade.gradeValue());
             tick.setNotes(notes);
             tick.setSourceUrl(url);
             tick.setPitches(parseOptionalInteger(pitches));
