@@ -62,7 +62,10 @@ function TickCard({
           </div>
 
           <div className="tick-row__actions">
-            <ActionButton label="Show Details" onClick={() => setShowDetails(true)}>
+            <ActionButton
+              label="Show Details"
+              onClick={() => setShowDetails(true)}
+            >
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <path d="M12 5c5.23 0 9.27 4.1 10.7 6.02a1.6 1.6 0 0 1 0 1.96C21.27 14.9 17.23 19 12 19S2.73 14.9 1.3 12.98a1.6 1.6 0 0 1 0-1.96C2.73 9.1 6.77 5 12 5Zm0 2C8.3 7 5.23 9.73 3.42 12 5.23 14.27 8.3 17 12 17s6.77-2.73 8.58-5C18.77 9.73 15.7 7 12 7Zm0 2.25A2.75 2.75 0 1 1 9.25 12 2.75 2.75 0 0 1 12 9.25Z" />
               </svg>
@@ -109,7 +112,10 @@ function TickCard({
       </div>
 
       {showDetails && (
-        <div className="tick-modal-backdrop" onClick={() => setShowDetails(false)}>
+        <div
+          className="tick-modal-backdrop"
+          onClick={() => setShowDetails(false)}
+        >
           <div
             aria-labelledby={`tick-details-title-${tick.id}`}
             aria-modal="true"
@@ -160,31 +166,36 @@ function TickCard({
 
     setDeleteError("");
     setIsDeleting(true);
-
-    const response = await fetch(`/ticks/${tick.id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
     try {
-      if (response.status === 401) {
-        onAuthExpired();
-        return;
-      }
+      const response = await fetch(`/ticks/${tick.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      if (response.status === 403) {
-        setDeleteError("The backend rejected the delete request (403).");
-        return;
-      }
+      try {
+        if (response.status === 401) {
+          onAuthExpired();
+          return;
+        }
 
-      if (!response.ok) {
-        setDeleteError(`Could not delete tick (${response.status}).`);
+        if (response.status === 403) {
+          setDeleteError("The backend rejected the delete request (403).");
+          return;
+        }
+
+        if (!response.ok) {
+          setDeleteError(`Could not delete tick (${response.status}).`);
+          return;
+        }
+      } catch (error) {
+        setDeleteError(`Could not delete tick: ${error}`);
         return;
       }
 
       await onDelete();
+      return;
     } finally {
       setIsDeleting(false);
     }

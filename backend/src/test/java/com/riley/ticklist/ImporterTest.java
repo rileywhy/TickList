@@ -75,6 +75,7 @@ class ImporterTest {
         assertThat(tick.getGrade()).isEqualTo("5.10a");
         assertThat(tick.getRawGrade()).isEqualTo("5.10a");
         assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.YDS);
+        assertThat(tick.getGradeValue()).isEqualTo(10.0);
         assertThat(tick.getNotes()).isEqualTo("Great movement, bad feet");
         assertThat(tick.getSourceUrl()).isEqualTo("https://mountainproject.com/route/123");
         assertThat(tick.getPitches()).isEqualTo(1);
