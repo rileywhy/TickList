@@ -21,17 +21,21 @@ public class Importer {
     public Importer(TickRepository tickRepository) {
         this.tickRepository = tickRepository;
     }
-    public void importCSV() throws Exception {
-        importCSV(defaultCsvPath());
+    public ImportResult importCSV(User user) throws Exception {
+        return importCSV(defaultCsvPath(), user);
     }
 
-    ImportResult importCSV(Path csvPath) throws Exception {
+    ImportResult importCSV(Path csvPath, User user) throws Exception {
         try (Reader reader = Files.newBufferedReader(csvPath)) {
-            return importCSV(reader);
+            return importCSV(reader, user);
         }
     }
 
-    public ImportResult importCSV(Reader reader) throws IOException {
+    public ImportResult importCSV(Reader reader, User user) throws IOException {
+        if (user == null) {
+            throw new IllegalArgumentException("Import requires an authenticated user.");
+        }
+
         Iterable<CSVRecord> records = CSVFormat.DEFAULT
                 .builder()
                 .setHeader()
@@ -80,6 +84,7 @@ public class Importer {
             tick.setUserStars(parseOptionalDouble(yourStars));
             tick.setStyle(style);
             tick.setRopeStyle(parseRopeStyle(leadStyle));
+            tick.setUser(user);
             
             Discipline discipline = DisciplineParser.parsePrimaryDiscipline(routeType, rating);
             tick.setDiscipline(discipline);

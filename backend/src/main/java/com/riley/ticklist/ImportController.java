@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
 public class ImportController {
@@ -22,13 +23,13 @@ public class ImportController {
     }
 
     @PostMapping(path = "/imports/mountain-project", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ImportResponse importMountainProject(@RequestParam("file") MultipartFile file) {
+    public ImportResponse importMountainProject(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal User user) {
         if (file.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Choose a CSV file to import.");
         }
 
         try (Reader reader = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8)) {
-            Importer.ImportResult result = importer.importCSV(reader);
+            Importer.ImportResult result = importer.importCSV(reader, user);
             return new ImportResponse(
                 file.getOriginalFilename(),
                 result.importedRows(),
