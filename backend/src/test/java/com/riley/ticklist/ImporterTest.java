@@ -50,12 +50,19 @@ class ImporterTest {
     private Path testCsv;
     private TickRepository tickRepository;
     private Importer importer;
+    private User importingUser;
 
     @BeforeEach
     void setUp() {
         testCsv = tempDir.resolve("ticks.csv");
         tickRepository = mock(TickRepository.class);
         importer = new Importer(tickRepository);
+        importingUser = new User();
+        importingUser.setId(1L);
+        importingUser.setFirstName("Test");
+        importingUser.setLastName("Climber");
+        importingUser.setEmail("test@example.com");
+        importingUser.setPassword("hashed-password");
     }
 
     @Test
@@ -64,7 +71,7 @@ class ImporterTest {
             "2026-06-15,The Bulge,5.10a,\"Great movement, bad feet\",https://mountainproject.com/route/123,1,Eldorado Canyon,4.5,3,Lead,Redpoint,Trad,5.10b,80,"
         );
 
-        importer.importCSV(testCsv);
+        importer.importCSV(testCsv, importingUser);
 
         ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
         verify(tickRepository).save(tickCaptor.capture());
@@ -88,6 +95,7 @@ class ImporterTest {
         assertThat(tick.getDiscipline()).isEqualTo(Discipline.TRAD);
         assertThat(tick.getPersonalGrade()).isEqualTo("5.10b");
         assertThat(tick.getClimbHeight()).isEqualTo(80.0);
+        assertThat(tick.getUser()).isSameAs(importingUser);
     }
 
     @Test
@@ -96,7 +104,7 @@ class ImporterTest {
             "2026-06-15,The Bulge,5.10a,Fun route,https://mountainproject.com/route/123,,Eldorado Canyon,,,Lead,Redpoint,Trad,5.10b,,"
         );
 
-        importer.importCSV(testCsv);
+        importer.importCSV(testCsv, importingUser);
 
         ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
         verify(tickRepository).save(tickCaptor.capture());
@@ -112,7 +120,7 @@ class ImporterTest {
     void failsWithoutSavingWhenTicksCsvIsMissing() throws IOException {
         Files.deleteIfExists(testCsv);
 
-        assertThatThrownBy(() -> importer.importCSV(testCsv))
+        assertThatThrownBy(() -> importer.importCSV(testCsv, importingUser))
             .isInstanceOf(NoSuchFileException.class);
 
         verify(tickRepository, never()).save(any(Tick.class));
@@ -124,7 +132,7 @@ class ImporterTest {
             "2026-06-15,The Bulge,5.10a,Fun route,https://mountainproject.com/route/123,one,Eldorado Canyon,4,3,FLASH,REDPOINT,Trad,5.10b,80,"
         );
 
-        assertThatThrownBy(() -> importer.importCSV(testCsv))
+        assertThatThrownBy(() -> importer.importCSV(testCsv, importingUser))
             .isInstanceOf(NumberFormatException.class);
 
         verify(tickRepository, never()).save(any(Tick.class));
@@ -136,7 +144,7 @@ class ImporterTest {
             "2026-06-15,Hi-C,V1,Fun boulder,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,Send,,Boulder,,,"
         );
 
-        importer.importCSV(testCsv);
+        importer.importCSV(testCsv, importingUser);
 
         ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
         verify(tickRepository).save(tickCaptor.capture());
@@ -150,7 +158,7 @@ class ImporterTest {
             "2026-06-15,The Bulge,5.10a,Worked moves,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,Lead,Fell/Hung,Trad,5.10b,80,"
         );
 
-        Importer.ImportResult result = importer.importCSV(testCsv);
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
 
         ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
         verify(tickRepository).save(tickCaptor.capture());
@@ -166,7 +174,7 @@ class ImporterTest {
             "2026-06-15,The Bulge,5.10a,TR lap,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,TR,,Trad,5.10b,80,"
         );
 
-        Importer.ImportResult result = importer.importCSV(testCsv);
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
 
         ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
         verify(tickRepository).save(tickCaptor.capture());
@@ -182,7 +190,7 @@ class ImporterTest {
             "not-a-date,The Bulge,5.10a,Fun route,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,FLASH,REDPOINT,Trad,5.10b,80,"
         );
 
-        assertThatThrownBy(() -> importer.importCSV(testCsv))
+        assertThatThrownBy(() -> importer.importCSV(testCsv, importingUser))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("Unsupported date format");
 
@@ -201,7 +209,7 @@ class ImporterTest {
         });
 
         try {
-            importer.importCSV();
+            importer.importCSV(importingUser);
         } catch (Exception error) {
             System.out.printf(
                 "Importer failed while reading inputs/ticks.csv after %d saved tick(s): %s: %s%n",
