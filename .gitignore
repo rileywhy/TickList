@@ -1,7 +1,6 @@
 .DS_Store
 .vscode/
 .claude
-docs/
 test-results/
 playwright-report/
 frontend/test-results/
