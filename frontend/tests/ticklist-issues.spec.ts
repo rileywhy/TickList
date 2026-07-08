@@ -71,7 +71,6 @@ test.beforeEach(async ({ page }) => {
 // (network failure / server down / offline) is never caught, so the user is
 // shown a silently blank list with no indication anything went wrong.
 test('shows an error when the tick list fails to load', async ({ page }) => {
-  test.fail();
 
   await mockTickList(page, (route) => route.abort('failed'));
 
@@ -84,7 +83,6 @@ test('shows an error when the tick list fails to load', async ({ page }) => {
 // makes the next render throw on ticks.filter(...), and with no error boundary
 // the whole page (including the create form) unmounts.
 test('does not crash when the backend returns a non-array payload', async ({ page }) => {
-  test.fail();
 
   await mockTickList(page, (route) =>
     route.fulfill({ status: 200, contentType: 'application/json', body: '{}' })
