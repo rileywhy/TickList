@@ -46,6 +46,11 @@ function TickPage({ onAuthExpired, token }: TickPageProps) {
       return;
     }
     const data = await response.json();
+    if (!Array.isArray(data)) {
+      setMessage("Could not load ticks: unexpected response from the server.");
+      return;                    // ← bail out before setTicks, so filter never sees a non-array
+    }
+
     setTicks(data);
     setMessage("");
   } catch (error) {
