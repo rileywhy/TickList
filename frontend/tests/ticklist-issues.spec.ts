@@ -71,11 +71,8 @@ test.beforeEach(async ({ page }) => {
 // (network failure / server down / offline) is never caught, so the user is
 // shown a silently blank list with no indication anything went wrong.
 test('shows an error when the tick list fails to load', async ({ page }) => {
-
   await mockTickList(page, (route) => route.abort('failed'));
-
   await openTickList(page);
-
   await expect(page.getByRole('alert')).toBeVisible({ timeout: 2000 });
 });
 
@@ -83,13 +80,10 @@ test('shows an error when the tick list fails to load', async ({ page }) => {
 // makes the next render throw on ticks.filter(...), and with no error boundary
 // the whole page (including the create form) unmounts.
 test('does not crash when the backend returns a non-array payload', async ({ page }) => {
-
   await mockTickList(page, (route) =>
     route.fulfill({ status: 200, contentType: 'application/json', body: '{}' })
   );
-
   await openTickList(page);
-
   await expect(page.locator('form.create-tick-form')).toBeVisible({ timeout: 2000 });
 });
 
@@ -103,7 +97,6 @@ test('shows an empty state when there are no ticks', async ({ page }) => {
   );
 
   await openTickList(page);
-
   await expect(page.getByText(/no ticks/i)).toBeVisible({ timeout: 2000 });
 });
 
@@ -118,7 +111,6 @@ test('shows a loading indicator while ticks are loading', async ({ page }) => {
   });
 
   await openTickList(page);
-
   await expect(page.getByText(/loading/i)).toBeVisible({ timeout: 2000 });
 });
 
@@ -138,7 +130,6 @@ test('search matches the labels the user actually sees', async ({ page }) => {
 
   await openTickList(page);
   await expect(getTickRow(page, 'Sunset Arete')).toBeVisible();
-
   // The card displays tickType "CLEAN_TR" as "Clean Tr"; searching that visible
   // text should keep the row, but the raw-code match ("clean_tr") drops it.
   await page.locator('.filters').getByPlaceholder('Search').fill('Clean Tr');
