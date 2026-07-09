@@ -30,10 +30,13 @@ public class GradeMappingService {
         }
         tick.setGradeSystem(gradeSystem);
 
+        // Look the mapping up from the same string we parsed the system from
+        // (grade first, rawGrade only as a fallback). Preferring rawGrade here
+        // would let an edited grade keep the old grade's difficultyScore.
         Optional<GradeMapping> gradeMapping = findMapping(
             gradeSystem,
             tick.getDiscipline(),
-            firstPresent(tick.getRawGrade(), tick.getGrade())
+            cleanedGrade
         );
 
         tick.setGradeMapping(gradeMapping.orElse(null));
@@ -108,7 +111,8 @@ public class GradeMappingService {
         if (normalized.startsWith("VB")) {
             return "VB";
         }
-        return normalized;
+        // The seed spells range grades with a dash (V4-5); accept the slash form too.
+        return normalized.replaceAll("(\\d)/(\\d)", "$1-$2");
     }
 
     private static String normalizeEGrade(String rawGrade) {
