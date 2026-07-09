@@ -49,6 +49,7 @@ class ImporterTest {
 
     private Path testCsv;
     private TickRepository tickRepository;
+    private GradeMappingService gradeMappingService;
     private Importer importer;
     private User importingUser;
 
@@ -56,7 +57,8 @@ class ImporterTest {
     void setUp() {
         testCsv = tempDir.resolve("ticks.csv");
         tickRepository = mock(TickRepository.class);
-        importer = new Importer(tickRepository);
+        gradeMappingService = mock(GradeMappingService.class);
+        importer = new Importer(tickRepository, gradeMappingService);
         importingUser = new User();
         importingUser.setId(1L);
         importingUser.setFirstName("Test");
@@ -96,6 +98,7 @@ class ImporterTest {
         assertThat(tick.getPersonalGrade()).isEqualTo("5.10b");
         assertThat(tick.getClimbHeight()).isEqualTo(80.0);
         assertThat(tick.getUser()).isSameAs(importingUser);
+        verify(gradeMappingService).applyGradeMapping(tick);
     }
 
     @Test

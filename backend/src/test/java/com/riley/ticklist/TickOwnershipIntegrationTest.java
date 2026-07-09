@@ -149,6 +149,23 @@ class TickOwnershipIntegrationTest {
     }
 
     @Test
+    @DisplayName("POST /ticks resolves a CSV grade mapping and exposes difficultyScore")
+    void createTickExposesDifficultyScore() throws Exception {
+        ObjectNode body = api.tickBody("Mapped Arete");
+        body.put("grade", "5.11a");
+        body.put("discipline", "TRAD");
+
+        mockMvc.perform(post("/ticks")
+                .header("Authorization", api.bearer(aliceToken))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body.toString()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.gradeSystem").value("YDS"))
+            .andExpect(jsonPath("$.gradeValue").value(11.0))
+            .andExpect(jsonPath("$.difficultyScore").value(55.0));
+    }
+
+    @Test
     @DisplayName("PUT /ticks/{id} cannot reassign ownership via the request body")
     void updateCannotReassignOwner() throws Exception {
         Long aliceTickId = api.createTick(aliceToken, "Alice Arete");

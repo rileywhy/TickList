@@ -16,10 +16,12 @@ public class Importer {
     //function to import the csv file and parse the data
     private static final Path DEFAULT_CSV_PATH = Path.of("inputs", "ticks.csv");
     private static final Path BACKEND_DEFAULT_CSV_PATH = Path.of("..", "inputs", "ticks.csv");
-     private final TickRepository tickRepository;
+    private final TickRepository tickRepository;
+    private final GradeMappingService gradeMappingService;
 
-    public Importer(TickRepository tickRepository) {
+    public Importer(TickRepository tickRepository, GradeMappingService gradeMappingService) {
         this.tickRepository = tickRepository;
+        this.gradeMappingService = gradeMappingService;
     }
     public ImportResult importCSV(User user) throws Exception {
         return importCSV(defaultCsvPath(), user);
@@ -88,6 +90,7 @@ public class Importer {
             
             Discipline discipline = DisciplineParser.parsePrimaryDiscipline(routeType, rating);
             tick.setDiscipline(discipline);
+            gradeMappingService.applyGradeMapping(tick);
             
             tick.setPersonalGrade(yourRating);
             tick.setClimbHeight(parseOptionalDouble(length));

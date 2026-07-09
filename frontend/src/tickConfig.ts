@@ -37,6 +37,7 @@ export type TickPayload = {
 export type TickRecord = Omit<TickPayload, "attempts"> & {
   id: number;
   attempts: number | null;
+  difficultyScore: number | null;
   createdAt: string | null;
   updatedAt: string | null;
 };
