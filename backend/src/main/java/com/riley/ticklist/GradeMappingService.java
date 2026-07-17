@@ -19,7 +19,9 @@ public class GradeMappingService {
         }
 
         String cleanedGrade = clean(firstPresent(tick.getGrade(), tick.getRawGrade()));
-        GradeParser.ParsedGrade parsedGrade = GradeParser.parse(cleanedGrade);
+        // The discipline disambiguates Font from French sport ("7a" on a boulder
+        // is Font), so a lowercase boulder grade doesn't land on the sport ladder.
+        GradeParser.ParsedGrade parsedGrade = GradeParser.parse(cleanedGrade, tick.getDiscipline());
         GradeSystem gradeSystem = resolveGradeSystem(tick.getGradeSystem(), parsedGrade.gradeSystem());
 
         if (cleanedGrade != null) {

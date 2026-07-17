@@ -50,6 +50,39 @@ class GradeMappingServiceTest {
     }
 
     @Test
+    void lowercaseBoulderGradeResolvesToTheFontLadderNotFrenchSport() {
+        // 8a.nu (and plenty of humans) write Font grades lowercase. The tick's
+        // discipline, not letter case, must pick the ladder — otherwise this
+        // boulder scores as a 7a sport route, ~5 letter grades too low.
+        Tick tick = new Tick();
+        tick.setGrade("7a");
+        tick.setGradeSystem(GradeSystem.UNKNOWN); // the form default
+        tick.setDiscipline(Discipline.BOULDER);
+
+        service.applyGradeMapping(tick);
+
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.FONT);
+        ArgumentCaptor<String> key = ArgumentCaptor.forClass(String.class);
+        verify(repository).findByGradeSystemAndDisciplineAndRawGradeAndActiveTrue(
+            eq(GradeSystem.FONT), eq(Discipline.BOULDER), key.capture());
+        assertThat(key.getValue()).isEqualTo("7A");
+    }
+
+    @Test
+    void uppercaseGradeOnASportTickResolvesToTheFrenchSportLadder() {
+        Tick tick = new Tick();
+        tick.setGrade("7A");
+        tick.setGradeSystem(GradeSystem.UNKNOWN);
+        tick.setDiscipline(Discipline.SPORT);
+
+        service.applyGradeMapping(tick);
+
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.FRENCH_SPORT);
+        verify(repository).findByGradeSystemAndDisciplineAndRawGradeAndActiveTrue(
+            eq(GradeSystem.FRENCH_SPORT), eq(Discipline.SPORT), eq("7a"));
+    }
+
+    @Test
     void vScaleSlashRangeNormalizesToTheDashFormTheSeedUses() {
         Tick tick = new Tick();
         tick.setGrade("V4/5");

@@ -156,6 +156,40 @@ class ImporterTest {
     }
 
     @Test
+    void boulderRouteTypeResolvesLowercaseLetterGradesToFont() throws Exception {
+        // Mountain Project's Route Type column, not the grade's letter case,
+        // decides Font vs French sport: a Boulder row rated "7a" is Font.
+        writeTicksCsv(
+            "2026-06-15,Karma,7a,Classic,https://mountainproject.com/route/456,,Fontainebleau,4.9,4,Send,,Boulder,,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getDiscipline()).isEqualTo(Discipline.BOULDER);
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.FONT);
+    }
+
+    @Test
+    void sportRouteTypeKeepsLetterGradesOnTheFrenchSportLadder() throws Exception {
+        writeTicksCsv(
+            "2026-06-15,Biographie,9a+,Hard,https://mountainproject.com/route/789,1,Ceuse,5,5,Lead,Redpoint,Sport,,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getDiscipline()).isEqualTo(Discipline.SPORT);
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.FRENCH_SPORT);
+    }
+
+    @Test
     void importsFellHungRowsAsAttempts() throws Exception {
         writeTicksCsv(
             "2026-06-15,The Bulge,5.10a,Worked moves,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,Lead,Fell/Hung,Trad,5.10b,80,"

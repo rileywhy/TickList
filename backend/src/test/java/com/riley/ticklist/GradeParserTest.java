@@ -130,6 +130,25 @@ class GradeParserTest {
     }
 
     @Test
+    void disciplineHintSplitsFontFromFrenchSport() {
+        // Case-ambiguous letter grades follow the discipline when it's known.
+        assertThat(GradeParser.parse("7a", Discipline.BOULDER).gradeSystem()).isEqualTo(GradeSystem.FONT);
+        assertThat(GradeParser.parse("7A", Discipline.SPORT).gradeSystem()).isEqualTo(GradeSystem.FRENCH_SPORT);
+        assertThat(GradeParser.parse("6b+", Discipline.TRAD).gradeSystem()).isEqualTo(GradeSystem.FRENCH_SPORT);
+        assertThat(GradeParser.parse("7A", Discipline.BOULDER).gradeSystem()).isEqualTo(GradeSystem.FONT);
+
+        // Without a usable hint, letter case still decides.
+        assertThat(GradeParser.parse("7a", null).gradeSystem()).isEqualTo(GradeSystem.FRENCH_SPORT);
+        assertThat(GradeParser.parse("7a", Discipline.UNKNOWN).gradeSystem()).isEqualTo(GradeSystem.FRENCH_SPORT);
+        assertThat(GradeParser.parse("7A", Discipline.GYM).gradeSystem()).isEqualTo(GradeSystem.FONT);
+
+        // The hint never rewrites systems that aren't case-ambiguous.
+        assertThat(GradeParser.parse("V6", Discipline.SPORT).gradeSystem()).isEqualTo(GradeSystem.V_SCALE);
+        assertThat(GradeParser.parse("5.11a", Discipline.BOULDER).gradeSystem()).isEqualTo(GradeSystem.YDS);
+        assertThat(GradeParser.parse("rainbow", Discipline.BOULDER).gradeSystem()).isEqualTo(GradeSystem.UNKNOWN);
+    }
+
+    @Test
     void parsesIceMixedAidAndEGradeVariants() {
         assertThat(GradeParser.parseGradeSystem("ai3")).isEqualTo(GradeSystem.ICE_WI);
         assertThat(GradeParser.parseGradeValue("ai3")).isEqualTo(3.0);

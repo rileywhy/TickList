@@ -23,11 +23,39 @@ public class GradeParser {
     }
 
     public static ParsedGrade parse(String rawGrade) {
+        return parse(rawGrade, null);
+    }
+
+    public static ParsedGrade parse(String rawGrade, Discipline disciplineHint) {
         String cleanedGrade = clean(rawGrade);
-        GradeSystem gradeSystem = parseGradeSystem(cleanedGrade);
+        GradeSystem gradeSystem = parseGradeSystem(cleanedGrade, disciplineHint);
         return new ParsedGrade(cleanedGrade, gradeSystem, parseGradeValue(cleanedGrade, gradeSystem));
     }
-    
+
+    public static GradeSystem parseGradeSystem(String rawGrade, Discipline disciplineHint) {
+        return disambiguateFontFromFrench(parseGradeSystem(rawGrade), disciplineHint);
+    }
+
+    // Font and French sport share the same written shape ("7A" vs "7a") and the
+    // regexes tell them apart only by letter case, which real data doesn't respect
+    // (8a.nu exports boulder grades lowercase). When the discipline is known it
+    // decides between the two ladders; case remains the fallback signal.
+    private static GradeSystem disambiguateFontFromFrench(GradeSystem parsed, Discipline disciplineHint) {
+        if (parsed != GradeSystem.FONT && parsed != GradeSystem.FRENCH_SPORT) {
+            return parsed;
+        }
+
+        if (disciplineHint == Discipline.BOULDER) {
+            return GradeSystem.FONT;
+        }
+
+        if (disciplineHint == Discipline.SPORT || disciplineHint == Discipline.TRAD) {
+            return GradeSystem.FRENCH_SPORT;
+        }
+
+        return parsed;
+    }
+
     public static GradeSystem parseGradeSystem(String rawGrade) {
         String cleanedGrade = clean(rawGrade);
 
