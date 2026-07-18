@@ -62,7 +62,6 @@ public class TickController {
         existingTick.setDiscipline(updatedTick.getDiscipline());
         existingTick.setTickType(updatedTick.getTickType());
         existingTick.setGrade(updatedTick.getGrade());
-        existingTick.setRawGrade(updatedTick.getRawGrade());
         existingTick.setGradeSystem(updatedTick.getGradeSystem());
         existingTick.setSourceApp(updatedTick.getSourceApp());
         existingTick.setExternalId(updatedTick.getExternalId());
@@ -72,7 +71,6 @@ public class TickController {
         existingTick.setTickDate(updatedTick.getTickDate());
         existingTick.setAttempts(updatedTick.getAttempts());
         existingTick.setNotes(updatedTick.getNotes());
-        existingTick.setClimbHeight(updatedTick.getClimbHeight());
         gradeMappingService.applyGradeMapping(existingTick);
         return tickRepository.save(existingTick);
     }
