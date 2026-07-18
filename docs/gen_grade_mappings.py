@@ -128,7 +128,12 @@ FRENCH_SLASH_LADDER = [
 
 
 # systemOrder is only for sorting inside the French grade ladder.
-FRENCH_PLAIN_SYSTEM_ORDER = {"1+": 1.5, "2+": 2.5, "4": 4.333, "4+": 4.833,
+# "3+" is pinned to 3b's order (3.333): its score already equals 3b (27.5), and
+# without the pin the letter formula would place it at 3.167 — colliding with
+# the sub-4 letter row "3a+" at a different score, so ticks graded "3+" and
+# "3a+" would sort as the same rung. Mirrors how plain "4"/"5" sit on their
+# b-letter orders.
+FRENCH_PLAIN_SYSTEM_ORDER = {"1+": 1.5, "2+": 2.5, "3+": 3.333, "4": 4.333, "4+": 4.833,
                              "5": 5.333, "5+": 5.833}
 
 
@@ -182,6 +187,43 @@ for ladder_index in range(len(FRENCH_SLASH_LADDER) - 1):
         add_grade_row("FRENCH_SPORT", "SPORT", f"{lower_grade}/{upper_grade}",
             midpoint_order, midpoint_score, confidence,
             "letter-boundary slash form (8a.nu/logbooks)")
+
+# Letter forms GradeParser accepts ([3-9][abc]+?) that the anchor table above
+# doesn't name — without rows here they parse fine but resolve to no
+# difficultyScore. Two gaps:
+#   - sub-4 letters ("3a".."3c+", rare legacy/logbook forms): interpolated as
+#     thirds between the 3 and 4a anchors, plus forms as midpoints. Note the
+#     3b score lands exactly on the existing "3+" (27.5) — the plain plus and
+#     the mid letter agree, same as "4"/"4b" and "5"/"5b" do — and "3+" is
+#     order-pinned to 3b in FRENCH_PLAIN_SYSTEM_ORDER so the pair are exact
+#     synonyms on both axes (not just the score one).
+#   - sub-5 plus forms ("4a+".."4c+"): midpoints of the neighboring letter
+#     rungs. "4c+" computes to the same order/score as the existing plain "4+"
+#     (4.833 / 36.88), which is the fold identity ("4+" reads as ~4c+), so the
+#     two rows are deliberate exact synonyms.
+# These are emitted before the gym-route copy loop below, so FRENCH_SPORT/GYM
+# rows for every form come free via the indoor curve.
+third_of_3_to_4a = (FRENCH_SCORE_BY_GRADE["4a"] - FRENCH_SCORE_BY_GRADE["3"]) / 3
+FRENCH_SUB_4_LETTER_ANCHORS = [
+    ("3a", FRENCH_SCORE_BY_GRADE["3"], "sub-4 letter form (rare/legacy): synonym of 3"),
+    ("3b", FRENCH_SCORE_BY_GRADE["3"] + third_of_3_to_4a,
+     "sub-4 letter form (rare/legacy): interpolated third between 3 and 4a"),
+    ("3c", FRENCH_SCORE_BY_GRADE["3"] + 2 * third_of_3_to_4a,
+     "sub-4 letter form (rare/legacy): interpolated third between 3 and 4a"),
+    # 4a closes the ladder for the 3c+ midpoint; sentinel only, not re-emitted.
+    ("4a", FRENCH_SCORE_BY_GRADE["4a"], None),
+]
+for (raw_grade, difficulty_score, letter_note), (_, next_score, _) in zip(
+        FRENCH_SUB_4_LETTER_ANCHORS, FRENCH_SUB_4_LETTER_ANCHORS[1:]):
+    add_grade_row("FRENCH_SPORT", "SPORT", raw_grade, french_system_order(raw_grade),
+                  difficulty_score, 0.7, letter_note)
+    add_grade_row("FRENCH_SPORT", "SPORT", f"{raw_grade}+", french_system_order(f"{raw_grade}+"),
+                  (difficulty_score + next_score) / 2, 0.7,
+                  "sub-4 letter plus form (rare/legacy): midpoint of adjacent letter rungs")
+for lower_grade, upper_grade in [("4a", "4b"), ("4b", "4c"), ("4c", "5a")]:
+    add_grade_row("FRENCH_SPORT", "SPORT", f"{lower_grade}+", french_system_order(f"{lower_grade}+"),
+                  (FRENCH_SCORE_BY_GRADE[lower_grade] + FRENCH_SCORE_BY_GRADE[upper_grade]) / 2, 0.7,
+                  "letter plus form: midpoint of adjacent letter rungs")
 
 # ---------------------------------------------------------- V_SCALE and FONT
 # Values are difficultyScore. systemOrder stays the V number.
@@ -306,6 +348,46 @@ def add_boulder_ladders(v_score_by_grade, discipline, confidence, v_note, font_n
         # Emit base Font grades for this discipline: BOULDER or GYM.
         add_grade_row("FONT", discipline, raw_grade, font_system_order(raw_grade),
                       difficulty_score, confidence, font_note)
+
+    # Sub-6A letter forms ("4a".."5c+"): 8a.nu exports and UK logbooks write low
+    # Font boulders with French-style letters, and GradeParser resolves them to
+    # FONT on boulders (uppercased by normalizeRawGrade), so every letter form
+    # the parser accepts needs a row here or the tick silently gets no
+    # difficultyScore. Canonical Font is numeric below 6A, so letters fold onto
+    # the numeric rungs as synonyms: the low/mid/high letter thirds of a number
+    # are its -/plain/+ triple (4A=4-, 4B=4, 4C=4+, 5A=5-, 5B=5, 5C=5+).
+    # "3" has no numeric -/+ rungs, so 3A pins to 3 and 3B/3C interpolate
+    # thirds toward 4-. Plus forms are midpoints of the neighboring letter
+    # rungs, e.g. 5C+ lands halfway between 5+ (=5C) and 6A — matching how
+    # climbers read it ("nearly 6A"). Synonym rows copy their target's
+    # systemOrder as well as its score; giving letters their own bottom-anchored
+    # third orders (4A=4.0, 4B=4.333...) would interleave wrongly with the
+    # centered numeric triple (4B at 4.333 would sort after 4+ at 4.167 while
+    # scoring below it, breaking monotonicity).
+    third_of_3_to_4_minus = (font_score_by_grade["4-"] - font_score_by_grade["3"]) / 3
+    sub_6a_note = "sub-6A letter form (8a.nu/UK logbook style)"
+    sub_6a_letter_anchors = [
+        ("3A", 3.0, font_score_by_grade["3"], f"{sub_6a_note}: synonym of Font 3"),
+        ("3B", 3 + 1 / 3, font_score_by_grade["3"] + third_of_3_to_4_minus,
+         f"{sub_6a_note}: interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)"),
+        ("3C", 3 + 2 / 3, font_score_by_grade["3"] + 2 * third_of_3_to_4_minus,
+         f"{sub_6a_note}: interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)"),
+    ]
+    for letter_grade, numeric_rung in [("4A", "4-"), ("4B", "4"), ("4C", "4+"),
+                                       ("5A", "5-"), ("5B", "5"), ("5C", "5+")]:
+        sub_6a_letter_anchors.append(
+            (letter_grade, font_system_order(numeric_rung), font_score_by_grade[numeric_rung],
+             f"{sub_6a_note}: synonym of Font {numeric_rung}"))
+    # 6A closes the ladder so 5C+ gets a midpoint; it is a sentinel only and is
+    # NOT re-emitted (the real 6A row already exists above).
+    sub_6a_letter_anchors.append(("6A", font_system_order("6A"), font_score_by_grade["6A"], None))
+    for (letter_grade, system_order, score, letter_note), (_, next_order, next_score, _) in zip(
+            sub_6a_letter_anchors, sub_6a_letter_anchors[1:]):
+        add_grade_row("FONT", discipline, letter_grade, system_order, score, confidence, letter_note)
+        add_grade_row("FONT", discipline, f"{letter_grade}+",
+                      (system_order + next_order) / 2, (score + next_score) / 2, confidence,
+                      f"{sub_6a_note}: plus form, midpoint of adjacent letter rungs")
+
     for ladder_index in range(len(FONT_SLASH_LADDER) - 1):
         lower_grade = FONT_SLASH_LADDER[ladder_index]
         upper_grade = FONT_SLASH_LADDER[ladder_index + 1]

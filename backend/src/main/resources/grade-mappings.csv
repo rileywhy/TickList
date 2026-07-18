@@ -160,12 +160,21 @@ FRENCH_SPORT,GYM,1+,1.5,20.01,0.4,"indoor crossover: soft below ~5.14a, stiff ab
 FRENCH_SPORT,GYM,2,2.0,21.03,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,2+,2.5,22.56,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,3,3.0,24.07,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
-FRENCH_SPORT,GYM,3+,3.167,25.09,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3a,3.0,24.07,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3a+,3.167,24.58,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3+,3.333,25.09,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3b,3.333,25.09,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3b+,3.5,25.6,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3c,3.667,26.1,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3c+,3.833,26.61,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,4a,4.0,27.12,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4a+,4.167,28.13,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,4b,4.333,29.15,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,4,4.333,29.15,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4b+,4.5,30.16,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,4c,4.667,31.18,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,4+,4.833,32.7,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4c+,4.833,32.7,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,5a,5.0,34.22,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,5a+,5.167,35.24,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
 FRENCH_SPORT,GYM,5b,5.333,36.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
@@ -235,12 +244,21 @@ FRENCH_SPORT,SPORT,1+,1.5,21.25,0.7,low-end alignment; sources vary a full rung
 FRENCH_SPORT,SPORT,2,2.0,22.5,0.7,low-end alignment; sources vary a full rung
 FRENCH_SPORT,SPORT,2+,2.5,24.38,0.7,low-end alignment; sources vary a full rung
 FRENCH_SPORT,SPORT,3,3.0,26.25,0.7,low-end alignment; sources vary a full rung
-FRENCH_SPORT,SPORT,3+,3.167,27.5,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,3a,3.0,26.25,0.7,sub-4 letter form (rare/legacy): synonym of 3
+FRENCH_SPORT,SPORT,3a+,3.167,26.88,0.7,sub-4 letter plus form (rare/legacy): midpoint of adjacent letter rungs
+FRENCH_SPORT,SPORT,3+,3.333,27.5,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,3b,3.333,27.5,0.7,sub-4 letter form (rare/legacy): interpolated third between 3 and 4a
+FRENCH_SPORT,SPORT,3b+,3.5,28.13,0.7,sub-4 letter plus form (rare/legacy): midpoint of adjacent letter rungs
+FRENCH_SPORT,SPORT,3c,3.667,28.75,0.7,sub-4 letter form (rare/legacy): interpolated third between 3 and 4a
+FRENCH_SPORT,SPORT,3c+,3.833,29.38,0.7,sub-4 letter plus form (rare/legacy): midpoint of adjacent letter rungs
 FRENCH_SPORT,SPORT,4a,4.0,30.0,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,4a+,4.167,31.25,0.7,letter plus form: midpoint of adjacent letter rungs
 FRENCH_SPORT,SPORT,4b,4.333,32.5,0.7,low-end alignment; sources vary a full rung
 FRENCH_SPORT,SPORT,4,4.333,32.5,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,4b+,4.5,33.75,0.7,letter plus form: midpoint of adjacent letter rungs
 FRENCH_SPORT,SPORT,4c,4.667,35.0,0.7,low-end alignment; sources vary a full rung
 FRENCH_SPORT,SPORT,4+,4.833,36.88,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,4c+,4.833,36.88,0.7,letter plus form: midpoint of adjacent letter rungs
 FRENCH_SPORT,SPORT,5a,5.0,38.75,0.7,low-end alignment; sources vary a full rung
 FRENCH_SPORT,SPORT,5a+,5.167,40.0,0.7,low-end alignment; sources vary a full rung
 FRENCH_SPORT,SPORT,5b,5.333,41.25,0.7,low-end alignment; sources vary a full rung
@@ -452,12 +470,30 @@ V_SCALE,GYM,V17,17.0,102.5,0.4,"indoor crossover: soft below ~V10, stiff above (
 FONT,BOULDER,1,1.0,32.5,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
 FONT,BOULDER,2,2.0,37.5,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
 FONT,BOULDER,3,3.0,41.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,3A,3.0,41.25,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 3
+FONT,BOULDER,3A+,3.167,41.81,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,3B,3.333,42.36,0.5,sub-6A letter form (8a.nu/UK logbook style): interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)
+FONT,BOULDER,3B+,3.5,42.92,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,3C,3.667,43.47,0.5,sub-6A letter form (8a.nu/UK logbook style): interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)
+FONT,BOULDER,3C+,3.75,44.03,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,BOULDER,4-,3.833,44.58,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,4A,3.833,44.58,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4-
+FONT,BOULDER,4A+,3.917,45.42,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,BOULDER,4,4.0,46.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,4B,4.0,46.25,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4
+FONT,BOULDER,4B+,4.083,47.5,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,BOULDER,4+,4.167,48.75,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,4C,4.167,48.75,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4+
+FONT,BOULDER,4C+,4.5,49.17,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,BOULDER,5-,4.833,49.58,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,5A,4.833,49.58,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5-
+FONT,BOULDER,5A+,4.917,50.42,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,BOULDER,5,5.0,51.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,5B,5.0,51.25,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5
+FONT,BOULDER,5B+,5.083,53.75,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,BOULDER,5+,5.167,56.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,5C,5.167,56.25,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5+
+FONT,BOULDER,5C+,5.583,58.75,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,BOULDER,6A,6.0,61.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
 FONT,BOULDER,6A/+,6.083,62.19,0.5,8a.nu short slash form
 FONT,BOULDER,6A/6A+,6.083,62.19,0.5,full slash form
@@ -507,12 +543,30 @@ FONT,BOULDER,9A,9.0,102.5,0.5,outdoor; via near-unanimous V-Font crosswalk over 
 FONT,GYM,1,1.0,29.15,0.4,indoor; via V-Font crosswalk over the gym crossover curve
 FONT,GYM,2,2.0,33.21,0.4,indoor; via V-Font crosswalk over the gym crossover curve
 FONT,GYM,3,3.0,36.25,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,3A,3.0,36.25,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 3
+FONT,GYM,3A+,3.167,36.67,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,3B,3.333,37.08,0.4,sub-6A letter form (8a.nu/UK logbook style): interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)
+FONT,GYM,3B+,3.5,37.5,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,3C,3.667,37.92,0.4,sub-6A letter form (8a.nu/UK logbook style): interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)
+FONT,GYM,3C+,3.75,38.33,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,GYM,4-,3.833,38.75,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,4A,3.833,38.75,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4-
+FONT,GYM,4A+,3.917,39.38,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,GYM,4,4.0,40.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,4B,4.0,40.0,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4
+FONT,GYM,4B+,4.083,40.78,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,GYM,4+,4.167,41.56,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,4C,4.167,41.56,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4+
+FONT,GYM,4C+,4.5,41.82,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,GYM,5-,4.833,42.08,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,5A,4.833,42.08,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5-
+FONT,GYM,5A+,4.917,42.6,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,GYM,5,5.0,43.13,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,5B,5.0,43.13,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5
+FONT,GYM,5B+,5.083,44.69,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,GYM,5+,5.167,46.25,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,5C,5.167,46.25,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5+
+FONT,GYM,5C+,5.583,49.11,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
 FONT,GYM,6A,6.0,51.96,0.4,indoor; via V-Font crosswalk over the gym crossover curve
 FONT,GYM,6A/+,6.083,53.04,0.4,8a.nu short slash form
 FONT,GYM,6A/6A+,6.083,53.04,0.4,full slash form

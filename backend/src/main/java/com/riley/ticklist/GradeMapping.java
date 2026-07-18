@@ -7,8 +7,19 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
+// (gradeSystem, discipline, rawGrade) is the mapping's identity: the repository
+// finders return Optional (they throw if the key ever matches two rows) and the
+// seeder's find-or-create assumes one row per key. The database enforces that
+// invariant against every writer — concurrent boot seeding, hand-run SQL, or a
+// duplicate key in a hand-edited CSV.
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(
+    name = "uk_grade_mapping_system_discipline_raw_grade",
+    columnNames = {"grade_system", "discipline", "raw_grade"}
+))
 public class GradeMapping {
 
     @Id
