@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -176,12 +179,18 @@ public class Tick {
         this.gradeSystem = gradeSystem;
     }
 
+    @JsonIgnore
     public GradeMapping getGradeMapping() {
         return gradeMapping;
     }
 
     public void setGradeMapping(GradeMapping gradeMapping) {
         this.gradeMapping = gradeMapping;
+    }
+
+    @Transient
+    public Double getDifficultyScore() {
+        return gradeMapping == null ? null : gradeMapping.getDifficultyScore();
     }
 
     public SourceApp getSourceApp() {

@@ -49,6 +49,7 @@ class ImporterTest {
 
     private Path testCsv;
     private TickRepository tickRepository;
+    private GradeMappingService gradeMappingService;
     private Importer importer;
     private User importingUser;
 
@@ -56,7 +57,8 @@ class ImporterTest {
     void setUp() {
         testCsv = tempDir.resolve("ticks.csv");
         tickRepository = mock(TickRepository.class);
-        importer = new Importer(tickRepository);
+        gradeMappingService = mock(GradeMappingService.class);
+        importer = new Importer(tickRepository, gradeMappingService);
         importingUser = new User();
         importingUser.setId(1L);
         importingUser.setFirstName("Test");
@@ -96,6 +98,7 @@ class ImporterTest {
         assertThat(tick.getPersonalGrade()).isEqualTo("5.10b");
         assertThat(tick.getClimbHeight()).isEqualTo(80.0);
         assertThat(tick.getUser()).isSameAs(importingUser);
+        verify(gradeMappingService).applyGradeMapping(tick);
     }
 
     @Test
@@ -150,6 +153,40 @@ class ImporterTest {
         verify(tickRepository).save(tickCaptor.capture());
 
         assertThat(tickCaptor.getValue().getRopeStyle()).isEqualTo(RopeStyle.UNKNOWN);
+    }
+
+    @Test
+    void boulderRouteTypeResolvesLowercaseLetterGradesToFont() throws Exception {
+        // Mountain Project's Route Type column, not the grade's letter case,
+        // decides Font vs French sport: a Boulder row rated "7a" is Font.
+        writeTicksCsv(
+            "2026-06-15,Karma,7a,Classic,https://mountainproject.com/route/456,,Fontainebleau,4.9,4,Send,,Boulder,,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getDiscipline()).isEqualTo(Discipline.BOULDER);
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.FONT);
+    }
+
+    @Test
+    void sportRouteTypeKeepsLetterGradesOnTheFrenchSportLadder() throws Exception {
+        writeTicksCsv(
+            "2026-06-15,Biographie,9a+,Hard,https://mountainproject.com/route/789,1,Ceuse,5,5,Lead,Redpoint,Sport,,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getDiscipline()).isEqualTo(Discipline.SPORT);
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.FRENCH_SPORT);
     }
 
     @Test

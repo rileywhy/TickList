@@ -34,6 +34,7 @@ function TickCard({
   const details = [
     ["Location", tick.location || "Unknown"],
     ["Grade", gradeLabel],
+    ["Difficulty", formatNumber(tick.difficultyScore)],
     ["Discipline", formatEnumLabel(tick.discipline)],
     ["Source", sourceMeta.label],
     ["Type", formatEnumLabel(tick.tickType)],
@@ -265,6 +266,10 @@ function formatDateTime(value: string | null | undefined) {
   }
 
   return new Date(value).toLocaleString();
+}
+
+function formatNumber(value: number | null | undefined) {
+  return value == null ? "Unknown" : value.toString();
 }
 
 type ActionButtonProps = {

@@ -1,0 +1,817 @@
+gradeSystem,discipline,rawGrade,systemOrder,difficultyScore,confidence,note
+YDS,GYM,3rd,-3.0,19.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,4th,-2.0,19.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,Easy 5th,-1.0,19.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.0,0.0,19.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.1,1.0,21.03,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.2,2.0,23.06,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.3,3.0,25.09,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.4,4.0,27.12,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.5,5.0,29.15,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.6,6.0,31.18,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.7,7.0,33.21,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.7+,7.3,33.88,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.8-,7.7,34.56,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.8,8.0,35.24,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.8+,8.3,35.91,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.9-,8.7,36.57,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.9,9.0,37.19,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.9+,9.3,37.81,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10a,10.0,39.06,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10-,10.0,39.06,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10a/b,10.125,40.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10b,10.25,40.78,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10b/c,10.375,41.56,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10,10.375,41.56,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10c,10.5,42.34,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10c/d,10.625,43.13,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10+,10.625,43.13,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.10d,10.75,43.91,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11a,11.0,45.47,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11-,11.0,45.47,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11a/b,11.125,46.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11b,11.25,47.68,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11b/c,11.375,49.11,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11,11.375,49.11,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11c,11.5,50.54,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11c/d,11.625,51.96,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11+,11.625,51.96,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.11d,11.75,53.39,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12a,12.0,56.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12-,12.0,56.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12a/b,12.125,57.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12b,12.25,58.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12b/c,12.375,60.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12,12.375,60.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12c,12.5,61.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12c/d,12.625,62.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12+,12.625,62.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.12d,12.75,63.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13a,13.0,66.8,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13-,13.0,66.8,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13a/b,13.125,68.6,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13b,13.25,70.4,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13b/c,13.375,72.2,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13,13.375,72.2,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13c,13.5,74.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13c/d,13.625,76.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13+,13.625,76.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.13d,13.75,79.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14a,14.0,84.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14-,14.0,84.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14a/b,14.125,86.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14b,14.25,89.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14b/c,14.375,90.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14,14.375,90.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14c,14.5,92.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14c/d,14.625,94.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14+,14.625,94.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.14d,14.75,96.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15a,15.0,97.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15-,15.0,97.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15a/b,15.125,98.63,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15b,15.25,99.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15b/c,15.375,100.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15,15.375,100.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15c,15.5,101.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15c/d,15.625,101.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15+,15.625,101.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,GYM,5.15d,15.75,102.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+YDS,SPORT,3rd,-3.0,12.5,0.8,MP class string (scramble)
+YDS,SPORT,4th,-2.0,15.0,0.8,MP class string (exposed scramble)
+YDS,SPORT,Easy 5th,-1.0,17.5,0.8,MP class string (~5.0-5.2)
+YDS,SPORT,5.0,0.0,20.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.1,1.0,22.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.2,2.0,25.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.3,3.0,27.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.4,4.0,30.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.5,5.0,32.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.6,6.0,35.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.7,7.0,37.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.7+,7.3,38.33,0.9,MP-export +/- variant; one third of a rung
+YDS,SPORT,5.8-,7.7,39.17,0.9,MP-export +/- variant; one third of a rung
+YDS,SPORT,5.8,8.0,40.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.8+,8.3,40.83,0.9,MP-export +/- variant; one third of a rung
+YDS,SPORT,5.9-,8.7,41.67,0.9,MP-export +/- variant; one third of a rung
+YDS,SPORT,5.9,9.0,42.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.9+,9.3,43.33,0.9,MP-export +/- variant; one third of a rung
+YDS,SPORT,5.10a,10.0,45.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.10-,10.0,45.0,0.95,pinned to 5.Na; sources split between 5.Na and 5.Na/b
+YDS,SPORT,5.10a/b,10.125,46.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.10b,10.25,47.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.10b/c,10.375,48.75,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.10,10.375,48.75,0.95,MP: plain 5.N = 5.Nb/c
+YDS,SPORT,5.10c,10.5,50.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.10c/d,10.625,51.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.10+,10.625,51.25,0.95,MP: 5.N+ = 5.Nc/d
+YDS,SPORT,5.10d,10.75,52.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.11a,11.0,55.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.11-,11.0,55.0,0.95,pinned to 5.Na; sources split between 5.Na and 5.Na/b
+YDS,SPORT,5.11a/b,11.125,56.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.11b,11.25,57.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.11b/c,11.375,58.75,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.11,11.375,58.75,0.95,MP: plain 5.N = 5.Nb/c
+YDS,SPORT,5.11c,11.5,60.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.11c/d,11.625,61.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.11+,11.625,61.25,0.95,MP: 5.N+ = 5.Nc/d
+YDS,SPORT,5.11d,11.75,62.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.12a,12.0,65.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.12-,12.0,65.0,0.95,pinned to 5.Na; sources split between 5.Na and 5.Na/b
+YDS,SPORT,5.12a/b,12.125,66.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.12b,12.25,67.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.12b/c,12.375,68.75,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.12,12.375,68.75,0.95,MP: plain 5.N = 5.Nb/c
+YDS,SPORT,5.12c,12.5,70.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.12c/d,12.625,71.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.12+,12.625,71.25,0.95,MP: 5.N+ = 5.Nc/d
+YDS,SPORT,5.12d,12.75,72.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.13a,13.0,75.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.13-,13.0,75.0,0.95,pinned to 5.Na; sources split between 5.Na and 5.Na/b
+YDS,SPORT,5.13a/b,13.125,76.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.13b,13.25,77.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.13b/c,13.375,78.75,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.13,13.375,78.75,0.95,MP: plain 5.N = 5.Nb/c
+YDS,SPORT,5.13c,13.5,80.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.13c/d,13.625,81.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.13+,13.625,81.25,0.95,MP: 5.N+ = 5.Nc/d
+YDS,SPORT,5.13d,13.75,82.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.14a,14.0,85.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.14-,14.0,85.0,0.95,pinned to 5.Na; sources split between 5.Na and 5.Na/b
+YDS,SPORT,5.14a/b,14.125,86.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.14b,14.25,87.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.14b/c,14.375,88.75,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.14,14.375,88.75,0.95,MP: plain 5.N = 5.Nb/c
+YDS,SPORT,5.14c,14.5,90.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.14c/d,14.625,91.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.14+,14.625,91.25,0.95,MP: 5.N+ = 5.Nc/d
+YDS,SPORT,5.14d,14.75,92.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.15a,15.0,95.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.15-,15.0,95.0,0.95,pinned to 5.Na; sources split between 5.Na and 5.Na/b
+YDS,SPORT,5.15a/b,15.125,96.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.15b,15.25,97.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.15b/c,15.375,98.75,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.15,15.375,98.75,0.95,MP: plain 5.N = 5.Nb/c
+YDS,SPORT,5.15c,15.5,100.0,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+YDS,SPORT,5.15c/d,15.625,101.25,1.0,letter-boundary slash grade (MP chart)
+YDS,SPORT,5.15+,15.625,101.25,0.95,MP: 5.N+ = 5.Nc/d
+YDS,SPORT,5.15d,15.75,102.5,1.0,axis anchor; consensus of MP/Wikipedia/ClimbingHouse/Sendy/Bergfreunde
+FRENCH_SPORT,GYM,1,1.0,19.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,1+,1.5,20.01,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,2,2.0,21.03,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,2+,2.5,22.56,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3,3.0,24.07,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3a,3.0,24.07,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3a+,3.167,24.58,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3+,3.333,25.09,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3b,3.333,25.09,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3b+,3.5,25.6,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3c,3.667,26.1,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,3c+,3.833,26.61,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4a,4.0,27.12,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4a+,4.167,28.13,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4b,4.333,29.15,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4,4.333,29.15,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4b+,4.5,30.16,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4c,4.667,31.18,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4+,4.833,32.7,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,4c+,4.833,32.7,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,5a,5.0,34.22,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,5a+,5.167,35.24,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,5b,5.333,36.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,5,5.333,36.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,5b+,5.5,37.19,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,5c,5.667,38.13,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,5c+,5.833,38.6,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,5+,5.833,38.6,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6a,6.0,39.06,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6a/+,6.083,40.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6a/6a+,6.083,40.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6a+,6.167,40.78,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6a+/6b,6.25,41.56,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6b,6.333,42.34,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6b/+,6.417,43.13,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6b/6b+,6.417,43.13,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6b+,6.5,43.91,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6b+/6c,6.583,45.08,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6c,6.667,46.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6c/+,6.75,47.68,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6c/6c+,6.75,47.68,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6c+,6.833,49.11,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,6c+/7a,6.917,50.54,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7a,7.0,51.96,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7a/+,7.083,54.11,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7a/7a+,7.083,54.11,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7a+,7.167,56.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7a+/7b,7.25,57.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7b,7.333,58.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7b/+,7.417,60.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7b/7b+,7.417,60.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7b+,7.5,61.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7b+/7c,7.583,62.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7c,7.667,63.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7c/+,7.75,65.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7c/7c+,7.75,65.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7c+,7.833,66.8,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,7c+/8a,7.917,68.6,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8a,8.0,70.4,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8a/+,8.083,72.2,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8a/8a+,8.083,72.2,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8a+,8.167,74.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8a+/8b,8.25,76.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8b,8.333,79.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8b/+,8.417,81.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8b/8b+,8.417,81.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8b+,8.5,84.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8b+/8c,8.583,86.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8c,8.667,89.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8c/+,8.75,90.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8c/8c+,8.75,90.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8c+,8.833,92.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,8c+/9a,8.917,94.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9a,9.0,96.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9a/+,9.083,96.88,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9a/9a+,9.083,96.88,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9a+,9.167,97.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9a+/9b,9.25,98.63,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9b,9.333,99.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9b/+,9.417,100.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9b/9b+,9.417,100.25,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9b+,9.5,101.0,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9b+/9c,9.583,101.75,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,GYM,9c,9.667,102.5,0.4,"indoor crossover: soft below ~5.14a, stiff above (comp/board setting), converge at top; modeled offset, gyms vary"
+FRENCH_SPORT,SPORT,1,1.0,20.0,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,1+,1.5,21.25,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,2,2.0,22.5,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,2+,2.5,24.38,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,3,3.0,26.25,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,3a,3.0,26.25,0.7,sub-4 letter form (rare/legacy): synonym of 3
+FRENCH_SPORT,SPORT,3a+,3.167,26.88,0.7,sub-4 letter plus form (rare/legacy): midpoint of adjacent letter rungs
+FRENCH_SPORT,SPORT,3+,3.333,27.5,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,3b,3.333,27.5,0.7,sub-4 letter form (rare/legacy): interpolated third between 3 and 4a
+FRENCH_SPORT,SPORT,3b+,3.5,28.13,0.7,sub-4 letter plus form (rare/legacy): midpoint of adjacent letter rungs
+FRENCH_SPORT,SPORT,3c,3.667,28.75,0.7,sub-4 letter form (rare/legacy): interpolated third between 3 and 4a
+FRENCH_SPORT,SPORT,3c+,3.833,29.38,0.7,sub-4 letter plus form (rare/legacy): midpoint of adjacent letter rungs
+FRENCH_SPORT,SPORT,4a,4.0,30.0,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,4a+,4.167,31.25,0.7,letter plus form: midpoint of adjacent letter rungs
+FRENCH_SPORT,SPORT,4b,4.333,32.5,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,4,4.333,32.5,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,4b+,4.5,33.75,0.7,letter plus form: midpoint of adjacent letter rungs
+FRENCH_SPORT,SPORT,4c,4.667,35.0,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,4+,4.833,36.88,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,4c+,4.833,36.88,0.7,letter plus form: midpoint of adjacent letter rungs
+FRENCH_SPORT,SPORT,5a,5.0,38.75,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,5a+,5.167,40.0,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,5b,5.333,41.25,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,5,5.333,41.25,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,5b+,5.5,42.5,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,5c,5.667,43.75,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,5c+,5.833,44.38,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,5+,5.833,44.38,0.7,low-end alignment; sources vary a full rung
+FRENCH_SPORT,SPORT,6a,6.0,45.0,0.85,compression band midline (MP vs Wikipedia camps)
+FRENCH_SPORT,SPORT,6a/+,6.083,46.25,0.85,8a.nu short slash form
+FRENCH_SPORT,SPORT,6a/6a+,6.083,46.25,0.85,full slash form
+FRENCH_SPORT,SPORT,6a+,6.167,47.5,0.85,compression band midline (MP vs Wikipedia camps)
+FRENCH_SPORT,SPORT,6a+/6b,6.25,48.75,0.85,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,6b,6.333,50.0,0.85,compression band midline (MP vs Wikipedia camps)
+FRENCH_SPORT,SPORT,6b/+,6.417,51.25,0.85,8a.nu short slash form
+FRENCH_SPORT,SPORT,6b/6b+,6.417,51.25,0.85,full slash form
+FRENCH_SPORT,SPORT,6b+,6.5,52.5,0.85,compression band midline (MP vs Wikipedia camps)
+FRENCH_SPORT,SPORT,6b+/6c,6.583,54.38,0.85,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,6c,6.667,56.25,0.85,compression band midline (MP vs Wikipedia camps)
+FRENCH_SPORT,SPORT,6c/+,6.75,57.5,0.85,8a.nu short slash form
+FRENCH_SPORT,SPORT,6c/6c+,6.75,57.5,0.85,full slash form
+FRENCH_SPORT,SPORT,6c+,6.833,58.75,0.85,compression band midline (MP vs Wikipedia camps)
+FRENCH_SPORT,SPORT,6c+/7a,6.917,60.0,0.85,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,7a,7.0,61.25,0.85,compression band midline (MP vs Wikipedia camps)
+FRENCH_SPORT,SPORT,7a/+,7.083,63.13,0.85,8a.nu short slash form
+FRENCH_SPORT,SPORT,7a/7a+,7.083,63.13,0.85,full slash form
+FRENCH_SPORT,SPORT,7a+,7.167,65.0,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,7a+/7b,7.25,66.25,1.0,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,7b,7.333,67.5,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,7b/+,7.417,68.75,1.0,8a.nu short slash form
+FRENCH_SPORT,SPORT,7b/7b+,7.417,68.75,1.0,full slash form
+FRENCH_SPORT,SPORT,7b+,7.5,70.0,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,7b+/7c,7.583,71.25,1.0,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,7c,7.667,72.5,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,7c/+,7.75,73.75,1.0,8a.nu short slash form
+FRENCH_SPORT,SPORT,7c/7c+,7.75,73.75,1.0,full slash form
+FRENCH_SPORT,SPORT,7c+,7.833,75.0,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,7c+/8a,7.917,76.25,1.0,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,8a,8.0,77.5,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,8a/+,8.083,78.75,1.0,8a.nu short slash form
+FRENCH_SPORT,SPORT,8a/8a+,8.083,78.75,1.0,full slash form
+FRENCH_SPORT,SPORT,8a+,8.167,80.0,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,8a+/8b,8.25,81.25,1.0,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,8b,8.333,82.5,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,8b/+,8.417,83.75,1.0,8a.nu short slash form
+FRENCH_SPORT,SPORT,8b/8b+,8.417,83.75,1.0,full slash form
+FRENCH_SPORT,SPORT,8b+,8.5,85.0,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,8b+/8c,8.583,86.25,1.0,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,8c,8.667,87.5,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,8c/+,8.75,88.75,1.0,8a.nu short slash form
+FRENCH_SPORT,SPORT,8c/8c+,8.75,88.75,1.0,full slash form
+FRENCH_SPORT,SPORT,8c+,8.833,90.0,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,8c+/9a,8.917,91.25,1.0,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,9a,9.0,92.5,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,9a/+,9.083,93.75,1.0,8a.nu short slash form
+FRENCH_SPORT,SPORT,9a/9a+,9.083,93.75,1.0,full slash form
+FRENCH_SPORT,SPORT,9a+,9.167,95.0,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,9a+/9b,9.25,96.25,1.0,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,9b,9.333,97.5,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,9b/+,9.417,98.75,1.0,8a.nu short slash form
+FRENCH_SPORT,SPORT,9b/9b+,9.417,98.75,1.0,full slash form
+FRENCH_SPORT,SPORT,9b+,9.5,100.0,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+FRENCH_SPORT,SPORT,9b+/9c,9.583,101.25,1.0,letter-boundary slash form (8a.nu/logbooks)
+FRENCH_SPORT,SPORT,9c,9.667,102.5,1.0,universal 1:1 with YDS from 7a+=5.12a up (benchmark routes)
+V_SCALE,BOULDER,VB,-1.0,41.25,0.5,"VB; outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V-easy,-1.0,41.25,0.5,MP synonym for VB
+V_SCALE,BOULDER,V0-,-0.25,44.58,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V0,0.0,46.25,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V0+,0.25,48.75,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V0-1,0.5,48.75,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V1-,0.75,49.58,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V1,1.0,51.25,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V1+,1.25,53.75,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V1-2,1.5,53.75,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V2-,1.75,54.58,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V2,2.0,56.25,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V2+,2.25,58.75,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V2-3,2.5,58.75,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V3-,2.75,59.58,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V3,3.0,61.25,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V3+,3.25,63.13,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V3-4,3.5,63.13,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V4-,3.75,63.75,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V4,4.0,65.0,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V4+,4.25,66.88,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V4-5,4.5,66.88,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V5-,4.75,67.5,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V5,5.0,68.75,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V5+,5.25,71.25,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V5-6,5.5,71.25,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V6-,5.75,72.08,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V6,6.0,73.75,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V6+,6.25,75.0,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V6-7,6.5,75.0,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V7-,6.75,75.42,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V7,7.0,76.25,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V7+,7.25,78.13,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V7-8,7.5,78.13,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V8-,7.75,78.75,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V8,8.0,80.0,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V8+,8.25,81.25,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V8-9,8.5,81.25,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V9-,8.75,81.67,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V9,9.0,82.5,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V9+,9.25,83.75,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V9-10,9.5,83.75,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V10-,9.75,84.17,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V10,10.0,85.0,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V10+,10.25,86.25,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V10-11,10.5,86.25,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V11-,10.75,86.67,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V11,11.0,87.5,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V11+,11.25,88.75,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V11-12,11.5,88.75,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V12-,11.75,89.17,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V12,12.0,90.0,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V12+,12.25,91.25,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V12-13,12.5,91.25,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V13-,12.75,91.67,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V13,13.0,92.5,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V13+,13.25,93.75,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V13-14,13.5,93.75,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V14-,13.75,94.17,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V14,14.0,95.0,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V14+,14.25,96.25,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V14-15,14.5,96.25,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V15-,14.75,96.67,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V15,15.0,97.5,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V15+,15.25,98.75,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V15-16,15.5,98.75,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V16-,15.75,99.17,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V16,16.0,100.0,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,BOULDER,V16+,16.25,101.25,0.5,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,BOULDER,V16-17,16.5,101.25,0.5,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,BOULDER,V17-,16.75,101.67,0.5,minus variant: one third toward previous rung
+V_SCALE,BOULDER,V17,17.0,102.5,0.5,"outdoor middle-line boulder-route bridge (opinion; spread +/-2 letters low, +/-1-2 high)"
+V_SCALE,GYM,VB,-1.0,36.25,0.4,"VB; indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V-easy,-1.0,36.25,0.4,MP synonym for VB
+V_SCALE,GYM,V0-,-0.25,38.75,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V0,0.0,40.0,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V0+,0.25,41.56,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V0-1,0.5,41.56,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V1-,0.75,42.08,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V1,1.0,43.13,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V1+,1.25,44.69,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V1-2,1.5,44.69,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V2-,1.75,45.21,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V2,2.0,46.25,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V2+,2.25,49.11,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V2-3,2.5,49.11,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V3-,2.75,50.06,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V3,3.0,51.96,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V3+,3.25,54.11,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V3-4,3.5,54.11,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V4-,3.75,54.82,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V4,4.0,56.25,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V4+,4.25,58.13,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V4-5,4.5,58.13,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V5-,4.75,58.75,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V5,5.0,60.0,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V5+,5.25,62.5,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V5-6,5.5,62.5,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V6-,5.75,63.33,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V6,6.0,65.0,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V6+,6.25,66.8,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V6-7,6.5,66.8,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V7-,6.75,67.4,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V7,7.0,68.6,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V7+,7.25,71.3,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V7-8,7.5,71.3,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V8-,7.75,72.2,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V8,8.0,74.0,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V8+,8.25,76.5,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V8-9,8.5,76.5,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V9-,8.75,77.33,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V9,9.0,79.0,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V9+,9.25,81.5,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V9-10,9.5,81.5,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V10-,9.75,82.33,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V10,10.0,84.0,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V10+,10.25,86.5,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V10-11,10.5,86.5,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V11-,10.75,87.33,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V11,11.0,89.0,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V11+,11.25,90.75,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V11-12,11.5,90.75,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V12-,11.75,91.33,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V12,12.0,92.5,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V12+,12.25,94.25,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V12-13,12.5,94.25,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V13-,12.75,94.83,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V13,13.0,96.0,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V13+,13.25,96.88,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V13-14,13.5,96.88,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V14-,13.75,97.17,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V14,14.0,97.75,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V14+,14.25,98.63,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V14-15,14.5,98.63,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V15-,14.75,98.92,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V15,15.0,99.5,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V15+,15.25,100.25,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V15-16,15.5,100.25,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V16-,15.75,100.5,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V16,16.0,101.0,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+V_SCALE,GYM,V16+,16.25,101.75,0.4,plus variant: midpoint to next rung (matches Font pins)
+V_SCALE,GYM,V16-17,16.5,101.75,0.4,MP range grade: midpoint (synonym of Vn+)
+V_SCALE,GYM,V17-,16.75,102.0,0.4,minus variant: one third toward previous rung
+V_SCALE,GYM,V17,17.0,102.5,0.4,"indoor crossover: soft below ~V10, stiff above (comp/spray setting), converge at top; gyms vary widely"
+FONT,BOULDER,1,1.0,32.5,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,2,2.0,37.5,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,3,3.0,41.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,3A,3.0,41.25,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 3
+FONT,BOULDER,3A+,3.167,41.81,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,3B,3.333,42.36,0.5,sub-6A letter form (8a.nu/UK logbook style): interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)
+FONT,BOULDER,3B+,3.5,42.92,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,3C,3.667,43.47,0.5,sub-6A letter form (8a.nu/UK logbook style): interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)
+FONT,BOULDER,3C+,3.75,44.03,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,4-,3.833,44.58,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,4A,3.833,44.58,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4-
+FONT,BOULDER,4A+,3.917,45.42,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,4,4.0,46.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,4B,4.0,46.25,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4
+FONT,BOULDER,4B+,4.083,47.5,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,4+,4.167,48.75,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,4C,4.167,48.75,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4+
+FONT,BOULDER,4C+,4.5,49.17,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,5-,4.833,49.58,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,5A,4.833,49.58,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5-
+FONT,BOULDER,5A+,4.917,50.42,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,5,5.0,51.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,5B,5.0,51.25,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5
+FONT,BOULDER,5B+,5.083,53.75,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,5+,5.167,56.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,5C,5.167,56.25,0.5,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5+
+FONT,BOULDER,5C+,5.583,58.75,0.5,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,BOULDER,6A,6.0,61.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,6A/+,6.083,62.19,0.5,8a.nu short slash form
+FONT,BOULDER,6A/6A+,6.083,62.19,0.5,full slash form
+FONT,BOULDER,6A+,6.167,63.13,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,6A+/6B,6.25,64.06,0.5,letter-boundary slash form
+FONT,BOULDER,6B,6.333,65.0,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,6B/+,6.417,65.94,0.5,8a.nu short slash form
+FONT,BOULDER,6B/6B+,6.417,65.94,0.5,full slash form
+FONT,BOULDER,6B+,6.5,66.88,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,6B+/6C,6.583,67.81,0.5,letter-boundary slash form
+FONT,BOULDER,6C,6.667,68.75,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,6C/+,6.75,70.0,0.5,8a.nu short slash form
+FONT,BOULDER,6C/6C+,6.75,70.0,0.5,full slash form
+FONT,BOULDER,6C+,6.833,71.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,6C+/7A,6.917,72.5,0.5,letter-boundary slash form
+FONT,BOULDER,7A,7.0,73.75,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,7A/+,7.083,75.0,0.5,8a.nu short slash form
+FONT,BOULDER,7A/7A+,7.083,75.0,0.5,full slash form
+FONT,BOULDER,7A+,7.167,76.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,7A+/7B,7.25,78.13,0.5,letter-boundary slash form
+FONT,BOULDER,7B,7.333,80.0,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,7B/+,7.417,80.63,0.5,8a.nu short slash form
+FONT,BOULDER,7B/7B+,7.417,80.63,0.5,full slash form
+FONT,BOULDER,7B+,7.5,81.25,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,7B+/7C,7.583,81.88,0.5,letter-boundary slash form
+FONT,BOULDER,7C,7.667,82.5,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,7C/+,7.75,83.75,0.5,8a.nu short slash form
+FONT,BOULDER,7C/7C+,7.75,83.75,0.5,full slash form
+FONT,BOULDER,7C+,7.833,85.0,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,7C+/8A,7.917,86.25,0.5,letter-boundary slash form
+FONT,BOULDER,8A,8.0,87.5,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,8A/+,8.083,88.75,0.5,8a.nu short slash form
+FONT,BOULDER,8A/8A+,8.083,88.75,0.5,full slash form
+FONT,BOULDER,8A+,8.167,90.0,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,8A+/8B,8.25,91.25,0.5,letter-boundary slash form
+FONT,BOULDER,8B,8.333,92.5,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,8B/+,8.417,93.75,0.5,8a.nu short slash form
+FONT,BOULDER,8B/8B+,8.417,93.75,0.5,full slash form
+FONT,BOULDER,8B+,8.5,95.0,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,8B+/8C,8.583,96.25,0.5,letter-boundary slash form
+FONT,BOULDER,8C,8.667,97.5,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,8C/+,8.75,98.75,0.5,8a.nu short slash form
+FONT,BOULDER,8C/8C+,8.75,98.75,0.5,full slash form
+FONT,BOULDER,8C+,8.833,100.0,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,BOULDER,8C+/9A,8.917,101.25,0.5,letter-boundary slash form
+FONT,BOULDER,9A,9.0,102.5,0.5,outdoor; via near-unanimous V-Font crosswalk over the middle-line bridge
+FONT,GYM,1,1.0,29.15,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,2,2.0,33.21,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,3,3.0,36.25,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,3A,3.0,36.25,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 3
+FONT,GYM,3A+,3.167,36.67,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,3B,3.333,37.08,0.4,sub-6A letter form (8a.nu/UK logbook style): interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)
+FONT,GYM,3B+,3.5,37.5,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,3C,3.667,37.92,0.4,sub-6A letter form (8a.nu/UK logbook style): interpolated third between 3 and 4- (no numeric 3+/3- rungs exist)
+FONT,GYM,3C+,3.75,38.33,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,4-,3.833,38.75,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,4A,3.833,38.75,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4-
+FONT,GYM,4A+,3.917,39.38,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,4,4.0,40.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,4B,4.0,40.0,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4
+FONT,GYM,4B+,4.083,40.78,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,4+,4.167,41.56,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,4C,4.167,41.56,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 4+
+FONT,GYM,4C+,4.5,41.82,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,5-,4.833,42.08,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,5A,4.833,42.08,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5-
+FONT,GYM,5A+,4.917,42.6,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,5,5.0,43.13,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,5B,5.0,43.13,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5
+FONT,GYM,5B+,5.083,44.69,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,5+,5.167,46.25,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,5C,5.167,46.25,0.4,sub-6A letter form (8a.nu/UK logbook style): synonym of Font 5+
+FONT,GYM,5C+,5.583,49.11,0.4,"sub-6A letter form (8a.nu/UK logbook style): plus form, midpoint of adjacent letter rungs"
+FONT,GYM,6A,6.0,51.96,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,6A/+,6.083,53.04,0.4,8a.nu short slash form
+FONT,GYM,6A/6A+,6.083,53.04,0.4,full slash form
+FONT,GYM,6A+,6.167,54.11,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,6A+/6B,6.25,55.18,0.4,letter-boundary slash form
+FONT,GYM,6B,6.333,56.25,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,6B/+,6.417,57.19,0.4,8a.nu short slash form
+FONT,GYM,6B/6B+,6.417,57.19,0.4,full slash form
+FONT,GYM,6B+,6.5,58.13,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,6B+/6C,6.583,59.06,0.4,letter-boundary slash form
+FONT,GYM,6C,6.667,60.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,6C/+,6.75,61.25,0.4,8a.nu short slash form
+FONT,GYM,6C/6C+,6.75,61.25,0.4,full slash form
+FONT,GYM,6C+,6.833,62.5,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,6C+/7A,6.917,63.75,0.4,letter-boundary slash form
+FONT,GYM,7A,7.0,65.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,7A/+,7.083,66.8,0.4,8a.nu short slash form
+FONT,GYM,7A/7A+,7.083,66.8,0.4,full slash form
+FONT,GYM,7A+,7.167,68.6,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,7A+/7B,7.25,71.3,0.4,letter-boundary slash form
+FONT,GYM,7B,7.333,74.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,7B/+,7.417,75.25,0.4,8a.nu short slash form
+FONT,GYM,7B/7B+,7.417,75.25,0.4,full slash form
+FONT,GYM,7B+,7.5,76.5,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,7B+/7C,7.583,77.75,0.4,letter-boundary slash form
+FONT,GYM,7C,7.667,79.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,7C/+,7.75,81.5,0.4,8a.nu short slash form
+FONT,GYM,7C/7C+,7.75,81.5,0.4,full slash form
+FONT,GYM,7C+,7.833,84.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,7C+/8A,7.917,86.5,0.4,letter-boundary slash form
+FONT,GYM,8A,8.0,89.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,8A/+,8.083,90.75,0.4,8a.nu short slash form
+FONT,GYM,8A/8A+,8.083,90.75,0.4,full slash form
+FONT,GYM,8A+,8.167,92.5,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,8A+/8B,8.25,94.25,0.4,letter-boundary slash form
+FONT,GYM,8B,8.333,96.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,8B/+,8.417,96.88,0.4,8a.nu short slash form
+FONT,GYM,8B/8B+,8.417,96.88,0.4,full slash form
+FONT,GYM,8B+,8.5,97.75,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,8B+/8C,8.583,98.63,0.4,letter-boundary slash form
+FONT,GYM,8C,8.667,99.5,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,8C/+,8.75,100.25,0.4,8a.nu short slash form
+FONT,GYM,8C/8C+,8.75,100.25,0.4,full slash form
+FONT,GYM,8C+,8.833,101.0,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+FONT,GYM,8C+/9A,8.917,101.75,0.4,letter-boundary slash form
+FONT,GYM,9A,9.0,102.5,0.4,indoor; via V-Font crosswalk over the gym crossover curve
+ICE_WI,ICE,AI1,0.6,31.25,0.25,half grade below same-numbered WI: midline of AAC 'about one grade softer' vs regional no-offset usage
+ICE_WI,ICE,WI1,1.0,32.5,0.3,via M-scale crosswalk + 'M+4' rule; rough movement comparison only
+ICE_WI,ICE,AI1-2,1.1,32.5,0.25,MP range grade
+ICE_WI,ICE,WI1+,1.25,33.33,0.3,plus variant (rare below WI3)
+ICE_WI,ICE,WI1-2,1.5,33.75,0.3,MP range grade
+ICE_WI,ICE,AI2,1.6,33.75,0.25,half grade below same-numbered WI: midline of AAC 'about one grade softer' vs regional no-offset usage
+ICE_WI,ICE,WI2-,1.75,34.17,0.3,minus variant (rare)
+ICE_WI,ICE,WI2,2.0,35.0,0.3,via M-scale crosswalk + 'M+4' rule; rough movement comparison only
+ICE_WI,ICE,AI2-3,2.1,35.0,0.25,MP range grade
+ICE_WI,ICE,WI2+,2.25,35.83,0.3,plus variant (rare below WI3)
+ICE_WI,ICE,WI2-3,2.5,36.25,0.3,MP range grade
+ICE_WI,ICE,AI3,2.6,36.25,0.25,half grade below same-numbered WI: midline of AAC 'about one grade softer' vs regional no-offset usage
+ICE_WI,ICE,WI3-,2.75,36.67,0.3,minus variant (rare)
+ICE_WI,ICE,WI3,3.0,37.5,0.3,via M-scale crosswalk + 'M+4' rule; rough movement comparison only
+ICE_WI,ICE,AI3-4,3.1,37.5,0.25,MP range grade
+ICE_WI,ICE,WI3+,3.25,38.33,0.3,plus variant (guidebook standard from WI3+)
+ICE_WI,ICE,WI3-4,3.5,38.75,0.3,MP range grade
+ICE_WI,ICE,AI4,3.6,38.75,0.25,half grade below same-numbered WI: midline of AAC 'about one grade softer' vs regional no-offset usage
+ICE_WI,ICE,WI4-,3.75,39.17,0.3,minus variant (rare)
+ICE_WI,ICE,WI4,4.0,40.0,0.3,via M-scale crosswalk + 'M+4' rule; rough movement comparison only
+ICE_WI,ICE,AI4-5,4.1,40.0,0.25,MP range grade
+ICE_WI,ICE,WI4+,4.25,40.83,0.3,plus variant (guidebook standard from WI3+)
+ICE_WI,ICE,WI4-5,4.5,41.25,0.3,MP range grade
+ICE_WI,ICE,AI5,4.6,41.25,0.25,half grade below same-numbered WI: midline of AAC 'about one grade softer' vs regional no-offset usage
+ICE_WI,ICE,WI5-,4.75,41.67,0.3,minus variant (rare)
+ICE_WI,ICE,WI5,5.0,42.5,0.3,via M-scale crosswalk + 'M+4' rule; rough movement comparison only
+ICE_WI,ICE,AI5-6,5.1,43.44,0.25,MP range grade
+ICE_WI,ICE,WI5+,5.25,44.58,0.3,plus variant (guidebook standard from WI3+)
+ICE_WI,ICE,WI5-6,5.5,45.63,0.3,MP range grade
+ICE_WI,ICE,AI6,5.6,45.63,0.25,half grade below same-numbered WI: midline of AAC 'about one grade softer' vs regional no-offset usage
+ICE_WI,ICE,WI6-,5.75,46.67,0.3,minus variant (rare)
+ICE_WI,ICE,WI6,6.0,48.75,0.3,via M-scale crosswalk + 'M+4' rule; rough movement comparison only
+ICE_WI,ICE,WI6+,6.25,52.08,0.3,plus variant (guidebook standard from WI3+)
+ICE_WI,ICE,WI6-7,6.5,53.75,0.25,MP range grade
+ICE_WI,ICE,WI7-,6.75,55.42,0.25,minus variant (rare)
+ICE_WI,ICE,WI7,7.0,58.75,0.25,via M-scale crosswalk + 'M+4' rule; rough movement comparison only
+ICE_WI,ICE,WI7+,7.25,60.0,0.25,plus variant (guidebook standard from WI3+)
+ICE_WI,ICE,WI7-8,7.5,60.63,0.2,MP range grade
+ICE_WI,ICE,WI8-,7.75,61.25,0.2,minus variant (rare)
+ICE_WI,ICE,WI8,8.0,62.5,0.2,via M-scale crosswalk + 'M+4' rule; rough movement comparison only
+ICE_WI,ICE,WI10,10.0,72.5,0.1,"Helmcken spray-ice extension; contested, WI8/9 skipped"
+ICE_WI,ICE,WI10+,10.25,73.33,0.1,Helmcken spray-ice extension; contested
+ICE_WI,ICE,WI11,11.0,75.0,0.1,"Helmcken spray-ice extension; contested, WI8/9 skipped"
+ICE_WI,ICE,WI12,12.0,77.5,0.1,"Helmcken spray-ice extension; contested, WI8/9 skipped"
+ICE_WI,ICE,WI13,13.0,80.0,0.1,"Helmcken spray-ice extension; contested, WI8/9 skipped"
+MIXED_M,MIXED,M1,1.0,32.5,0.4,'M+4' rule (M4~5.8): consensus of NEice/Blackbird/Ascentionism
+MIXED_M,MIXED,M1+,1.25,33.33,0.4,plus variant
+MIXED_M,MIXED,M1-2,1.5,33.75,0.4,MP range grade
+MIXED_M,MIXED,M2-,1.75,34.17,0.4,minus variant
+MIXED_M,MIXED,M2,2.0,35.0,0.4,'M+4' rule (M4~5.8): consensus of NEice/Blackbird/Ascentionism
+MIXED_M,MIXED,M2+,2.25,35.83,0.4,plus variant
+MIXED_M,MIXED,M2-3,2.5,36.25,0.4,MP range grade
+MIXED_M,MIXED,M3-,2.75,36.67,0.4,minus variant
+MIXED_M,MIXED,M3,3.0,37.5,0.4,'M+4' rule (M4~5.8): consensus of NEice/Blackbird/Ascentionism
+MIXED_M,MIXED,M3+,3.25,38.33,0.4,plus variant
+MIXED_M,MIXED,M3-4,3.5,38.75,0.4,MP range grade
+MIXED_M,MIXED,M4-,3.75,39.17,0.4,minus variant
+MIXED_M,MIXED,M4,4.0,40.0,0.4,'M+4' rule (M4~5.8): consensus of NEice/Blackbird/Ascentionism
+MIXED_M,MIXED,M4+,4.25,40.83,0.4,plus variant
+MIXED_M,MIXED,M4-5,4.5,41.25,0.4,MP range grade
+MIXED_M,MIXED,M5-,4.75,41.67,0.4,minus variant
+MIXED_M,MIXED,M5,5.0,42.5,0.4,'M+4' rule (M4~5.8): consensus of NEice/Blackbird/Ascentionism
+MIXED_M,MIXED,M5+,5.25,44.58,0.4,plus variant
+MIXED_M,MIXED,M5-6,5.5,45.63,0.4,MP range grade
+MIXED_M,MIXED,M6-,5.75,46.67,0.4,minus variant
+MIXED_M,MIXED,M6,6.0,48.75,0.4,'M+4' rule (M4~5.8): consensus of NEice/Blackbird/Ascentionism
+MIXED_M,MIXED,M6+,6.25,52.08,0.4,plus variant
+MIXED_M,MIXED,M6-7,6.5,53.75,0.4,MP range grade
+MIXED_M,MIXED,M7-,6.75,55.42,0.4,minus variant
+MIXED_M,MIXED,M7,7.0,58.75,0.4,'M+4' rule (M4~5.8): consensus of NEice/Blackbird/Ascentionism
+MIXED_M,MIXED,M7+,7.25,60.0,0.25,plus variant
+MIXED_M,MIXED,M7-8,7.5,60.63,0.25,MP range grade
+MIXED_M,MIXED,M8-,7.75,61.25,0.25,minus variant
+MIXED_M,MIXED,M8,8.0,62.5,0.25,disputed above M8 (Lowe 5.12 vs modern 5.11+); Blackbird extrapolation
+MIXED_M,MIXED,M8+,8.25,64.58,0.25,plus variant
+MIXED_M,MIXED,M8-9,8.5,65.63,0.25,MP range grade
+MIXED_M,MIXED,M9-,8.75,66.67,0.25,minus variant
+MIXED_M,MIXED,M9,9.0,68.75,0.25,disputed above M8 (Lowe 5.12 vs modern 5.11+); Blackbird extrapolation
+MIXED_M,MIXED,M9+,9.25,70.0,0.25,plus variant
+MIXED_M,MIXED,M9-10,9.5,70.63,0.25,MP range grade
+MIXED_M,MIXED,M10-,9.75,71.25,0.25,minus variant
+MIXED_M,MIXED,M10,10.0,72.5,0.25,disputed above M8 (Lowe 5.12 vs modern 5.11+); Blackbird extrapolation
+MIXED_M,MIXED,M10+,10.25,74.58,0.25,plus variant
+MIXED_M,MIXED,M10-11,10.5,75.63,0.25,MP range grade
+MIXED_M,MIXED,M11-,10.75,76.67,0.25,minus variant
+MIXED_M,MIXED,M11,11.0,78.75,0.25,disputed above M8 (Lowe 5.12 vs modern 5.11+); Blackbird extrapolation
+MIXED_M,MIXED,M11+,11.25,82.08,0.25,plus variant
+MIXED_M,MIXED,M11-12,11.5,83.75,0.25,MP range grade
+MIXED_M,MIXED,M12-,11.75,85.42,0.25,minus variant
+MIXED_M,MIXED,M12,12.0,88.75,0.25,disputed above M8 (Lowe 5.12 vs modern 5.11+); Blackbird extrapolation
+MIXED_M,MIXED,M12+,12.25,89.58,0.15,plus variant
+MIXED_M,MIXED,M12-13,12.5,90.0,0.15,MP range grade
+MIXED_M,MIXED,M13-,12.75,90.42,0.15,minus variant
+MIXED_M,MIXED,M13,13.0,91.25,0.15,"elite rungs, highly subjective; M16 not established"
+MIXED_M,MIXED,M13+,13.25,92.08,0.15,plus variant
+MIXED_M,MIXED,M13-14,13.5,92.5,0.15,MP range grade
+MIXED_M,MIXED,M14-,13.75,92.92,0.15,minus variant
+MIXED_M,MIXED,M14,14.0,93.75,0.15,"elite rungs, highly subjective; M16 not established"
+MIXED_M,MIXED,M14+,14.25,94.58,0.15,plus variant
+MIXED_M,MIXED,M14-15,14.5,95.0,0.15,MP range grade
+MIXED_M,MIXED,M15-,14.75,95.42,0.15,minus variant
+MIXED_M,MIXED,M15,15.0,96.25,0.15,"elite rungs, highly subjective; M16 not established"
+MIXED_M,MIXED,M15+,15.25,97.08,0.15,plus variant
+MIXED_M,MIXED,M15-16,15.5,97.5,0.15,MP range grade
+MIXED_M,MIXED,M16-,15.75,97.92,0.15,minus variant
+MIXED_M,MIXED,M16,16.0,98.75,0.15,"elite rungs, highly subjective; M16 not established"
+E_Grade,TRAD,Mod,-11.0,21.25,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,Moderate,-11.0,21.25,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,M,-11.0,21.25,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,Diff,-10.0,23.75,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,D,-10.0,23.75,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,HD,-9.0,26.25,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,VDiff,-8.0,28.75,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,VD,-8.0,28.75,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,HVD,-7.0,31.25,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,MS,-6.0,32.5,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,Severe,-5.0,33.75,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,Sev,-5.0,33.75,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,S,-5.0,33.75,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,HS,-4.0,36.25,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,MVS,-3.0,37.5,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,VS,-2.0,38.75,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,HVS,-1.0,41.25,0.55,UK adjectival ladder below E1 (BMC/MP alignment)
+E_Grade,TRAD,E1,1.0,46.25,0.6,Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier
+E_Grade,TRAD,E1 5a,1.0,46.25,0.6,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E1 5b,1.0,46.25,0.6,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E1 5c,1.0,46.25,0.6,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E1/2,1.5,48.13,0.6,UKC logbook slash rung
+E_Grade,TRAD,E2,2.0,50.0,0.6,Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier
+E_Grade,TRAD,E2 5b,2.0,50.0,0.6,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E2 5c,2.0,50.0,0.6,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E2/3,2.5,53.13,0.6,UKC logbook slash rung
+E_Grade,TRAD,E3,3.0,56.25,0.6,Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier
+E_Grade,TRAD,E3 5c,3.0,56.25,0.6,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E3 6a,3.0,56.25,0.6,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E3/4,3.5,58.75,0.6,UKC logbook slash rung
+E_Grade,TRAD,E4,4.0,61.25,0.6,Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier
+E_Grade,TRAD,E4 6a,4.0,61.25,0.6,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E4 6b,4.0,61.25,0.6,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E4/5,4.5,63.75,0.5,UKC logbook slash rung
+E_Grade,TRAD,E5,5.0,66.25,0.5,Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier
+E_Grade,TRAD,E5 6a,5.0,66.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E5 6b,5.0,66.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E5/6,5.5,68.75,0.5,UKC logbook slash rung
+E_Grade,TRAD,E6,6.0,71.25,0.5,Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier
+E_Grade,TRAD,E6 6b,6.0,71.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E6 6c,6.0,71.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E6/7,6.5,73.75,0.5,UKC logbook slash rung
+E_Grade,TRAD,E7,7.0,76.25,0.5,Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier
+E_Grade,TRAD,E7 6b,7.0,76.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E7 6c,7.0,76.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E7/8,7.5,78.75,0.5,UKC logbook slash rung
+E_Grade,TRAD,E8,8.0,81.25,0.5,Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier
+E_Grade,TRAD,E8 6c,8.0,81.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E8 7a,8.0,81.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E8/9,8.5,83.75,0.5,UKC logbook slash rung
+E_Grade,TRAD,E9,9.0,86.25,0.5,Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier
+E_Grade,TRAD,E9 6c,9.0,86.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E9 7a,9.0,86.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E9 7b,9.0,86.25,0.5,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E9/10,9.5,88.13,0.4,UKC logbook slash rung
+E_Grade,TRAD,E10,10.0,90.0,0.4,"Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier; anchored by real routes, compressed top"
+E_Grade,TRAD,E10 7a,10.0,90.0,0.4,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E10 7c,10.0,90.0,0.4,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E10/11,10.5,90.63,0.4,UKC logbook slash rung
+E_Grade,TRAD,E11,11.0,91.25,0.4,"Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier; anchored by real routes, compressed top"
+E_Grade,TRAD,E11 7a,11.0,91.25,0.4,canonical logged form; scored as bare E rung
+E_Grade,TRAD,E11/12,11.5,91.88,0.4,UKC logbook slash rung
+E_Grade,TRAD,E12,12.0,92.5,0.4,"Rockfax-style E-to-French (well-protected reading); danger skews +/-2 E per tier; anchored by real routes, compressed top"
+E_Grade,TRAD,E12 7a,12.0,92.5,0.4,canonical logged form; scored as bare E rung
+AID,AID,A0,0.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,C0,0.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,A0-1,0.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,C0-1,0.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,A1,1.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,C1,1.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,A1-2,1.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,C1-2,1.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,A2,2.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,C2,2.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,A2+,2.25,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; new-wave plus rung
+AID,AID,C2+,2.25,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; new-wave plus rung
+AID,AID,A2-3,2.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,C2-3,2.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,A3,3.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,C3,3.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,A3+,3.25,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; new-wave plus rung
+AID,AID,C3+,3.25,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; new-wave plus rung
+AID,AID,A3-4,3.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,C3-4,3.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,A4,4.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,C4,4.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,A4+,4.25,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; new-wave plus rung
+AID,AID,C4+,4.25,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; new-wave plus rung
+AID,AID,A4-5,4.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,C4-5,4.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade
+AID,AID,A5,5.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,C5,5.0,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only
+AID,AID,A5+,5.25,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; new-wave plus rung
+AID,AID,C5+,5.25,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; new-wave plus rung
+AID,AID,A6,5.25,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; new-wave synonym for UIAA A5+ (same rung)
+AID,AID,A5-6,5.5,,,risk/time axis; NO published free-climbing equivalence exists - ordered within-system only; MP range grade

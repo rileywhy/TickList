@@ -17,9 +17,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class TickController {
 
     private final TickRepository tickRepository;
+    private final GradeMappingService gradeMappingService;
 
-    public TickController(TickRepository tickRepository) {
+    public TickController(TickRepository tickRepository, GradeMappingService gradeMappingService) {
         this.tickRepository = tickRepository;
+        this.gradeMappingService = gradeMappingService;
     }
 
     @GetMapping({"/ticks", "/tick"})
@@ -37,7 +39,7 @@ public class TickController {
 
     @PostMapping({"/ticks", "/tick"})
     public Tick createTick(@RequestBody Tick tick, @AuthenticationPrincipal User user) {
-        tick.setGradeValue(resolveGradeValue(tick));
+        gradeMappingService.applyGradeMapping(tick);
         tick.setUser(user);
         return tickRepository.save(tick);
     }
@@ -59,11 +61,9 @@ public class TickController {
         existingTick.setLocation(updatedTick.getLocation());
         existingTick.setDiscipline(updatedTick.getDiscipline());
         existingTick.setTickType(updatedTick.getTickType());
-        existingTick.setGradeValue(resolveGradeValue(updatedTick));
         existingTick.setGrade(updatedTick.getGrade());
         existingTick.setRawGrade(updatedTick.getRawGrade());
         existingTick.setGradeSystem(updatedTick.getGradeSystem());
-        existingTick.setGradeMapping(updatedTick.getGradeMapping());
         existingTick.setSourceApp(updatedTick.getSourceApp());
         existingTick.setExternalId(updatedTick.getExternalId());
         existingTick.setSourceUrl(updatedTick.getSourceUrl());
@@ -73,6 +73,7 @@ public class TickController {
         existingTick.setAttempts(updatedTick.getAttempts());
         existingTick.setNotes(updatedTick.getNotes());
         existingTick.setClimbHeight(updatedTick.getClimbHeight());
+        gradeMappingService.applyGradeMapping(existingTick);
         return tickRepository.save(existingTick);
     }
 
@@ -85,14 +86,4 @@ public class TickController {
         tickRepository.delete(tick);
 
     }
-
-    // gradeValue is derived from the grade string unless the client supplies one,
-    // so ticks created or edited through the UI stay sortable by grade.
-    private static Double resolveGradeValue(Tick tick) {
-        if (tick.getGradeValue() != null) {
-            return tick.getGradeValue();
-        }
-
-        return GradeParser.parseGradeValue(tick.getGrade());
-    }  
 }

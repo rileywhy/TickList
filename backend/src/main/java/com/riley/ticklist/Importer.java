@@ -1,25 +1,25 @@
 package com.riley.ticklist;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-/* Class to import the csv files and parse the data
- */
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Locale;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+import org.springframework.stereotype.Service;
+
 @Service
 public class Importer {
     //function to import the csv file and parse the data
     private static final Path DEFAULT_CSV_PATH = Path.of("inputs", "ticks.csv");
     private static final Path BACKEND_DEFAULT_CSV_PATH = Path.of("..", "inputs", "ticks.csv");
-     private final TickRepository tickRepository;
+    private final TickRepository tickRepository;
+    private final GradeMappingService gradeMappingService;
 
-    public Importer(TickRepository tickRepository) {
+    public Importer(TickRepository tickRepository, GradeMappingService gradeMappingService) {
         this.tickRepository = tickRepository;
+        this.gradeMappingService = gradeMappingService;
     }
     public ImportResult importCSV(User user) throws Exception {
         return importCSV(defaultCsvPath(), user);
@@ -53,7 +53,7 @@ public class Importer {
             
             String date = record.get("Date");
             String route = record.get("Route");
-            String rating = record.get("Rating");
+            String grade = record.get("Rating");
             String notes = record.get("Notes");
             String url = record.get("URL");
             String pitches = record.get("Pitches");
@@ -71,7 +71,12 @@ public class Importer {
             tick.setTickType(classifyTickType(style, leadStyle));
             tick.setTickDate(DateParser.parse(date));
             tick.setClimbName(route);
-            GradeParser.ParsedGrade parsedGrade = GradeParser.parse(rating);
+            // Resolve the discipline from the CSV's Route Type first so the grade
+            // parse can use it to split Font from French sport ("7a" on a Boulder
+            // row is Font), instead of trusting letter case.
+            Discipline discipline = DisciplineParser.parsePrimaryDiscipline(routeType, grade);
+            tick.setDiscipline(discipline);
+            GradeParser.ParsedGrade parsedGrade = GradeParser.parse(grade, discipline);
             tick.setRawGrade(parsedGrade.rawGrade());
             tick.setGrade(parsedGrade.rawGrade());
             tick.setGradeSystem(parsedGrade.gradeSystem());
@@ -86,9 +91,8 @@ public class Importer {
             tick.setRopeStyle(parseRopeStyle(leadStyle));
             tick.setUser(user);
             
-            Discipline discipline = DisciplineParser.parsePrimaryDiscipline(routeType, rating);
-            tick.setDiscipline(discipline);
-            
+            gradeMappingService.applyGradeMapping(tick);
+
             tick.setPersonalGrade(yourRating);
             tick.setClimbHeight(parseOptionalDouble(length));
             tick.setSourceApp(SourceApp.MOUNTAIN_PROJECT);
