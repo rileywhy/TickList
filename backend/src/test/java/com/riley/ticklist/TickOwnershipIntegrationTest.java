@@ -7,11 +7,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -43,6 +45,9 @@ class TickOwnershipIntegrationTest {
     @Autowired private MockMvc mockMvc;
     @Autowired private TickRepository tickRepository;
     @Autowired private UserRepository userRepository;
+
+    /** The signing secret the app is running with, so tests can mint tokens it will accept. */
+    @Value("${security.jwt.secret}") private String jwtSecret;
 
     private ApiTestClient api;
 
@@ -149,6 +154,46 @@ class TickOwnershipIntegrationTest {
     }
 
     @Test
+    @DisplayName("POST /ticks cannot overwrite another user's tick by supplying its id")
+    void createTickCannotHijackForeignTickById() throws Exception {
+        // Alice owns a tick carrying fields a JPA merge would silently null out.
+        ObjectNode aliceBody = api.tickBody("Alice Arete");
+        aliceBody.put("location", "Eldorado Canyon");
+        aliceBody.put("notes", "Best pitch of the season.");
+
+        MvcResult created = mockMvc.perform(post("/ticks")
+                .header("Authorization", api.bearer(aliceToken))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(aliceBody.toString()))
+            .andExpect(status().isOk())
+            .andReturn();
+        Long aliceTickId = api.readJson(created).get("id").asLong();
+
+        // Bob POSTs *Alice's* id. Unguarded, save() merges instead of inserting and the
+        // setUser(user) that follows hands Bob the row -- POST is the one write path with
+        // no findByIdAndUser check, so nothing else stops this.
+        ObjectNode hijack = api.tickBody("pwned");
+        hijack.put("id", aliceTickId);
+
+        mockMvc.perform(post("/ticks")
+                .header("Authorization", api.bearer(bobToken))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(hijack.toString()))
+            .andExpect(status().isBadRequest());
+
+        // Alice's row is untouched: still hers, and the omitted fields survive.
+        Tick unchanged = tickRepository.findById(aliceTickId).orElseThrow();
+        assertThat(unchanged.getUser().getEmail()).isEqualTo("alice@example.com");
+        assertThat(unchanged.getClimbName()).isEqualTo("Alice Arete");
+        assertThat(unchanged.getLocation()).isEqualTo("Eldorado Canyon");
+        assertThat(unchanged.getNotes()).isEqualTo("Best pitch of the season.");
+
+        // The rejected request also created nothing of its own.
+        assertThat(tickRepository.findByUser(userRepository.findByEmail("bob@example.com"))).isEmpty();
+        assertThat(tickRepository.findAll()).hasSize(1);
+    }
+
+    @Test
     @DisplayName("POST /ticks resolves a CSV grade mapping and exposes difficultyScore")
     void createTickExposesDifficultyScore() throws Exception {
         ObjectNode body = api.tickBody("Mapped Arete");
@@ -185,11 +230,29 @@ class TickOwnershipIntegrationTest {
     }
 
     @Test
-    @DisplayName("Tick endpoints reject unauthenticated requests")
+    @DisplayName("Tick endpoints reject unauthenticated requests with 401")
     void tickEndpointsRequireAuthentication() throws Exception {
         // No Authorization header -> blocked by SecurityConfig before reaching the controller.
+        // 401 specifically, not merely "some 4xx": the frontend redirects to login on 401 and
+        // only shows an error banner on 403, so the exact status is the contract.
         mockMvc.perform(get("/ticks"))
-            .andExpect(status().is4xxClientError());
+            .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("An expired token is rejected with 401, so the client knows to re-authenticate")
+    void expiredTokenIsUnauthorized() throws Exception {
+        User alice = userRepository.findByEmail("alice@example.com");
+
+        // Correctly signed with the running secret, but a negative lifetime means it is already
+        // expired when minted -- no sleeping required to reach the expiry path.
+        String expiredToken = new JwtService(jwtSecret, -1000L).generateToken(alice);
+
+        // JwtAuthenticationFilter catches the ExpiredJwtException and continues the chain with no
+        // principal, so this arrives at the authorization check as anonymous. That is an identity
+        // failure (401), not a permissions failure (403).
+        mockMvc.perform(get("/ticks").header("Authorization", api.bearer(expiredToken)))
+            .andExpect(status().isUnauthorized());
     }
 
     // ---------- Item 2: imported ticks are bound to the authenticated importer ----------
@@ -226,7 +289,7 @@ class TickOwnershipIntegrationTest {
     @DisplayName("Import rejects unauthenticated requests and saves nothing")
     void importRequiresAuthentication() throws Exception {
         mockMvc.perform(multipart("/imports/mountain-project").file(api.mountainProjectCsvUpload()))
-            .andExpect(status().is4xxClientError());
+            .andExpect(status().isUnauthorized());
 
         assertThat(tickRepository.findAll()).isEmpty();
     }

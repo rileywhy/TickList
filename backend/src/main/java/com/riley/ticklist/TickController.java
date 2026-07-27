@@ -40,6 +40,9 @@ public class TickController {
     @PostMapping({"/ticks", "/tick"})
     public Tick createTick(@RequestBody Tick tick, @AuthenticationPrincipal User user) {
         gradeMappingService.applyGradeMapping(tick);
+        if (tick.getId() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "New tick cannot have an ID.");
+        }
         tick.setUser(user);
         return tickRepository.save(tick);
     }
