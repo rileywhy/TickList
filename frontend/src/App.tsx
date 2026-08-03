@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, type ReactElement } from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -9,14 +9,50 @@ import "./App.css";
 import type { CurrentUser } from "./types";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null | "loading">(
+  () => (localStorage.getItem("user_token") ? "loading" : null)
+);
 
+  useEffect(() => {
+    const token = localStorage.getItem("user_token");
+    if (token) {
+      // Fetch user data using the token
+      fetch("/current_user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            // The server saw the token and rejected it -- the session is dead.
+            localStorage.removeItem("user_token");
+            setCurrentUser(null);
+            return;
+          }
+          const userData = await response.json();
+          setCurrentUser({ ...userData, token });
+        })
+        .catch((error) => {
+          // Transport failure (network down, or navigation aborting the request):
+          // the token was never judged, so keep it for the next load.
+          console.error(error);
+          setCurrentUser(null);
+        });
+    }
+    
+  }, []);
 
   function handleLogout() {
     setCurrentUser(null);
-    
+    localStorage.removeItem("user_token");
   }
 
+  function requireAuth(render: (user: CurrentUser) => ReactElement) {
+    if (currentUser === "loading") return <p>Loading...</p>;
+    if (currentUser === null) return <Navigate to="/login" />;
+    return render(currentUser);
+  }
+  const user = currentUser !== null && currentUser !== "loading" ? currentUser : null;
   return (
     <>
       <nav className="navbar">
@@ -27,7 +63,7 @@ function App() {
         <Link to="/upload">Import</Link>
       </nav>
 
-      {currentUser!== null && <AccountMenu name={currentUser.firstName+" "+currentUser.lastName} onLogout={handleLogout} />}
+      {user && <AccountMenu name={user.firstName+" "+user.lastName} onLogout={handleLogout} />}
 
       <Routes>
         <Route path="/" element={<h1>Welcome</h1>} />
@@ -41,29 +77,15 @@ function App() {
 
         <Route
           path="/ticks"
-          element={
-            currentUser !== null ? (
-              <TickPage
-                token={currentUser.token}
-                onAuthExpired={handleLogout}
-              />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          element={requireAuth((user) => (
+            <TickPage token={user.token} onAuthExpired={handleLogout} />
+          ))}
         />
         <Route
           path="/upload"
-          element={
-            currentUser !== null ? (
-              <UploadPage
-                token={currentUser.token}
-                onAuthExpired={handleLogout}
-              />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          element={requireAuth((user) => (
+            <UploadPage token={user.token} onAuthExpired={handleLogout} />
+          ))}
         />
       </Routes>
     </>

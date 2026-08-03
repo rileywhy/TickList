@@ -33,6 +33,7 @@ export default defineConfig({
       '/imports': apiProxy(),
       '/ticks': apiProxy(),
       '/tick': apiProxy(),
+      '/current_user': apiProxy(),
     },
   },
 })
