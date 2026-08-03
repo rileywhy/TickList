@@ -31,6 +31,7 @@ function LoginPage({ setCurrentUser }: LoginPageProps) {
     const user = await response.json();
     console.log(user);
 
+    localStorage.setItem("user_token", user.token);
     setCurrentUser(user);
     setMessage("Login successful!");
   }

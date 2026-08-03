@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 
 
@@ -28,6 +29,11 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    @GetMapping("/current_user")
+    public CurrentUserResponse getCurrentUser(@AuthenticationPrincipal User user) {
+       return new CurrentUserResponse(user.getEmail(), user.getFirstName(), user.getLastName());
     }
 
    @PostMapping("/login")
