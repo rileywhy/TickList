@@ -9,9 +9,9 @@ import "./App.css";
 import type { CurrentUser } from "./types";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null | "loading">(
-  () => (localStorage.getItem("user_token") ? "loading" : null)
-);
+  const [currentUser, setCurrentUser] = useState<
+    CurrentUser | null | "loading"
+  >(() => (localStorage.getItem("user_token") ? "loading" : null));
 
   useEffect(() => {
     const token = localStorage.getItem("user_token");
@@ -39,8 +39,11 @@ function App() {
           setCurrentUser(null);
         });
     }
-    
   }, []);
+  function handleLogin(user: CurrentUser) {
+    setCurrentUser(user);
+    localStorage.setItem("user_token", user.token);
+  }
 
   function handleLogout() {
     setCurrentUser(null);
@@ -52,7 +55,8 @@ function App() {
     if (currentUser === null) return <Navigate to="/login" />;
     return render(currentUser);
   }
-  const user = currentUser !== null && currentUser !== "loading" ? currentUser : null;
+  const user =
+    currentUser !== null && currentUser !== "loading" ? currentUser : null;
   return (
     <>
       <nav className="navbar">
@@ -63,17 +67,22 @@ function App() {
         <Link to="/upload">Import</Link>
       </nav>
 
-      {user && <AccountMenu name={user.firstName+" "+user.lastName} onLogout={handleLogout} />}
+      {user && (
+        <AccountMenu
+          name={user.firstName + " " + user.lastName}
+          onLogout={handleLogout}
+        />
+      )}
 
       <Routes>
         <Route path="/" element={<h1>Welcome</h1>} />
 
         <Route
           path="/login"
-          element={<LoginPage setCurrentUser={setCurrentUser} />}
+          element={<LoginPage onLogin={handleLogin} />}
         />
 
-        <Route path="/register" element={<RegisterPage  />} />
+        <Route path="/register" element={<RegisterPage />} />
 
         <Route
           path="/ticks"
