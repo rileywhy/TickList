@@ -1,10 +1,10 @@
 import { useState } from "react";
 import type { CurrentUser } from "../types";
 type LoginPageProps = {
-  setCurrentUser: (user: CurrentUser) => void;
+  onLogin: (user: CurrentUser) => void;
 };
 
-function LoginPage({ setCurrentUser }: LoginPageProps) {
+function LoginPage({ onLogin }: LoginPageProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -27,12 +27,8 @@ function LoginPage({ setCurrentUser }: LoginPageProps) {
       setMessage("Invalid email or password.");
       return;
     }
-
     const user = await response.json();
-    console.log(user);
-
-    localStorage.setItem("user_token", user.token);
-    setCurrentUser(user);
+    onLogin(user);
     setMessage("Login successful!");
   }
 
