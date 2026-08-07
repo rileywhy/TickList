@@ -83,6 +83,43 @@ class GradeMappingServiceTest {
     }
 
     @Test
+    void unmappedGradeLeavesGradeValueNull() {
+        // H1: when no seed row matches, gradeValue must be null -- not the
+        // GradeParser's arithmetic, which is a different scale than systemOrder
+        // (67 seed rows disagree). A null sorts honestly; a foreign-scale number
+        // silently corrupts every comparison it appears in.
+        Tick tick = new Tick();
+        tick.setGrade("M5");
+        tick.setGradeSystem(GradeSystem.UNKNOWN);
+        tick.setDiscipline(Discipline.GYM); // known seed gap: (MIXED_M, GYM) has no rows
+
+        service.applyGradeMapping(tick);
+
+        assertThat(tick.getGradeMapping()).isNull();
+        assertThat(tick.getGradeValue()).isNull();
+    }
+
+    @Test
+    void mappedGradeGetsTheSeedRowsSystemOrderExactly() {
+        GradeMapping seedRow = new GradeMapping();
+        seedRow.setSystemOrder(4.0); // the curated axis value for Font 4B
+        when(repository.findByGradeSystemAndDisciplineAndRawGradeAndActiveTrue(
+                eq(GradeSystem.FONT), eq(Discipline.BOULDER), eq("4B")))
+            .thenReturn(Optional.of(seedRow));
+
+        Tick tick = new Tick();
+        tick.setGrade("4B");
+        tick.setGradeSystem(GradeSystem.FONT);
+        tick.setDiscipline(Discipline.BOULDER);
+
+        service.applyGradeMapping(tick);
+
+        // Exactly the seed's number -- the parser would say 4.333 for the same string.
+        assertThat(tick.getGradeMapping()).isSameAs(seedRow);
+        assertThat(tick.getGradeValue()).isEqualTo(4.0);
+    }
+
+    @Test
     void vScaleSlashRangeNormalizesToTheDashFormTheSeedUses() {
         Tick tick = new Tick();
         tick.setGrade("V4/5");
