@@ -2,9 +2,10 @@ import { useState } from "react";
 import type { CurrentUser } from "../types";
 type LoginPageProps = {
   onLogin: (user: CurrentUser) => void;
+  sessionExpired: boolean;
 };
 
-function LoginPage({ onLogin }: LoginPageProps) {
+function LoginPage({ onLogin, sessionExpired }: LoginPageProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -43,17 +44,17 @@ function LoginPage({ onLogin }: LoginPageProps) {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-        />
+          />
 
         <button type="submit">Log In</button>
       </form>
 
+          {sessionExpired && <p>Your session expired. Please log in again.</p>}
       <p>{message}</p>
     </div>
   );

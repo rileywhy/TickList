@@ -34,3 +34,15 @@ test("logout survives a page refresh", async ({ page }) => {
   await page.goto("/ticks");
   await expect(page).toHaveURL(/\/login/);
 });
+
+test("expired session shows a message on the login page", async ({ page }) => {
+  // A dead token in storage drives the rehydration path: the server rejects it,
+  // the app settles to "expired", and the login page must say why.
+  // (The mid-session 401 path through TickPage/UploadPage is not covered here.)
+  await page.addInitScript(() => localStorage.setItem("user_token", "garbage"));
+
+  await page.goto("/ticks");
+
+  await expect(page).toHaveURL(/\/login/);
+  await expect(page.getByText("Your session expired")).toBeVisible();
+});
