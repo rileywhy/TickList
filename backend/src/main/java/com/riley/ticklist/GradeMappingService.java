@@ -44,7 +44,7 @@ public class GradeMappingService {
         tick.setGradeMapping(gradeMapping.orElse(null));
         tick.setGradeValue(gradeMapping
             .map(GradeMapping::getSystemOrder)
-            .orElse(parsedGrade.gradeValue()));
+            .orElse(null));
     }
 
     public Optional<GradeMapping> findMapping(GradeSystem gradeSystem, Discipline tickDiscipline, String rawGrade) {
