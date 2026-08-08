@@ -7,41 +7,56 @@ function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
-  function handleRegister(event: React.FormEvent) {
+  async function handleRegister(event: React.FormEvent) {
     event.preventDefault();
+    setMessage("");
+    setFieldErrors({});
 
-    fetch("/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        
-      },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Registration failed");
-        }
-        return response.json();
-      })
-      .then(() => {
-        setMessage("Account created successfully!");
-
-        // Optional: clear the form after successful registration
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPassword("");
-      })
-      .catch(() => {
-        setMessage("Could not create account.");
+    let response: Response;
+    try {
+      response = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+        }),
       });
+    } catch {
+      // Transport failure: the request never reached a verdict.
+      setMessage("Network error -- check your connection and try again.");
+      return;
+    }
+
+    if (response.status === 400) {
+      // Validation failure: the body is a field -> message map from the backend.
+      const errors = await response.json().catch(() => ({}));
+      setFieldErrors(errors);
+      setMessage("Please fix the highlighted fields.");
+      return;
+    }
+
+    if (response.status === 409) {
+      setFieldErrors({ email: "An account with this email already exists." });
+      return;
+    }
+
+    if (!response.ok) {
+      setMessage(`Could not create account (${response.status}).`);
+      return;
+    }
+
+    setMessage("Account created successfully!");
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
   }
 
   return (
@@ -56,6 +71,7 @@ function RegisterPage() {
           onChange={(event) => setFirstName(event.target.value)}
           required
         />
+        {fieldErrors.firstName && <p className="field-error">{fieldErrors.firstName}</p>}
 
         <input
           type="text"
@@ -64,6 +80,7 @@ function RegisterPage() {
           onChange={(event) => setLastName(event.target.value)}
           required
         />
+        {fieldErrors.lastName && <p className="field-error">{fieldErrors.lastName}</p>}
 
         <input
           type="email"
@@ -72,6 +89,7 @@ function RegisterPage() {
           onChange={(event) => setEmail(event.target.value)}
           required
         />
+        {fieldErrors.email && <p className="field-error">{fieldErrors.email}</p>}
 
         <input
           type="password"
@@ -80,6 +98,7 @@ function RegisterPage() {
           onChange={(event) => setPassword(event.target.value)}
           required
         />
+        {fieldErrors.password && <p className="field-error">{fieldErrors.password}</p>}
 
         <button type="submit">Register</button>
 

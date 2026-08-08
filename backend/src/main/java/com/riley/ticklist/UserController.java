@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.server.ResponseStatusException;
+
+import jakarta.validation.Valid;
 
 
 
@@ -24,11 +27,6 @@ public class UserController {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService= jwtService;
-    }
-
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return userRepository.findAll();
     }
 
     @GetMapping("/current_user")
@@ -64,10 +62,23 @@ public class UserController {
 }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-}
+    public CurrentUserResponse register(@Valid @RequestBody RegisterRequest request) {
+        // Deliberate account-enumeration oracle: a 409 tells a stranger this email
+        // has an account. Accepted for now; revisit alongside the privacy model.
+        if (userRepository.findByEmail(request.email()) != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "An account with this email already exists.");
+        }
+
+        // Translate at the boundary: only these four fields cross; id stays server-owned.
+        User user = new User();
+        user.setEmail(request.email());
+        user.setFirstName(request.firstName());
+        user.setLastName(request.lastName());
+        user.setPassword(passwordEncoder.encode(request.password()));
+        User saved = userRepository.save(user);
+
+        return new CurrentUserResponse(saved.getEmail(), saved.getFirstName(), saved.getLastName());
+    }
 
     
 }

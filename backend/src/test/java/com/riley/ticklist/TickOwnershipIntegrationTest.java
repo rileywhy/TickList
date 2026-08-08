@@ -65,10 +65,10 @@ class TickOwnershipIntegrationTest {
         api = new ApiTestClient(mockMvc);
 
         api.register("alice@example.com", "Alice", "Ascent", "alice-pw");
-        api.register("bob@example.com", "Bob", "Belay", "bob-pw");
+        api.register("bob@example.com", "Bob", "Belay", "bob-pass");
 
         aliceToken = api.login("alice@example.com", "alice-pw");
-        bobToken = api.login("bob@example.com", "bob-pw");
+        bobToken = api.login("bob@example.com", "bob-pass");
         bobId = userRepository.findByEmail("bob@example.com").getId();
     }
 

@@ -3,8 +3,9 @@
 Spring Boot + React/Vite climbing log. Imports Mountain Project CSV ticks; Kaya and 8a.nu planned.
 
 - `docs/roadmap.md` — phased plan and the original audit
-- `docs/review-2026-07-18.md` — current review; **two open criticals**, read before touching
-  `TickController` or auth
+- `docs/review-2026-07-18.md` — 2026-07 review. C1/C2/H3 resolved (`433c5b2`), M9 + session-expired
+  UX shipped (PRs #14/#15 + `f00954f`), H1 fixed 2026-08-06. Open: H2, H4, mediums — see the vault
+  Status note or memory for the live plan (M4 DTOs → Flyway baseline → Phase 1 import seam → Kaya)
 - `docs/ticklist-model.md`, `docs/grade-axis.md` — domain model and the cross-system grade scale
 
 ## Digest cache
