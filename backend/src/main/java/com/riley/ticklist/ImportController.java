@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import java.util.List;
 
 @RestController
 public class ImportController {
@@ -30,11 +31,7 @@ public class ImportController {
 
         try (Reader reader = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8)) {
             Importer.ImportResult result = importer.importCSV(reader, user);
-            return new ImportResponse(
-                file.getOriginalFilename(),
-                result.importedRows(),
-                result.skippedRows()
-            );
+            return new ImportResponse(file.getOriginalFilename(), result.importedRows(), result.skippedRows());
         } catch (IllegalArgumentException error) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error.getMessage(), error);
         } catch (IOException error) {
@@ -42,6 +39,6 @@ public class ImportController {
         }
     }
 
-    public record ImportResponse(String filename, int importedRows, int skippedRows) {
+    public record ImportResponse(String filename, int importedRows, List<SkippedRow> skippedRows) {
     }
 }
