@@ -4,8 +4,9 @@ Spring Boot + React/Vite climbing log. Imports Mountain Project CSV ticks; Kaya 
 
 - `docs/roadmap.md` — phased plan and the original audit
 - `docs/review-2026-07-18.md` — 2026-07 review. C1/C2/H3 resolved (`433c5b2`), M9 + session-expired
-  UX shipped (PRs #14/#15 + `f00954f`), H1 fixed 2026-08-06. Open: H2, H4, mediums — see the vault
-  Status note or memory for the live plan (M4 DTOs → Flyway baseline → Phase 1 import seam → Kaya)
+  UX shipped (PRs #14/#15 + `f00954f`), H1 fixed 2026-08-06, M4 done 2026-08-08 (Register + Tick
+  DTOs). Open: H2, H4, mediums — see the vault Status note or memory for the live plan
+  (Flyway baseline → Phase 1 import seam → Kaya)
 - `docs/ticklist-model.md`, `docs/grade-axis.md` — domain model and the cross-system grade scale
 
 ## Digest cache
@@ -31,8 +32,10 @@ tests are load-bearing.
 
 - Backend is a single flat package, `com.riley.ticklist`.
 - Tests: JUnit 5 + MockMvc; `backend/src/test/.../support/ApiTestClient.java` wraps register/login.
-- **Don't bind JPA entities directly as `@RequestBody`** — that's the root cause of the open
-  critical (`POST /ticks` mass-assignment IDOR). Use a DTO.
+- **Don't bind or return JPA entities on controllers** — that caused the (since-fixed) `POST /ticks`
+  mass-assignment IDOR. Every endpoint speaks DTOs (`RegisterRequest`, `TickRequest`/`TickResponse`);
+  `TickResponse` must stay in step with `TickRecord` in `tickConfig.ts` (Playwright pins this).
+- Vite's API proxy target is overridable via `VITE_API_TARGET` (defaults to `http://localhost:8080`).
 - Enum values are shared between `tickConfig.ts` and the Java enums and must stay in sync exactly.
 - Tests run `ddl-auto=create-drop` on H2 while production runs `update` on Postgres — schema/data
   migration bugs are structurally invisible to the suite.
