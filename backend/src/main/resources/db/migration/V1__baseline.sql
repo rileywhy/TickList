@@ -2,8 +2,6 @@
 -- PostgreSQL database dump
 --
 
-\restrict JKPydsRpDUVebzRmCBveyqpRHWOXlcrpakKVKXVTB1QfHFfnvhyrgaYXX7Mw2VR
-
 -- Dumped from database version 17.10 (Homebrew)
 -- Dumped by pg_dump version 17.10 (Homebrew)
 
@@ -243,6 +241,4 @@ ALTER TABLE ONLY public.tick
 --
 -- PostgreSQL database dump complete
 --
-
-\unrestrict JKPydsRpDUVebzRmCBveyqpRHWOXlcrpakKVKXVTB1QfHFfnvhyrgaYXX7Mw2VR
 
