@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class TickController {
 
@@ -25,57 +27,40 @@ public class TickController {
     }
 
     @GetMapping({"/ticks", "/tick"})
-    public List<Tick> getTicks(@AuthenticationPrincipal User user) {
-        return tickRepository.findByUser(user);
-
-
+    public List<TickResponse> getTicks(@AuthenticationPrincipal User user) {
+        return tickRepository.findByUser(user).stream()
+            .map(TickResponse::from)
+            .toList();
     }
 
     @GetMapping({"/ticks/{id}", "/tick/{id}"})
-    public Tick getTick(@PathVariable("id") Long id, @AuthenticationPrincipal User user) {
-        return tickRepository.findByIdAndUser(id, user).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tick not found."));
-
+    public TickResponse getTick(@PathVariable("id") Long id, @AuthenticationPrincipal User user) {
+        return tickRepository.findByIdAndUser(id, user)
+            .map(TickResponse::from)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tick not found."));
     }
 
     @PostMapping({"/ticks", "/tick"})
-    public Tick createTick(@RequestBody Tick tick, @AuthenticationPrincipal User user) {
+    public TickResponse createTick(@Valid @RequestBody TickRequest request, @AuthenticationPrincipal User user) {
+        Tick tick = new Tick();
+        applyRequest(request, tick);
         gradeMappingService.applyGradeMapping(tick);
-        if (tick.getId() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "New tick cannot have an ID.");
-        }
         tick.setUser(user);
-        return tickRepository.save(tick);
+        return TickResponse.from(tickRepository.save(tick));
     }
 
     @PutMapping({"/ticks/{id}", "/tick/{id}"})
-    public Tick updateTick(
+    public TickResponse updateTick(
         @PathVariable("id") Long id,
-        @RequestBody Tick updatedTick,
+        @Valid @RequestBody TickRequest request,
         @AuthenticationPrincipal User user
     ) {
-        Tick existingTick = tickRepository.findByIdAndUser(id, user).orElse(null);
+        Tick existingTick = tickRepository.findByIdAndUser(id, user)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tick not found."));
 
-         if (existingTick == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tick not found.");
-        }
-
-        existingTick.setClimbName(updatedTick.getClimbName());
-        existingTick.setClimbId(updatedTick.getClimbId());
-        existingTick.setLocation(updatedTick.getLocation());
-        existingTick.setDiscipline(updatedTick.getDiscipline());
-        existingTick.setTickType(updatedTick.getTickType());
-        existingTick.setGrade(updatedTick.getGrade());
-        existingTick.setGradeSystem(updatedTick.getGradeSystem());
-        existingTick.setSourceApp(updatedTick.getSourceApp());
-        existingTick.setExternalId(updatedTick.getExternalId());
-        existingTick.setSourceUrl(updatedTick.getSourceUrl());
-        existingTick.setStyle(updatedTick.getStyle());
-        existingTick.setRopeStyle(updatedTick.getRopeStyle());
-        existingTick.setTickDate(updatedTick.getTickDate());
-        existingTick.setAttempts(updatedTick.getAttempts());
-        existingTick.setNotes(updatedTick.getNotes());
+        applyRequest(request, existingTick);
         gradeMappingService.applyGradeMapping(existingTick);
-        return tickRepository.save(existingTick);
+        return TickResponse.from(tickRepository.save(existingTick));
     }
 
     @DeleteMapping({"/ticks/{id}", "/tick/{id}"})
@@ -85,6 +70,28 @@ public class TickController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tick not found.");
         }
         tickRepository.delete(tick);
+    }
 
+    /**
+     * Translate at the boundary: only TickRequest's fields cross onto the
+     * entity; id and user are set nowhere here, so a request cannot touch them.
+     * Enums fall back to UNKNOWN when omitted, matching the entity's defaults.
+     */
+    private void applyRequest(TickRequest request, Tick tick) {
+        tick.setClimbName(request.climbName());
+        tick.setClimbId(request.climbId());
+        tick.setLocation(request.location());
+        tick.setDiscipline(request.discipline() != null ? request.discipline() : Discipline.UNKNOWN);
+        tick.setTickType(request.tickType() != null ? request.tickType() : TickType.UNKNOWN);
+        tick.setGrade(request.grade());
+        tick.setGradeSystem(request.gradeSystem() != null ? request.gradeSystem() : GradeSystem.UNKNOWN);
+        tick.setSourceApp(request.sourceApp() != null ? request.sourceApp() : SourceApp.UNKNOWN);
+        tick.setExternalId(request.externalId());
+        tick.setSourceUrl(request.sourceUrl());
+        tick.setStyle(request.style());
+        tick.setRopeStyle(request.ropeStyle() != null ? request.ropeStyle() : RopeStyle.UNKNOWN);
+        tick.setTickDate(request.tickDate());
+        tick.setAttempts(request.attempts());
+        tick.setNotes(request.notes());
     }
 }

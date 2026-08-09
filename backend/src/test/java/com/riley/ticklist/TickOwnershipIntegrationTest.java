@@ -65,10 +65,10 @@ class TickOwnershipIntegrationTest {
         api = new ApiTestClient(mockMvc);
 
         api.register("alice@example.com", "Alice", "Ascent", "alice-pw");
-        api.register("bob@example.com", "Bob", "Belay", "bob-pw");
+        api.register("bob@example.com", "Bob", "Belay", "bob-pass");
 
         aliceToken = api.login("alice@example.com", "alice-pw");
-        bobToken = api.login("bob@example.com", "bob-pw");
+        bobToken = api.login("bob@example.com", "bob-pass");
         bobId = userRepository.findByEmail("bob@example.com").getId();
     }
 
@@ -169,28 +169,50 @@ class TickOwnershipIntegrationTest {
             .andReturn();
         Long aliceTickId = api.readJson(created).get("id").asLong();
 
-        // Bob POSTs *Alice's* id. Unguarded, save() merges instead of inserting and the
-        // setUser(user) that follows hands Bob the row -- POST is the one write path with
-        // no findByIdAndUser check, so nothing else stops this.
+        // Bob POSTs *Alice's* id. TickRequest has no id field, so the smuggled value has
+        // nowhere to land: the request succeeds as an ordinary create for Bob. (Before the
+        // DTO, this same body reached save() as a merge and only a hand-written id guard
+        // stood in the way.)
         ObjectNode hijack = api.tickBody("pwned");
         hijack.put("id", aliceTickId);
 
-        mockMvc.perform(post("/ticks")
+        MvcResult hijackResult = mockMvc.perform(post("/ticks")
                 .header("Authorization", api.bearer(bobToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(hijack.toString()))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isOk())
+            .andReturn();
 
-        // Alice's row is untouched: still hers, and the omitted fields survive.
+        // Alice's row is untouched: still hers, and every field survives.
         Tick unchanged = tickRepository.findById(aliceTickId).orElseThrow();
         assertThat(unchanged.getUser().getEmail()).isEqualTo("alice@example.com");
         assertThat(unchanged.getClimbName()).isEqualTo("Alice Arete");
         assertThat(unchanged.getLocation()).isEqualTo("Eldorado Canyon");
         assertThat(unchanged.getNotes()).isEqualTo("Best pitch of the season.");
 
-        // The rejected request also created nothing of its own.
-        assertThat(tickRepository.findByUser(userRepository.findByEmail("bob@example.com"))).isEmpty();
-        assertThat(tickRepository.findAll()).hasSize(1);
+        // Bob got a brand-new row of his own under a different id -- an INSERT, not a merge.
+        Long bobTickId = api.readJson(hijackResult).get("id").asLong();
+        assertThat(bobTickId).isNotEqualTo(aliceTickId);
+        List<Tick> bobTicks = tickRepository.findByUser(userRepository.findByEmail("bob@example.com"));
+        assertThat(bobTicks).hasSize(1);
+        assertThat(bobTicks.get(0).getClimbName()).isEqualTo("pwned");
+        assertThat(tickRepository.findAll()).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("Tick responses expose only the TickResponse contract, never entity internals")
+    void tickResponsesOmitServerInternals() throws Exception {
+        Long tickId = api.createTick(aliceToken, "Contract Crack");
+
+        // The response shape is TickResponse's choice, not the Tick entity's: the owning
+        // user (and their bcrypt hash) plus normalization internals must never serialize.
+        mockMvc.perform(get("/ticks/" + tickId).header("Authorization", api.bearer(aliceToken)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(tickId))
+            .andExpect(jsonPath("$.climbName").value("Contract Crack"))
+            .andExpect(jsonPath("$.user").doesNotExist())
+            .andExpect(jsonPath("$.rawGrade").doesNotExist())
+            .andExpect(jsonPath("$.personalGrade").doesNotExist());
     }
 
     @Test
