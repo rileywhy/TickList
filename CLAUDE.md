@@ -37,5 +37,8 @@ tests are load-bearing.
   `TickResponse` must stay in step with `TickRecord` in `tickConfig.ts` (Playwright pins this).
 - Vite's API proxy target is overridable via `VITE_API_TARGET` (defaults to `http://localhost:8080`).
 - Enum values are shared between `tickConfig.ts` and the Java enums and must stay in sync exactly.
-- Tests run `ddl-auto=create-drop` on H2 while production runs `update` on Postgres — schema/data
-  migration bugs are structurally invisible to the suite.
+- Schema is Flyway-managed (`db/migration/V*.sql`, baselined 2026-08-08); Hibernate runs
+  `ddl-auto=validate` and must never author DDL. Every schema change = a new numbered migration.
+  Spring Boot 4 gotcha: Flyway needs `spring-boot-starter-flyway`, not bare `flyway-core`.
+- Tests still run `ddl-auto=create-drop` on H2 with Flyway disabled — migration bugs remain
+  invisible to the suite until we adopt Testcontainers (a deliberate, deferred choice).
