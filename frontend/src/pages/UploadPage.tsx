@@ -8,17 +8,25 @@ type UploadPageProps = {
 type ImportResponse = {
   filename: string | null;
   importedRows: number;
-  skippedRows: number;
+  skippedRows: SkippedRow[];
+};
+
+type SkippedRow = {
+  recordNumber: number;
+  reason: string;
+  rawRow: string;
 };
 
 function UploadPage({ onAuthExpired, token }: UploadPageProps) {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [skipped, setSkipped] = useState<SkippedRow[]>([]);
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     setFile(event.target.files?.[0] ?? null);
     setMessage("");
+    setSkipped([]);
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -63,8 +71,9 @@ function UploadPage({ onAuthExpired, token }: UploadPageProps) {
 
       const result = (await response.json()) as ImportResponse;
       setMessage(
-        `Imported ${result.importedRows} ticks from ${result.filename ?? file.name}. Skipped ${result.skippedRows}.`
+        `Imported ${result.importedRows} ticks from ${result.filename ?? file.name}. Skipped ${result.skippedRows.length}.`,
       );
+      setSkipped(result.skippedRows);
       setFile(null);
       form.reset();
     } catch {
@@ -80,11 +89,25 @@ function UploadPage({ onAuthExpired, token }: UploadPageProps) {
         <h1>Import CSV</h1>
         <label className="upload-file-field">
           <span>Mountain Project CSV</span>
-          <input accept=".csv,text/csv" name="file" type="file" onChange={handleFileChange} />
+          <input
+            accept=".csv,text/csv"
+            name="file"
+            type="file"
+            onChange={handleFileChange}
+          />
         </label>
         <button type="submit" disabled={isUploading}>
           {isUploading ? "Importing..." : "Import CSV"}
         </button>
+        {skipped.length > 0 && (
+          <ul>
+            {skipped.map((row) => (
+              <li key={row.recordNumber}>
+                Row {row.recordNumber}: {row.reason}
+              </li>
+            ))}
+          </ul>
+        )}
         {file && <p className="upload-file-name">{file.name}</p>}
         {message && <p role="alert">{message}</p>}
       </form>

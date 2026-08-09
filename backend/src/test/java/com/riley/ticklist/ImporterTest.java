@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -130,14 +131,15 @@ class ImporterTest {
     }
 
     @Test
-    void failsWithoutSavingWhenNumericColumnsAreMalformed() throws IOException {
+    void skipsRowWithMalformedNumericColumnWithoutSaving() throws Exception {
         writeTicksCsv(
             "2026-06-15,The Bulge,5.10a,Fun route,https://mountainproject.com/route/123,one,Eldorado Canyon,4,3,FLASH,REDPOINT,Trad,5.10b,80,"
         );
 
-        assertThatThrownBy(() -> importer.importCSV(testCsv, importingUser))
-            .isInstanceOf(NumberFormatException.class);
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
 
+        assertThat(result.importedRows()).isZero();
+        assertThat(result.skippedRows()).hasSize(1);
         verify(tickRepository, never()).save(any(Tick.class));
     }
 
@@ -201,7 +203,7 @@ class ImporterTest {
         verify(tickRepository).save(tickCaptor.capture());
 
         assertThat(result.importedRows()).isEqualTo(1);
-        assertThat(result.skippedRows()).isZero();
+        assertThat(result.skippedRows()).isEmpty();
         assertThat(tickCaptor.getValue().getTickType()).isEqualTo(TickType.ATTEMPT);
     }
 
@@ -217,21 +219,47 @@ class ImporterTest {
         verify(tickRepository).save(tickCaptor.capture());
 
         assertThat(result.importedRows()).isEqualTo(1);
-        assertThat(result.skippedRows()).isZero();
+        assertThat(result.skippedRows()).isEmpty();
         assertThat(tickCaptor.getValue().getTickType()).isEqualTo(TickType.CLEAN_TR);
     }
 
     @Test
-    void failsWithoutSavingWhenDateFormatIsUnsupported() throws IOException {
+    void skipsRowWithUnsupportedDateFormatWithoutSaving() throws Exception {
         writeTicksCsv(
             "not-a-date,The Bulge,5.10a,Fun route,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,FLASH,REDPOINT,Trad,5.10b,80,"
         );
 
-        assertThatThrownBy(() -> importer.importCSV(testCsv, importingUser))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Unsupported date format");
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
 
+        assertThat(result.importedRows()).isZero();
+        assertThat(result.skippedRows()).hasSize(1);
+        assertThat(result.skippedRows().get(0).reason()).contains("Unsupported date format");
         verify(tickRepository, never()).save(any(Tick.class));
+    }
+
+    @Test
+    void skipsMalformedRowButImportsTheRest() throws Exception {
+        writeTicksCsv(
+            "2026-06-15,The Bulge,5.10a,Fun route,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,Lead,Redpoint,Trad,5.10b,80,",
+            "2026-06-16,Choss Pile,5.9,Bad row,https://mountainproject.com/route/124,1,Eldorado Canyon,4,3,Lead,Redpoint,Trad,,about 30,",
+            "2026-06-17,Hi-C,V1,Fun boulder,https://mountainproject.com/route/125,,Eldorado Canyon,4,3,Send,,Boulder,,,"
+        );
+
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
+
+        assertThat(result.importedRows()).isEqualTo(2);
+        assertThat(result.skippedRows()).hasSize(1);
+
+        SkippedRow skipped = result.skippedRows().get(0);
+        assertThat(skipped.recordNumber()).isEqualTo(2);
+        assertThat(skipped.reason()).isNotBlank();
+        assertThat(skipped.rawRow()).contains("Choss Pile");
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository, times(2)).save(tickCaptor.capture());
+        assertThat(tickCaptor.getAllValues())
+            .extracting(Tick::getClimbName)
+            .containsExactly("The Bulge", "Hi-C");
     }
     // main test method to run the importer against the actual inputs/ticks.csv file for inspection
     @Test
