@@ -19,13 +19,15 @@ public class Importer {
     // function to import the csv file and parse the data
     private static final Path DEFAULT_CSV_PATH = Path.of("inputs", "ticks.csv");
     private static final Path BACKEND_DEFAULT_CSV_PATH = Path.of("..", "inputs", "ticks.csv");
+    private final ImportBatchRepository importBatchRepository;
     private final TickRepository tickRepository;
     private final GradeMappingService gradeMappingService;
     private static final Logger log = LoggerFactory.getLogger(Importer.class);
 
-    public Importer(TickRepository tickRepository, GradeMappingService gradeMappingService) {
+    public Importer(TickRepository tickRepository, GradeMappingService gradeMappingService, ImportBatchRepository importBatchRepository) {
         this.tickRepository = tickRepository;
         this.gradeMappingService = gradeMappingService;
+        this.importBatchRepository = importBatchRepository;
     }
 
     public ImportResult importCSV(User user) throws Exception {
@@ -34,11 +36,11 @@ public class Importer {
 
     ImportResult importCSV(Path csvPath, User user) throws Exception {
         try (Reader reader = Files.newBufferedReader(csvPath)) {
-            return importCSV(reader, user);
+            return importCSV(reader, user, csvPath.getFileName().toString());
         }
     }
 
-    public ImportResult importCSV(Reader reader, User user) throws IOException {
+    public ImportResult importCSV(Reader reader, User user, String filename) throws IOException {
         if (user == null) {
             throw new IllegalArgumentException("Import requires an authenticated user.");
         }
@@ -52,6 +54,10 @@ public class Importer {
 
         // Date Route Rating Notes URL Pitches Location Avg Stars Your Stars Style Lead
         // Style Route Type Your Rating Length Rating Code
+        // Saved before the loop so ticks and skipped rows have an id to point at,
+        // and so a batch exists even when every row fails.
+        ImportBatch importBatch = new ImportBatch(user, SourceApp.MOUNTAIN_PROJECT, filename);
+        importBatchRepository.save(importBatch);
 
         int importedRows = 0;
         List<SkippedRow> skippedRows = new ArrayList<>();
@@ -67,14 +73,19 @@ public class Importer {
                 SkippedRow skippedRow = new SkippedRow(recordNumber, reason, rawRow);
                 skippedRows.add(skippedRow);
                 log.warn("Skipping row {}: {}. Raw row: {}", recordNumber, reason, rawRow);
-
                 continue;
             }
             tick.setUser(user);
+            tick.setImportBatch(importBatch);
             gradeMappingService.applyGradeMapping(tick);
             tickRepository.save(tick);
             importedRows++;
         }
+
+        importBatch.setSuccessfulRows(importedRows);
+        importBatch.setFailedRows(skippedRows.size());
+        importBatchRepository.save(importBatch);
+
         return new ImportResult(importedRows, skippedRows);
     }
 

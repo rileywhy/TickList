@@ -64,6 +64,9 @@ public class Tick {
     private String externalId;
     
     private String sourceUrl;
+
+    @ManyToOne
+    private ImportBatch importBatch;
     
     private String style;
     
@@ -215,6 +218,14 @@ public class Tick {
 
     public void setSourceUrl(String sourceUrl) {
         this.sourceUrl = sourceUrl;
+    }
+
+    public ImportBatch getImportBatch() {
+        return importBatch;
+    }
+
+    public void setImportBatch(ImportBatch importBatch) {
+        this.importBatch = importBatch;
     }
 
     public RopeStyle getRopeStyle() {

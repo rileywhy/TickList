@@ -51,6 +51,7 @@ class ImporterTest {
     private Path testCsv;
     private TickRepository tickRepository;
     private GradeMappingService gradeMappingService;
+    private ImportBatchRepository importBatchRepository;
     private Importer importer;
     private User importingUser;
 
@@ -59,7 +60,8 @@ class ImporterTest {
         testCsv = tempDir.resolve("ticks.csv");
         tickRepository = mock(TickRepository.class);
         gradeMappingService = mock(GradeMappingService.class);
-        importer = new Importer(tickRepository, gradeMappingService);
+        importBatchRepository = mock(ImportBatchRepository.class);
+        importer = new Importer(tickRepository, gradeMappingService, importBatchRepository);
         importingUser = new User();
         importingUser.setId(1L);
         importingUser.setFirstName("Test");
@@ -141,6 +143,13 @@ class ImporterTest {
         assertThat(result.importedRows()).isZero();
         assertThat(result.skippedRows()).hasSize(1);
         verify(tickRepository, never()).save(any(Tick.class));
+
+        // Even a fully failed import must leave a batch record behind.
+        ArgumentCaptor<ImportBatch> batchCaptor = ArgumentCaptor.forClass(ImportBatch.class);
+        verify(importBatchRepository, times(2)).save(batchCaptor.capture());
+        ImportBatch finalBatch = batchCaptor.getValue();
+        assertThat(finalBatch.getSuccessfulRows()).isZero();
+        assertThat(finalBatch.getFailedRows()).isEqualTo(1);
     }
 
     @Test
@@ -260,6 +269,19 @@ class ImporterTest {
         assertThat(tickCaptor.getAllValues())
             .extracting(Tick::getClimbName)
             .containsExactly("The Bulge", "Hi-C");
+
+        // Batch saved exactly twice (before the loop, then with final counts).
+        ArgumentCaptor<ImportBatch> batchCaptor = ArgumentCaptor.forClass(ImportBatch.class);
+        verify(importBatchRepository, times(2)).save(batchCaptor.capture());
+        ImportBatch finalBatch = batchCaptor.getValue();
+        assertThat(finalBatch.getUser()).isSameAs(importingUser);
+        assertThat(finalBatch.getSourceApp()).isEqualTo(SourceApp.MOUNTAIN_PROJECT);
+        assertThat(finalBatch.getSuccessfulRows()).isEqualTo(2);
+        assertThat(finalBatch.getFailedRows()).isEqualTo(1);
+
+        // Every imported tick points back at the batch that created it.
+        assertThat(tickCaptor.getAllValues())
+            .allSatisfy(tick -> assertThat(tick.getImportBatch()).isSameAs(finalBatch));
     }
     // main test method to run the importer against the actual inputs/ticks.csv file for inspection
     @Test

@@ -30,7 +30,7 @@ public class ImportController {
         }
 
         try (Reader reader = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8)) {
-            Importer.ImportResult result = importer.importCSV(reader, user);
+            Importer.ImportResult result = importer.importCSV(reader, user, file.getOriginalFilename());
             return new ImportResponse(file.getOriginalFilename(), result.importedRows(), result.skippedRows());
         } catch (IllegalArgumentException error) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error.getMessage(), error);
