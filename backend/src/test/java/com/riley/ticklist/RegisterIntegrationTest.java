@@ -31,6 +31,7 @@ class RegisterIntegrationTest {
 
     @Autowired private MockMvc mockMvc;
     @Autowired private TickRepository tickRepository;
+    @Autowired private ImportBatchRepository importBatchRepository;
     @Autowired private UserRepository userRepository;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -39,6 +40,7 @@ class RegisterIntegrationTest {
     @BeforeEach
     void setUp() throws Exception {
         tickRepository.deleteAll();
+        importBatchRepository.deleteAll();
         userRepository.deleteAll();
         api = new ApiTestClient(mockMvc);
         api.register("alice@example.com", "Alice", "Anchor", "alice-pass");

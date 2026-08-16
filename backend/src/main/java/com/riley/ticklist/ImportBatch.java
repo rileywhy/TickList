@@ -27,13 +27,83 @@ public class ImportBatch {
     private SourceApp sourceApp;
 
     private String originalFilename;
-
-    private Integer totalRows;
     private Integer successfulRows;
     private Integer failedRows;
 
     @CreationTimestamp
     private LocalDateTime importedAt;
+
+    public ImportBatch() {
+        this.successfulRows = 0;
+        this.failedRows = 0;
+    }
+
+    public ImportBatch(User user, SourceApp sourceApp, String originalFilename) {
+        this();
+        this.user = user;
+        this.sourceApp = sourceApp;
+        this.originalFilename = originalFilename;
+    }
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public SourceApp getSourceApp() {
+        return sourceApp;
+    }
+
+    public void setSourceApp(SourceApp sourceApp) {
+        this.sourceApp = sourceApp;
+    }
+
+    public String getOriginalFilename() {
+        return originalFilename;
+    }
+
+    public void setOriginalFilename(String originalFilename) {
+        this.originalFilename = originalFilename;
+    }
+
+    public Integer getSuccessfulRows() {
+        return successfulRows;
+    }
+
+    public void setSuccessfulRows(Integer successfulRows) {
+        this.successfulRows = successfulRows;
+    }
+
+    public Integer getFailedRows() {
+        return failedRows;
+    }
+
+    public void setFailedRows(Integer failedRows) {
+        this.failedRows = failedRows;
+    }
+
+    public LocalDateTime getImportedAt() {
+        return importedAt;
+    }
+
+    public void setImportedAt(LocalDateTime importedAt) {
+        this.importedAt = importedAt;
+    }
+
+
 
     
 }
