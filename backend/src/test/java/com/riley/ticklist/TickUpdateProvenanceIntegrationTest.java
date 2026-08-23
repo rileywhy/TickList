@@ -65,6 +65,7 @@ class TickUpdateProvenanceIntegrationTest {
     @Autowired private MockMvc mockMvc;
     @Autowired private TickRepository tickRepository;
     @Autowired private ImportBatchRepository importBatchRepository;
+    @Autowired private SkippedRowRepository skippedRowRepository;
     @Autowired private UserRepository userRepository;
 
     private ApiTestClient api;
@@ -74,6 +75,7 @@ class TickUpdateProvenanceIntegrationTest {
     void setUp() throws Exception {
         // The schema is created once per context; clear rows between tests for isolation.
         // Ticks first (they hold the FK to app_users), then users.
+        skippedRowRepository.deleteAll();
         tickRepository.deleteAll();
         importBatchRepository.deleteAll();
         userRepository.deleteAll();

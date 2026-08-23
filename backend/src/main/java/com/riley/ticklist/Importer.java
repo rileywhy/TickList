@@ -22,12 +22,14 @@ public class Importer {
     private final ImportBatchRepository importBatchRepository;
     private final TickRepository tickRepository;
     private final GradeMappingService gradeMappingService;
+    private final SkippedRowRepository skippedRowRepository;
     private static final Logger log = LoggerFactory.getLogger(Importer.class);
 
-    public Importer(TickRepository tickRepository, GradeMappingService gradeMappingService, ImportBatchRepository importBatchRepository) {
+    public Importer(TickRepository tickRepository, GradeMappingService gradeMappingService, ImportBatchRepository importBatchRepository, SkippedRowRepository skippedRowRepository) {
         this.tickRepository = tickRepository;
         this.gradeMappingService = gradeMappingService;
         this.importBatchRepository = importBatchRepository;
+        this.skippedRowRepository = skippedRowRepository;
     }
 
     public ImportResult importCSV(User user) throws Exception {
@@ -60,7 +62,7 @@ public class Importer {
         importBatchRepository.save(importBatch);
 
         int importedRows = 0;
-        List<SkippedRow> skippedRows = new ArrayList<>();
+        List<SkippedRowResponse> skippedRows = new ArrayList<>();
 
         for (CSVRecord record : records) {
             Tick tick;
@@ -70,8 +72,12 @@ public class Importer {
                 long recordNumber = record.getRecordNumber();
                 String reason =  e.getMessage();
                 String rawRow = record.toMap().toString();
-                SkippedRow skippedRow = new SkippedRow(recordNumber, reason, rawRow);
-                skippedRows.add(skippedRow);
+                SkippedRow skippedRow = new SkippedRow(recordNumber, reason, rawRow, importBatch);
+
+                skippedRowRepository.save(skippedRow);
+                // The entity stays server-side; the response twin is what leaves
+                // (serializing the entity would drag batch -> user -> password along).
+                skippedRows.add(SkippedRowResponse.fromEntity(skippedRow));
                 log.warn("Skipping row {}: {}. Raw row: {}", recordNumber, reason, rawRow);
                 continue;
             }
@@ -89,7 +95,7 @@ public class Importer {
         return new ImportResult(importedRows, skippedRows);
     }
 
-    public record ImportResult(int importedRows, List<SkippedRow> skippedRows) {
+    public record ImportResult(int importedRows, List<SkippedRowResponse> skippedRows) {
     }
 
     private static Tick processMTNProjectRow(CSVRecord record) {

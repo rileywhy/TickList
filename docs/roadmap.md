@@ -88,8 +88,9 @@ This document is the output of a 70-agent audit: six code reviewers (security, i
 2. Per-row try/catch with real counts + row-level errors in `ImportResult` (imported / duplicates / failed with reasons); `@Transactional` import.
 3. Header-based source auto-detection → generic `POST /imports`; 400 with detected headers on no match.
 4. Idempotency: deterministic `externalId` per row (MP: route URL id + date + style; Kaya: full timestamp + gym + color + grade + ascent_type), unique constraint `(user, sourceApp, externalId)`, skip-and-count duplicates.
-5. Finish `ImportBatch`: repository, `Tick → ImportBatch` link, populate per import; enables history and "undo this import."
+5. ~~Finish `ImportBatch`: repository, `Tick → ImportBatch` link, populate per import~~ — done 2026-08-15 (PR #21, migration V2). Next: persist `SkippedRow` per batch (V3) so skip reports outlive the response.
 6. Fix the confirmed parser bugs (protection ratings, Attempt-style boulders, −1 sentinel, BOM, upload size limits).
+7. **String-length audit (V4).** Postgres rejects over-length values rather than truncating, and a rejected save inside the import loop fails the whole batch. `Tick.notes` is `varchar(2000)` with no declared limit anywhere (user prose — will bite); `climb_name`, `location`, `source_url` sit at the invisible 255 default and MP data (link-up names, breadcrumb locations) can exceed it. Widen all four to `text` (`ALTER COLUMN ... TYPE text` is safe on live data; Java `@Column(columnDefinition = "TEXT")`). `GradeMapping.note` (1000, internal) is fine. Rule: caps only as declared policy — `@Size` on the request DTO plus a UI counter — never as a database guess.
 
 ### Phase 2 — Kaya import
 

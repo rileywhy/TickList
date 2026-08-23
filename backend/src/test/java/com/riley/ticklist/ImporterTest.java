@@ -52,6 +52,7 @@ class ImporterTest {
     private TickRepository tickRepository;
     private GradeMappingService gradeMappingService;
     private ImportBatchRepository importBatchRepository;
+    private SkippedRowRepository skippedRowRepository;
     private Importer importer;
     private User importingUser;
 
@@ -61,7 +62,8 @@ class ImporterTest {
         tickRepository = mock(TickRepository.class);
         gradeMappingService = mock(GradeMappingService.class);
         importBatchRepository = mock(ImportBatchRepository.class);
-        importer = new Importer(tickRepository, gradeMappingService, importBatchRepository);
+        skippedRowRepository = mock(SkippedRowRepository.class);
+        importer = new Importer(tickRepository, gradeMappingService, importBatchRepository, skippedRowRepository);
         importingUser = new User();
         importingUser.setId(1L);
         importingUser.setFirstName("Test");
@@ -259,10 +261,17 @@ class ImporterTest {
         assertThat(result.importedRows()).isEqualTo(2);
         assertThat(result.skippedRows()).hasSize(1);
 
-        SkippedRow skipped = result.skippedRows().get(0);
+        SkippedRowResponse skipped = result.skippedRows().get(0);
         assertThat(skipped.recordNumber()).isEqualTo(2);
         assertThat(skipped.reason()).isNotBlank();
         assertThat(skipped.rawRow()).contains("Choss Pile");
+
+        // The skipped row is persisted, tied to this batch.
+        ArgumentCaptor<SkippedRow> skippedCaptor = ArgumentCaptor.forClass(SkippedRow.class);
+        verify(skippedRowRepository).save(skippedCaptor.capture());
+        SkippedRow savedSkip = skippedCaptor.getValue();
+        assertThat(savedSkip.getRecordNumber()).isEqualTo(2);
+        assertThat(savedSkip.getRawRow()).contains("Choss Pile");
 
         ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
         verify(tickRepository, times(2)).save(tickCaptor.capture());
