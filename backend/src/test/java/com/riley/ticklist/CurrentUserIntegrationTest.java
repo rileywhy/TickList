@@ -31,6 +31,7 @@ class CurrentUserIntegrationTest {
     @Autowired private MockMvc mockMvc;
     @Autowired private TickRepository tickRepository;
     @Autowired private ImportBatchRepository importBatchRepository;
+    @Autowired private SkippedRowRepository skippedRowRepository;
     @Autowired private UserRepository userRepository;
 
     /** The signing secret the app is running with, so tests can mint tokens it will accept. */
@@ -42,6 +43,7 @@ class CurrentUserIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
+        skippedRowRepository.deleteAll();
         tickRepository.deleteAll();
         importBatchRepository.deleteAll();
         userRepository.deleteAll();

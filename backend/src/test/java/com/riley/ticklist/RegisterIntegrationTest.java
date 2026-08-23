@@ -32,6 +32,7 @@ class RegisterIntegrationTest {
     @Autowired private MockMvc mockMvc;
     @Autowired private TickRepository tickRepository;
     @Autowired private ImportBatchRepository importBatchRepository;
+    @Autowired private SkippedRowRepository skippedRowRepository;
     @Autowired private UserRepository userRepository;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -39,6 +40,7 @@ class RegisterIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
+        skippedRowRepository.deleteAll();
         tickRepository.deleteAll();
         importBatchRepository.deleteAll();
         userRepository.deleteAll();

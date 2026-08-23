@@ -45,6 +45,7 @@ class TickOwnershipIntegrationTest {
     @Autowired private MockMvc mockMvc;
     @Autowired private TickRepository tickRepository;
     @Autowired private ImportBatchRepository importBatchRepository;
+    @Autowired private SkippedRowRepository skippedRowRepository;
     @Autowired private UserRepository userRepository;
 
     /** The signing secret the app is running with, so tests can mint tokens it will accept. */
@@ -60,6 +61,7 @@ class TickOwnershipIntegrationTest {
     void setUp() throws Exception {
         // The schema is created once per context; clear rows between tests for isolation.
         // Ticks first (they hold the FK to app_users), then users.
+        skippedRowRepository.deleteAll();
         tickRepository.deleteAll();
         importBatchRepository.deleteAll();
         userRepository.deleteAll();

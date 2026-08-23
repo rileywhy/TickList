@@ -39,6 +39,6 @@ public class ImportController {
         }
     }
 
-    public record ImportResponse(String filename, int importedRows, List<SkippedRow> skippedRows) {
+    public record ImportResponse(String filename, int importedRows, List<SkippedRowResponse> skippedRows) {
     }
 }
