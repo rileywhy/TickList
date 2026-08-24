@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,6 +27,7 @@ public class ImportBatch {
     @Enumerated(EnumType.STRING)
     private SourceApp sourceApp;
 
+    @Column(columnDefinition = "TEXT")
     private String originalFilename;
     private Integer successfulRows;
     private Integer failedRows;
