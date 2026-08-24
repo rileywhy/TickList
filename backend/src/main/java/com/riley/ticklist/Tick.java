@@ -36,7 +36,7 @@ public class Tick {
     @Enumerated(EnumType.STRING)
     private TickType tickType = TickType.UNKNOWN;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User user;
 
     @Column(columnDefinition = "TEXT")
