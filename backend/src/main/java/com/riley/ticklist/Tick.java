@@ -26,6 +26,7 @@ public class Tick {
     private Long id;
 
     @NotBlank
+    @Column(columnDefinition = "TEXT")
     private String climbName;
 
     private String climbId;
@@ -38,6 +39,7 @@ public class Tick {
     @ManyToOne
     private User user;
 
+    @Column(columnDefinition = "TEXT")
     private String location;
 
     private String grade;
@@ -63,6 +65,7 @@ public class Tick {
     
     private String externalId;
     
+    @Column(columnDefinition = "TEXT")
     private String sourceUrl;
 
     @ManyToOne
@@ -82,7 +85,7 @@ public class Tick {
     private Double userStars;
 
 
-    @Column(length = 2000)
+    @Column(columnDefinition = "TEXT")
     private String notes;
 
     @CreationTimestamp
