@@ -42,11 +42,15 @@ tests are load-bearing.
 - Enum values are shared between `tickConfig.ts` and the Java enums and must stay in sync exactly.
 - Schema is Flyway-managed (`db/migration/V*.sql`, baselined 2026-08-08); Hibernate runs
   `ddl-auto=validate` and must never author DDL. Every schema change = a new numbered migration.
+  Exception, on purpose: adding an enum constant is NOT a schema change — V4 dropped the
+  Hibernate-generated CHECK constraints, so Java owns the enum value set (N1). Applied migrations
+  are frozen: never edit one (even cosmetically — checksums); fix bugs with a new migration.
   Spring Boot 4 gotcha: Flyway needs `spring-boot-starter-flyway`, not bare `flyway-core`.
 - Tests still run `ddl-auto=create-drop` on H2 with Flyway disabled — migration bugs remain
   invisible to the suite until we adopt Testcontainers (a deliberate, deferred choice).
 - String columns: no guessed length caps. Postgres rejects (not truncates) over-length values, and
   a rejected save inside the import loop kills the whole batch. Use `@Column(columnDefinition =
   "TEXT")` for anything whose length we don't control (user prose, imported data, error messages);
-  a cap is only OK as declared policy (`@Size` on the request DTO + UI counter). Known debt: V4
-  audit in `docs/roadmap.md` (Tick.notes 2000, climb_name/location/source_url at default 255).
+  a cap is only OK as declared policy (`@Size` on the request DTO + UI counter). The old guessed
+  caps were widened to `text` in V5 (notes, climb_name, location, source_url, original_filename);
+  short structural fields (grade, style, externalId, climbId) stay at the 255 default by choice.
