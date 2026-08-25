@@ -25,7 +25,8 @@ public class Importer {
     private final SkippedRowRepository skippedRowRepository;
     private static final Logger log = LoggerFactory.getLogger(Importer.class);
 
-    public Importer(TickRepository tickRepository, GradeMappingService gradeMappingService, ImportBatchRepository importBatchRepository, SkippedRowRepository skippedRowRepository) {
+    public Importer(TickRepository tickRepository, GradeMappingService gradeMappingService,
+            ImportBatchRepository importBatchRepository, SkippedRowRepository skippedRowRepository) {
         this.tickRepository = tickRepository;
         this.gradeMappingService = gradeMappingService;
         this.importBatchRepository = importBatchRepository;
@@ -70,7 +71,7 @@ public class Importer {
                 tick = processMTNProjectRow(record);
             } catch (RuntimeException e) {
                 long recordNumber = record.getRecordNumber();
-                String reason =  e.getMessage();
+                String reason = e.getMessage();
                 String rawRow = record.toMap().toString();
                 SkippedRow skippedRow = new SkippedRow(recordNumber, reason, rawRow, importBatch);
 
@@ -136,11 +137,72 @@ public class Importer {
         tick.setStars(parseOptionalDouble(avgStars));
         tick.setUserStars(parseOptionalDouble(yourStars));
         tick.setStyle(style);
-        tick.setRopeStyle(parseRopeStyle(leadStyle));
+
+        RopeStyle ropeStyle = parseRopeStyle(leadStyle);
+        if (ropeStyle == RopeStyle.UNKNOWN) {
+            // MP boulders carry ascent style in the Style column; "Send" is MP's
+            // word for a worked clean ascent 
+            ropeStyle = rawValueEquals(style, "Send") ? RopeStyle.REDPOINT : parseRopeStyle(style);
+        }
+        tick.setRopeStyle(ropeStyle);
 
         tick.setPersonalGrade(yourRating);
         tick.setClimbHeight(parseOptionalDouble(length));
         tick.setSourceApp(SourceApp.MOUNTAIN_PROJECT);
+        return tick;
+
+    }
+
+    private static Tick processKayaRow(CSVRecord record) {
+        String date = record.get("date").trim();
+        String stiffness = record.get("stiffness").trim();
+        String yourStars = record.get("rating").trim();
+        String style = record.get("ascent_type").trim();
+        String attempts = record.get("attempts").trim();
+        String rawGrade = record.get("grade").trim();
+        String color = record.get("color").trim();
+        String name = record.get("climb_name").trim();
+        String gymName = record.get("gym").trim();
+        String locationName = record.get("location").trim();
+        String countryName = record.get("country").trim();
+
+        Tick tick = new Tick();
+        tick.setTickDate(DateParser.parse(date));
+        tick.setClimbName(name);
+        if (name.trim().isEmpty()) {
+            tick.setClimbName(color + " " + rawGrade + " " + gymName);
+        }
+
+        Discipline discipline = DisciplineParser.parsePrimaryDiscipline(null, rawGrade);
+        tick.setDiscipline(discipline);
+        GradeParser.ParsedGrade parsedGrade = GradeParser.parse(rawGrade, discipline);
+        tick.setRawGrade(parsedGrade.rawGrade());
+        tick.setGrade(parsedGrade.rawGrade());
+        tick.setGradeSystem(parsedGrade.gradeSystem());
+        tick.setGradeValue(parsedGrade.gradeValue());
+        // tick.setStiffness(stiffness);
+        tick.setAttempts(parseOptionalInteger(attempts));
+
+        String location;
+        if (!locationName.isEmpty()) {
+            location = countryName.isEmpty() ? locationName : locationName + ", " + countryName;
+        } else {
+            location = gymName.isEmpty() ? null : gymName;
+        }
+        tick.setLocation(location);
+
+        tick.setUserStars(parseOptionalDouble(yourStars));
+        tick.setStyle(style);
+        RopeStyle ropeStyle = parseRopeStyle(style);
+        tick.setRopeStyle(ropeStyle);
+        if (ropeStyle == RopeStyle.UNKNOWN) {
+            log.warn("Unrecognized Kaya ascent_type '{}' on row {} — importing as UNKNOWN", style,
+                    record.getRecordNumber());
+            tick.setTickType(TickType.UNKNOWN);
+        } else {
+            tick.setTickType(TickType.SEND);
+        }
+        tick.setSourceApp(SourceApp.KAYA);
         return tick;
 
     }
@@ -171,6 +233,10 @@ public class Importer {
 
     private static TickType classifyTickType(String style, String leadStyle) {
         if (rawValueEquals(leadStyle, "Fell/Hung")) {
+            return TickType.ATTEMPT;
+        }
+
+        if (rawValueEquals(style, "Attempt")) {
             return TickType.ATTEMPT;
         }
 

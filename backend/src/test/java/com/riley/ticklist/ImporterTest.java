@@ -155,7 +155,7 @@ class ImporterTest {
     }
 
     @Test
-    void importsBlankLeadStyleAsUnknownRopeStyle() throws Exception {
+    void boulderSendFallsBackToRedpointRopeStyle() throws Exception {
         writeTicksCsv(
             "2026-06-15,Hi-C,V1,Fun boulder,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,Send,,Boulder,,,"
         );
@@ -165,6 +165,53 @@ class ImporterTest {
         ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
         verify(tickRepository).save(tickCaptor.capture());
 
+        assertThat(tickCaptor.getValue().getRopeStyle()).isEqualTo(RopeStyle.REDPOINT);
+        assertThat(tickCaptor.getValue().getTickType()).isEqualTo(TickType.SEND);
+    }
+
+    @Test
+    void boulderFlashFallsBackToFlashRopeStyle() throws Exception {
+        writeTicksCsv(
+            "2026-06-15,Hi-C,V1,Fun boulder,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,Flash,,Boulder,,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        assertThat(tickCaptor.getValue().getRopeStyle()).isEqualTo(RopeStyle.FLASH);
+        assertThat(tickCaptor.getValue().getTickType()).isEqualTo(TickType.SEND);
+    }
+
+    @Test
+    void boulderAttemptClassifiesAsAttempt() throws Exception {
+        writeTicksCsv(
+            "2026-06-15,Hi-C,V1,Fun boulder,https://mountainproject.com/route/123,1,Eldorado Canyon,4,3,Attempt,,Boulder,,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        assertThat(tickCaptor.getValue().getTickType()).isEqualTo(TickType.ATTEMPT);
+        assertThat(tickCaptor.getValue().getRopeStyle()).isEqualTo(RopeStyle.UNKNOWN);
+    }
+
+    @Test
+    void followClassifiesAsSend() throws Exception {
+        // Decided 2026-08-24: seconding a pitch clean counts as a send.
+        writeTicksCsv(
+            "2026-06-15,Bastille Crack,5.7,,https://mountainproject.com/route/456,1,Eldorado Canyon,4,3,Follow,,Trad,,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        assertThat(tickCaptor.getValue().getTickType()).isEqualTo(TickType.SEND);
         assertThat(tickCaptor.getValue().getRopeStyle()).isEqualTo(RopeStyle.UNKNOWN);
     }
 
