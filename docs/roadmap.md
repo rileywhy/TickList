@@ -100,6 +100,8 @@ Model additions (one migration): `indoor` boolean (do **not** overload `Discipli
 
 Tests against fixture rows from the real export (gym row, outdoor row, vB, Repeat, stiffness ±1, trailing-space gym names); import-twice-→-0-new idempotency test; frontend: relabel Upload to auto-detect, show imported/duplicate/failed with row errors.
 
+Open question (2026-08-24): unrecognized `ascent_type` values currently only `log.warn` — the row still imports as UNKNOWN/UNKNOWN, so the user never sees it. Maybe surface these in the import summary ("N rows had an ascent type we didn't recognize"), which means carrying them through `ImportResult`. Undecided; revisit when the import-summary UI gets built.
+
 ### Phase 3 — Climb entity & identity resolution (the recommendation keystone)
 
 Do this **with or immediately after** the importers so dedup/backfill is built once, not twice:
@@ -108,6 +110,7 @@ Do this **with or immediately after** the importers so dedup/backfill is built o
 2. Resolution pipeline at import: exact external-ref match → normalized name+area+discipline match → fuzzy (trigram >0.85, grade ±1 as tiebreaker, store confidence) → else create PROVISIONAL climb. Merge log + reversible admin merge/split (fuzzy matching *will* err both ways).
 3. Ticks keep raw imported strings as immutable provenance; backfill migration resolves all existing ticks. **Your own MP+Kaya+8a exports are the first test corpus** — the same boulders must resolve to one Climb.
 4. Resurrect the grade axis: `GradeMappingRepository` + accessors + seed data (MP `Rating Code` is a free seed) → one cross-system `difficultyScore`; move consensus facts (stars, height) to Climb; ticks keep personal opinion (`userStars`, `personalGrade`, `stiffness`).
+5. **Location-string debt (flagged 2026-08-24, during Kaya work).** `Tick.location` is one free-text column now carrying three dialects — MP breadcrumbs (`Utah > Wasatch > …`), Kaya's `location, country` join (with gym-name fallback for gym rows), and manual free text — and the Kaya join is irreversible (the separator can occur inside either operand). It also swallows the only marker of gym-ness until the `indoor` flag exists, which the grade-axis GYM lookup rule depends on. The Area hierarchy above is the real fix; when building it: each dialect gets its own per-source splitter (never one regex over all three), the original location string stays on the tick as immutable provenance, and `indoor` gets set from source columns at import time — never inferred later by sniffing the display string for the word "Gym".
 
 ### Phase 4 — 8a.nu import
 
@@ -135,6 +138,11 @@ Task 0: obtain a real export (official path: Profile → Info → Edit → Logbo
 4. **Morpho inference**: auto-flag climbs where grade-opinion delta correlates with climber height — even if nobody tagged them.
 5. **Trip/area planner**: destination + profile + goal grades → ranked hit list by style fit, cohort love, sandbag index (after 1–3).
 6. **Partner matching / progression benchmarking** ("climbers your height: median 8 months V4→V6"): defer — needs local user density / longitudinal data.
+7. **Conditions engine & day/session planner** (climbingweather-style; added 2026-08-24). Two halves with different prerequisites:
+   - *Conditions*: per-area "condies score" per forecast day — temp/humidity/wind/precip from a free forecast API (Open-Meteo needs no key; NWS `api.weather.gov` for US detail), cached server-side, scored against aspect/sun exposure and dries-fast heuristics on the Area (a recent-rain + sandstone warning is safety-relevant content, not just convenience). Hook is the Phase 3 `Area` entity: add lat/long + aspect + rock type — the OpenBeta dump already carries area coordinates, so this is mostly a join, not data entry. Works at **n=1 user** — viable any time after Phase 3, unlike the density-gated items above it.
+   - *Personalized conditions* (the differentiator ClimbingWeather can't touch): correlate the user's own send history with historical weather at the tick's area/date — "your hardest sends cluster at 40–55°F" — then rank upcoming days by *their* send-weather profile, not a generic score.
+   - *Day planner*: date + destination + goals → itinerary: crag choice by sun/shade over the day, warm-up→project sequence pulled from pyramid gap analysis + recs (#5's trip planner is the multi-day version of this). *Training-session planner* indoors: target weaknesses via the anti-style trainer (#3), suggest load/rest from tick cadence. Both build on Phases 5–6, so they trail the conditions half.
+   - Keep it all behind client-agnostic API endpoints (e.g. `GET /areas/{id}/conditions`) per the iOS goal; forecast caching also matters for API rate limits once there's more than one user.
 
 ### Continuous track — product polish & infrastructure (slot into any phase)
 
