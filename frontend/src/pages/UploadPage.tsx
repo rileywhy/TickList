@@ -45,7 +45,7 @@ function UploadPage({ onAuthExpired, token }: UploadPageProps) {
     setMessage("");
 
     try {
-      const response = await fetch("/imports/mountain-project", {
+      const response = await fetch("/imports", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -88,7 +88,6 @@ function UploadPage({ onAuthExpired, token }: UploadPageProps) {
       <form className="upload-form" onSubmit={handleSubmit}>
         <h1>Import CSV</h1>
         <label className="upload-file-field">
-          <span>Mountain Project CSV</span>
           <input
             accept=".csv,text/csv"
             name="file"

@@ -133,7 +133,7 @@ class TickUpdateProvenanceIntegrationTest {
 
     /** Imports the two-row MP fixture as Alice and returns the persisted sport/trad row. */
     private Tick importAndFindSportRow() throws Exception {
-        mockMvc.perform(multipart("/imports/mountain-project")
+        mockMvc.perform(multipart("/imports")
                 .file(api.mountainProjectCsvUpload())
                 .header("Authorization", api.bearer(aliceToken)))
             .andExpect(status().isOk());

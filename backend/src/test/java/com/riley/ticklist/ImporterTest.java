@@ -45,6 +45,20 @@ class ImporterTest {
         "Rating Code"
     );
 
+    private static final String KAYA_HEADER = String.join(",",
+        "date",
+        "stiffness",
+        "rating",
+        "ascent_type",
+        "attempts",
+        "grade",
+        "color",
+        "climb_name",
+        "gym",
+        "location",
+        "country"
+    );
+
     @TempDir
     private Path tempDir;
 
@@ -366,8 +380,131 @@ class ImporterTest {
         assertThat(savedTicks).isNotEmpty();
     }
 
+    @Test
+    void importsKayaGymRowIntoTick() throws Exception {
+        // Real row from inputs/KAYA-Export-1782617673065.csv, trailing space in gym and all.
+        writeKayaCsv(
+            "Sun Mar 26 2023 16:30:56 GMT+0000 (GMT+00:00),0,,Flash,1,v2,Pink,,The Proving Ground Bouldering Gym ,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getTickDate()).isEqualTo(LocalDate.of(2023, 3, 26));
+        assertThat(tick.getClimbName()).isEqualTo("Pink v2 The Proving Ground Bouldering Gym");
+        assertThat(tick.getLocation()).isEqualTo("The Proving Ground Bouldering Gym");
+        assertThat(tick.getDiscipline()).isEqualTo(Discipline.BOULDER);
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.V_SCALE);
+        assertThat(tick.getRawGrade()).isEqualTo("v2");
+        assertThat(tick.getGradeValue()).isNotNull();
+        assertThat(tick.getTickType()).isEqualTo(TickType.SEND);
+        assertThat(tick.getRopeStyle()).isEqualTo(RopeStyle.FLASH);
+        assertThat(tick.getAttempts()).isEqualTo(1);
+        assertThat(tick.getUserStars()).isNull();
+        assertThat(tick.getSourceApp()).isEqualTo(SourceApp.KAYA);
+        assertThat(tick.getUser()).isSameAs(importingUser);
+        verify(gradeMappingService).applyGradeMapping(tick);
+    }
+
+    @Test
+    void importsKayaOutdoorRopeRowIntoTick() throws Exception {
+        writeKayaCsv(
+            "Mon Aug 24 2026 23:46:04 GMT+0000 (GMT+00:00),0,,Onsight,1,5.7,,Crescent Crack,,Little Cottonwood Canyon,United States"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getClimbName()).isEqualTo("Crescent Crack");
+        assertThat(tick.getLocation()).isEqualTo("Little Cottonwood Canyon, United States");
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.YDS);
+        // Kaya doesn't say sport vs trad, so a YDS row stays honestly UNKNOWN.
+        assertThat(tick.getDiscipline()).isEqualTo(Discipline.UNKNOWN);
+        assertThat(tick.getTickType()).isEqualTo(TickType.SEND);
+        assertThat(tick.getRopeStyle()).isEqualTo(RopeStyle.ONSIGHT);
+    }
+
+    @Test
+    void kayaRepeatAndStarsImportAsSendWithUserStars() throws Exception {
+        writeKayaCsv(
+            "Sun Mar 26 2023 16:31:00 GMT+0000 (GMT+00:00),0,4,Repeat,1,vB,Red,,The Proving Ground Bouldering Gym ,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getTickType()).isEqualTo(TickType.SEND);
+        assertThat(tick.getRopeStyle()).isEqualTo(RopeStyle.REPEAT);
+        assertThat(tick.getGradeSystem()).isEqualTo(GradeSystem.V_SCALE);
+        // Kaya's rating column is quality stars, not the grade.
+        assertThat(tick.getUserStars()).isEqualTo(4.0);
+        assertThat(tick.getStars()).isNull();
+    }
+
+    @Test
+    void unknownKayaAscentTypeImportsAsUnknownNotSkipped() throws Exception {
+        writeKayaCsv(
+            "Sun Mar 26 2023 16:30:56 GMT+0000 (GMT+00:00),0,,Project,1,v2,Pink,,The Proving Ground Bouldering Gym ,,"
+        );
+
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
+
+        assertThat(result.importedRows()).isEqualTo(1);
+        assertThat(result.skippedRows()).isEmpty();
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+
+        Tick tick = tickCaptor.getValue();
+        assertThat(tick.getTickType()).isEqualTo(TickType.UNKNOWN);
+        assertThat(tick.getRopeStyle()).isEqualTo(RopeStyle.UNKNOWN);
+        // The raw word is preserved for a later backfill.
+        assertThat(tick.getStyle()).isEqualTo("Project");
+    }
+
+    @Test
+    void kayaImportLabelsBatchKaya() throws Exception {
+        writeKayaCsv(
+            "Sun Mar 26 2023 16:30:56 GMT+0000 (GMT+00:00),0,,Flash,1,v2,Pink,,The Proving Ground Bouldering Gym ,,"
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<ImportBatch> batchCaptor = ArgumentCaptor.forClass(ImportBatch.class);
+        verify(importBatchRepository, times(2)).save(batchCaptor.capture());
+        assertThat(batchCaptor.getValue().getSourceApp()).isEqualTo(SourceApp.KAYA);
+    }
+
+    @Test
+    void rejectsCsvWithUnrecognizedHeaders() throws Exception {
+        Files.writeString(testCsv, "foo,bar,baz" + System.lineSeparator() + "1,2,3" + System.lineSeparator());
+
+        assertThatThrownBy(() -> importer.importCSV(testCsv, importingUser))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Headers found");
+
+        // A rejected file must not leave an orphan batch behind.
+        verify(importBatchRepository, never()).save(any(ImportBatch.class));
+        verify(tickRepository, never()).save(any(Tick.class));
+    }
+
     private void writeTicksCsv(String... rows) throws IOException {
         Files.writeString(testCsv, HEADER + System.lineSeparator()
+            + String.join(System.lineSeparator(), rows)
+            + System.lineSeparator());
+    }
+
+    private void writeKayaCsv(String... rows) throws IOException {
+        Files.writeString(testCsv, KAYA_HEADER + System.lineSeparator()
             + String.join(System.lineSeparator(), rows)
             + System.lineSeparator());
     }
