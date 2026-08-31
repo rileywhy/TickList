@@ -286,7 +286,7 @@ class TickOwnershipIntegrationTest {
     @Test
     @DisplayName("Import binds every imported tick to the authenticated user")
     void importBindsTicksToAuthenticatedUser() throws Exception {
-        mockMvc.perform(multipart("/imports/mountain-project")
+        mockMvc.perform(multipart("/imports")
                 .file(api.mountainProjectCsvUpload())
                 .header("Authorization", api.bearer(aliceToken)))
             .andExpect(status().isOk())
@@ -314,7 +314,7 @@ class TickOwnershipIntegrationTest {
     @Test
     @DisplayName("Import rejects unauthenticated requests and saves nothing")
     void importRequiresAuthentication() throws Exception {
-        mockMvc.perform(multipart("/imports/mountain-project").file(api.mountainProjectCsvUpload()))
+        mockMvc.perform(multipart("/imports").file(api.mountainProjectCsvUpload()))
             .andExpect(status().isUnauthorized());
 
         assertThat(tickRepository.findAll()).isEmpty();

@@ -23,8 +23,8 @@ public class ImportController {
         this.importer = importer;
     }
 
-    @PostMapping(path = "/imports/mountain-project", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ImportResponse importMountainProject(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal User user) {
+    @PostMapping(path = "/imports", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ImportResponse importFile(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal User user) {
         if (file.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Choose a CSV file to import.");
         }

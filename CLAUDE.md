@@ -2,6 +2,7 @@
 
 Spring Boot + React/Vite climbing log. Imports Mountain Project CSV ticks; Kaya and 8a.nu planned.
 
+- `docs/TODO.md` — open work only, ordered by importance. **Maintain it: delete items as they complete** (never check off or strike through — Riley never wants finished work visible there); add new work as it's discovered.
 - `docs/roadmap.md` — phased plan and the original audit
 - `docs/review-2026-07-18.md` — 2026-07 review. C1/C2/H3 resolved (`433c5b2`), M9 + session-expired
   UX shipped (PRs #14/#15 + `f00954f`), H1 fixed 2026-08-06, M4 done 2026-08-08 (Register + Tick
