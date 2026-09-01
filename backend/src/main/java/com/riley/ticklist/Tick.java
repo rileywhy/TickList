@@ -1,5 +1,6 @@
 package com.riley.ticklist;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -16,10 +17,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(name = "uk_tick_user_source_external", columnNames = { "user_id",
+        "source_app", "external_id" }))
 public class Tick {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,43 +52,41 @@ public class Tick {
     private String rawGrade;
 
     private Double gradeValue;
-    
+
     private String personalGrade;
     private Double stars;
-    
-    private Double climbHeight;
 
+    private Double climbHeight;
 
     @Enumerated(EnumType.STRING)
     private GradeSystem gradeSystem = GradeSystem.UNKNOWN;
-    
+
     @ManyToOne
     private GradeMapping gradeMapping;
-    
+
     @Enumerated(EnumType.STRING)
     private SourceApp sourceApp = SourceApp.UNKNOWN;
-    
+
     private String externalId;
-    
+
     @Column(columnDefinition = "TEXT")
     private String sourceUrl;
 
     @ManyToOne
     private ImportBatch importBatch;
-    
+
     private String style;
-    
+
     @Enumerated(EnumType.STRING)
     private RopeStyle ropeStyle = RopeStyle.UNKNOWN;
-    
+
     private LocalDate tickDate;
-    
+
     private Integer attempts;
-    
+
     private Integer pitches;
 
     private Double userStars;
-
 
     @Column(columnDefinition = "TEXT")
     private String notes;
@@ -93,6 +96,12 @@ public class Tick {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    // Kaya specific columns
+    private Integer stiffness;
+    private String holdColor; // 255 default matches the varchar
+    private Boolean indoor;
+    private Instant tickTimestamp;
 
     public Tick() {
     }
@@ -140,7 +149,6 @@ public class Tick {
     public void setGradeValue(Double gradeValue) {
         this.gradeValue = gradeValue;
     }
-
 
     public String getLocation() {
         return location;
@@ -239,7 +247,6 @@ public class Tick {
         this.ropeStyle = ropeStyle;
     }
 
-
     public LocalDate getTickDate() {
         return tickDate;
     }
@@ -320,11 +327,36 @@ public class Tick {
         this.climbHeight = climbHeight;
     }
 
+    public Integer getStiffness() {
+        return stiffness;
+    }
 
+    public void setStiffness(Integer stiffness) {
+        this.stiffness = stiffness;
+    }
 
+    public String getHoldColor() {
+        return holdColor;
+    }
 
+    public void setHoldColor(String holdColor) {
+        this.holdColor = holdColor;
+    }
 
+    public Boolean getIndoor() {
+        return indoor;
+    }
 
+    public void setIndoor(Boolean indoor) {
+        this.indoor = indoor;
+    }
 
+    public Instant getTickTimestamp() {
+        return tickTimestamp;
+    }
+
+    public void setTickTimestamp(Instant tickTimestamp) {
+        this.tickTimestamp = tickTimestamp;
+    }
 
 }

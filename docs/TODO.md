@@ -2,17 +2,9 @@
 
 Open work only, most important first. **Completed items get deleted, never checked off or struck through** — history lives in git and `docs/roadmap.md`, not here. Detail and rationale for most items: [roadmap.md](roadmap.md).
 
-## Now — finish the Kaya branch
-
-- Commit `kaya-importing`: `git add` the three untracked row classes (`ImportHelpers`, `KayaRow`, `MountainProjectRow`) — `commit -a` alone would break the build. Two commits: class extraction, then wiring + endpoint + tests.
-- Private constructors on the three new classes (the `GradeParser` no-instantiation idiom; `abstract` came off, nothing replaced it).
-- Formatter pass: `KayaRow.isSupportedFile` indentation, `//unused still ig` comment.
-- `npm run lint` + `npm run build` (UploadPage changed); Playwright run once backend is up.
-- PR to main.
 
 ## Next — before the first real Kaya import
 
-- **MP→Kaya round-trip experiment** (throwaway account): import MP ticks into Kaya, export, drop in `inputs/`, diff. Looking for: what survives, provenance markers, ascent_type words for TR/Fell-Hung rows, grade conversion. Informs cross-source dedup design.
 - **V7 migration — land columns BEFORE the first real import** (dedup skips never backfill): `stiffness`, `hold_color`, `indoor`, `tick_timestamp` (timestamptz from day one), plus idempotency — deterministic `externalId` per row (MP: route URL id + date + style; Kaya: full timestamp + gym + color + grade + ascent_type), unique `(user, sourceApp, externalId)`, skip-and-count duplicates. Import-twice → 0 new.
 - Wire the new columns in both row parsers once they exist (Kaya stiffness/color/timestamp; indoor from gym column).
 - DateParser: full-timestamp variant — JS-format dates currently truncate to UTC date, evening sessions land on the wrong day.
