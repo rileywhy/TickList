@@ -3,10 +3,18 @@
 Open work only, most important first. **Completed items get deleted, never checked off or struck through** — history lives in git and `docs/roadmap.md`, not here. Detail and rationale for most items: [roadmap.md](roadmap.md).
 
 
+## Now — two new unique constraints (V6, V7) can already 500 in prod
+
+- **No handler for `DataIntegrityViolationException` anywhere** (`ApiExceptionHandler` only catches `MethodArgumentNotValidException`). Two constraints that just landed are reachable without any code change on top of them:
+  - `idx_app_users_lower_email` (V6) shipped without N10's paired app-side half (`trim().toLowerCase()` at register/login — still open below). `UserController.register` only rejects an *exact*-case duplicate; a case-variant duplicate (`Foo@x.com` then `foo@x.com`) sails past that check and hits the DB constraint instead → unhandled 500 where the existing code already has a clean 409 for the exact-case case.
+  - `uk_tick_user_source_external` (V7) shipped while N11 (`TickController.applyRequest` still copies client-supplied `sourceApp`/`externalId` on PUT, unchanged) is still open — exactly the collision N11's writeup predicted ("the PUT 500s with a constraint violation") is now live: two ticks pushed to the same `(user, sourceApp, externalId)` via the edit form 500 instead of failing cleanly.
+  - Neither is caught by the test suite (H2 `create-drop`, Flyway disabled — doesn't see Postgres constraint behavior at all). Fix: add a generic `@ExceptionHandler(DataIntegrityViolationException.class)` → 409 now, on top of whichever of N10/N11's app-side fixes lands first.
+- **Kaya rows have no path to `TickType.ATTEMPT`**: `KayaRow.processKayaRow` never calls `ImportHelpers.classifyTickType` (only `MountainProjectRow` does) — it derives `TickType` purely from whether `ascent_type` resolves to a `RopeStyle`; unresolved and "genuinely a failed attempt" both land in `TickType.UNKNOWN`, indistinguishably, and `unknownKayaAscentTypeImportsAsUnknownNotSkipped` now pins that as if it were intentional. Check Kaya's real ascent_type vocabulary (not just the fixture values) for attempt/fall wording before the first real import, per the row below.
+
 ## Next — before the first real Kaya import
 
 - **V7 migration — land columns BEFORE the first real import** (dedup skips never backfill): `stiffness`, `hold_color`, `indoor`, `tick_timestamp` (timestamptz from day one), plus idempotency — deterministic `externalId` per row (MP: route URL id + date + style; Kaya: full timestamp + gym + color + grade + ascent_type), unique `(user, sourceApp, externalId)`, skip-and-count duplicates. Import-twice → 0 new.
-- Wire the new columns in both row parsers once they exist (Kaya stiffness/color/timestamp; indoor from gym column).
+- Wire the new columns in both row parsers once they exist (Kaya stiffness/color/timestamp; indoor from gym column) — right now `stiffness` and `color` are read off the CSV row and then dropped (`color` only reused as a climb-name fallback; `tick.setStiffness(...)` is commented out), so `hold_color`/`stiffness`/`indoor`/`tick_timestamp` stay null on every Kaya tick imported today.
 - DateParser: full-timestamp variant — JS-format dates currently truncate to UTC date, evening sessions land on the wrong day.
 - Import robustness: `@Transactional` import, raise 1 MB multipart cap (N4/N12), strip UTF-8 BOM.
 - Remaining MP parser bugs: `-1` "no rating" sentinel stored as real −1.0 stars; protection ratings (`5.9 PG13`, `V5 R`) parse to UNKNOWN grade.
