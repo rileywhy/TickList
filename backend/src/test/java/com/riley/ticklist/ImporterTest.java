@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +79,8 @@ class ImporterTest {
         gradeMappingService = mock(GradeMappingService.class);
         importBatchRepository = mock(ImportBatchRepository.class);
         skippedRowRepository = mock(SkippedRowRepository.class);
-        importer = new Importer(tickRepository, gradeMappingService, importBatchRepository, skippedRowRepository);
+        importer = new Importer(tickRepository, gradeMappingService, importBatchRepository, skippedRowRepository,
+            ZoneId.of("America/Denver"));
         importingUser = new User();
         importingUser.setId(1L);
         importingUser.setFirstName("Test");
@@ -99,6 +102,8 @@ class ImporterTest {
 
         Tick tick = tickCaptor.getValue();
         assertThat(tick.getTickDate()).isEqualTo(LocalDate.of(2026, 6, 15));
+        // MP gives a bare day; no invented midnight.
+        assertThat(tick.getTickTimestamp()).isNull();
         assertThat(tick.getClimbName()).isEqualTo("The Bulge");
         assertThat(tick.getGrade()).isEqualTo("5.10a");
         assertThat(tick.getRawGrade()).isEqualTo("5.10a");
@@ -394,6 +399,7 @@ class ImporterTest {
 
         Tick tick = tickCaptor.getValue();
         assertThat(tick.getTickDate()).isEqualTo(LocalDate.of(2023, 3, 26));
+        assertThat(tick.getTickTimestamp()).isEqualTo(Instant.parse("2023-03-26T16:30:56Z"));
         assertThat(tick.getClimbName()).isEqualTo("Pink v2 The Proving Ground Bouldering Gym");
         assertThat(tick.getLocation()).isEqualTo("The Proving Ground Bouldering Gym");
         assertThat(tick.getDiscipline()).isEqualTo(Discipline.BOULDER);

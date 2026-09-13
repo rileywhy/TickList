@@ -3,6 +3,7 @@ package com.riley.ticklist;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.time.ZoneId;
 import java.util.List;
 
 public class KayaRow {
@@ -12,7 +13,7 @@ public class KayaRow {
 
     private static final Logger log = LoggerFactory.getLogger(KayaRow.class);
 
-    static Tick processKayaRow(CSVRecord record) {
+    static Tick processKayaRow(CSVRecord record, ZoneId zone) {
         String date = record.get("date").trim();
         String stiffness = record.get("stiffness").trim(); // unused still ig
         String yourStars = record.get("rating").trim();
@@ -26,7 +27,9 @@ public class KayaRow {
         String countryName = record.get("country").trim();
 
         Tick tick = new Tick();
-        tick.setTickDate(DateParser.parse(date));
+        DateParser.ParsedDate parsedDate = DateParser.parse(date, zone);
+        tick.setTickDate(parsedDate.date());
+        tick.setTickTimestamp(parsedDate.instant());
         tick.setClimbName(name);
         if (name.trim().isEmpty()) {
             tick.setClimbName(color + " " + rawGrade + " " + gymName);

@@ -5,9 +5,8 @@ Open work only, most important first. **Completed items get deleted, never check
 
 ## Next — before the first real Kaya import
 
-- **V7 migration — land columns BEFORE the first real import** (dedup skips never backfill): `stiffness`, `hold_color`, `indoor`, `tick_timestamp` (timestamptz from day one), plus idempotency — deterministic `externalId` per row (MP: route URL id + date + style; Kaya: full timestamp + gym + color + grade + ascent_type), unique `(user, sourceApp, externalId)`, skip-and-count duplicates. Import-twice → 0 new.
-- Wire the new columns in both row parsers once they exist (Kaya stiffness/color/timestamp; indoor from gym column).
-- DateParser: full-timestamp variant — JS-format dates currently truncate to UTC date, evening sessions land on the wrong day.
+- Idempotent import: deterministic `externalId` per row (MP: route URL id + date + style; Kaya: full timestamp + gym + color + grade + ascent_type), check-before-insert (existsBy + in-batch set — never insert-and-catch under `@Transactional`), skip-and-count duplicates. Import-twice → 0 new.
+- Wire the new columns in both row parsers (Kaya stiffness/color/timestamp; indoor from gym column). Fingerprint hashes the instant, not the derived date.
 - Import robustness: `@Transactional` import, raise 1 MB multipart cap (N4/N12), strip UTF-8 BOM.
 - Manual `POST /ticks` accepts a client-supplied `externalId` (`TickController.java:89`) — provenance fields shouldn't be settable on the manual path; once the V7 constraint is live a collision there is a raw 500.
 - Remaining MP parser bugs: `-1` "no rating" sentinel stored as real −1.0 stars; protection ratings (`5.9 PG13`, `V5 R`) parse to UNKNOWN grade.
@@ -39,7 +38,7 @@ Open work only, most important first. **Completed items get deleted, never check
 
 ## Phase 5 — profiles, tags, privacy (design before recs)
 
-- ClimberProfile (height/wingspan/style self-ratings), StyleTag vocabulary + morpho flags, ClimbTagVote.
+- ClimberProfile (height/wingspan/style self-ratings, **timezone** — moves the import-date zone off the global property), StyleTag vocabulary + morpho flags, ClimbTagVote.
 - Privacy/consent model: per-user visibility, cohort opt-in, min-cohort-size, public `username` (cross-user surfaces must never show email).
 - Per-tick `affinityScore` from implicit signals.
 
