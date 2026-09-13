@@ -1,5 +1,6 @@
 package com.riley.ticklist;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -29,6 +30,10 @@ public record TickResponse(
     LocalDate tickDate,
     Integer attempts,
     String notes,
+    Integer stiffness,
+    String holdColor,
+    Boolean indoor,
+    Instant tickTimestamp,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
@@ -53,6 +58,10 @@ public record TickResponse(
             tick.getTickDate(),
             tick.getAttempts(),
             tick.getNotes(),
+            tick.getStiffness(),
+            tick.getHoldColor(),
+            tick.getIndoor(),
+            tick.getTickTimestamp(),
             tick.getCreatedAt(),
             tick.getUpdatedAt()
         );

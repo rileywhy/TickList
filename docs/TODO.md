@@ -9,6 +9,7 @@ Open work only, most important first. **Completed items get deleted, never check
 - Wire the new columns in both row parsers once they exist (Kaya stiffness/color/timestamp; indoor from gym column).
 - DateParser: full-timestamp variant — JS-format dates currently truncate to UTC date, evening sessions land on the wrong day.
 - Import robustness: `@Transactional` import, raise 1 MB multipart cap (N4/N12), strip UTF-8 BOM.
+- Manual `POST /ticks` accepts a client-supplied `externalId` (`TickController.java:89`) — provenance fields shouldn't be settable on the manual path; once the V7 constraint is live a collision there is a raw 500.
 - Remaining MP parser bugs: `-1` "no rating" sentinel stored as real −1.0 stars; protection ratings (`5.9 PG13`, `V5 R`) parse to UNKNOWN grade.
 - Import summary UI: show "Detected: Kaya export" + imported/duplicate/failed with row errors. Open question: surface unrecognized ascent_type values to the user via ImportResult (currently log-only).
 - Re-import `ticks.csv` through the UI (795 ownerless pre-auth ticks were deleted; this also end-to-end-verifies V3–V6).
@@ -34,6 +35,7 @@ Open work only, most important first. **Completed items get deleted, never check
 - 8a.nu: get a real export first (Profile → Info → Edit → Logbook Export), then a third row class; GradeParser slash-grade support (`7A/7A+`).
 - Kaya's logbook template (`inputs/logbook_template.csv`): 3-line preamble to skip, `Climb Type` column resolves Font-vs-French; imports anyone who formatted a spreadsheet for Kaya.
 - Sendage (needs a real export); eventually publish our own bring-your-own-spreadsheet template.
+- `raw_row` JSONB column: keep each imported CSV row verbatim instead of promoting every source-specific field to a column — a field earns a real column only when the app filters/aggregates/recommends on it; promote later with backfill from the blob.
 
 ## Phase 5 — profiles, tags, privacy (design before recs)
 
