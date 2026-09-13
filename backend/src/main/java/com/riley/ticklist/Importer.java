@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +26,17 @@ public class Importer {
     private final TickRepository tickRepository;
     private final GradeMappingService gradeMappingService;
     private final SkippedRowRepository skippedRowRepository;
+    private final ZoneId importZone;
     private static final Logger log = LoggerFactory.getLogger(Importer.class);
 
     public Importer(TickRepository tickRepository, GradeMappingService gradeMappingService,
-            ImportBatchRepository importBatchRepository, SkippedRowRepository skippedRowRepository) {
+            ImportBatchRepository importBatchRepository, SkippedRowRepository skippedRowRepository,
+            @Value("${ticklist.import.zone:America/Denver}") ZoneId importZone) {
         this.tickRepository = tickRepository;
         this.gradeMappingService = gradeMappingService;
         this.importBatchRepository = importBatchRepository;
         this.skippedRowRepository = skippedRowRepository;
+        this.importZone = importZone;
     }
 
     public ImportResult importCSV(User user) throws Exception {
@@ -82,9 +87,9 @@ public class Importer {
             Tick tick;
             try {
                 if (source == SourceApp.KAYA) {
-                    tick = KayaRow.processKayaRow(record);
+                    tick = KayaRow.processKayaRow(record, importZone);
                 } else {
-                    tick = MountainProjectRow.processMTNProjectRow(record);
+                    tick = MountainProjectRow.processMTNProjectRow(record, importZone);
                 }
             } catch (RuntimeException e) {
                 long recordNumber = record.getRecordNumber();

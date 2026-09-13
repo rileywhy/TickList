@@ -1,6 +1,7 @@
 package com.riley.ticklist;
 
 
+import java.time.ZoneId;
 import java.util.List;
 
 import org.apache.commons.csv.CSVRecord;
@@ -13,7 +14,7 @@ public class MountainProjectRow {
         // Prevent instantiation
     }
     
-    static Tick processMTNProjectRow(CSVRecord record) {
+    static Tick processMTNProjectRow(CSVRecord record, ZoneId zone) {
         String date = record.get("Date");
         String route = record.get("Route");
         String grade = record.get("Rating");
@@ -32,7 +33,9 @@ public class MountainProjectRow {
 
         Tick tick = new Tick();
         tick.setTickType(ImportHelpers.classifyTickType(style, leadStyle));
-        tick.setTickDate(DateParser.parse(date));
+        DateParser.ParsedDate parsedDate = DateParser.parse(date, zone);
+        tick.setTickDate(parsedDate.date());
+        tick.setTickTimestamp(parsedDate.instant());
         tick.setClimbName(route);
         // Resolve the discipline from the CSV's Route Type first so the grade
         // parse can use it to split Font from French sport ("7a" on a Boulder
