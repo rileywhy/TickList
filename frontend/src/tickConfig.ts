@@ -38,6 +38,10 @@ export type TickRecord = Omit<TickPayload, "attempts"> & {
   id: number;
   attempts: number | null;
   difficultyScore: number | null;
+  stiffness: number | null;
+  holdColor: string | null;
+  indoor: boolean | null;
+  tickTimestamp: string | null;
   createdAt: string | null;
   updatedAt: string | null;
 };
