@@ -65,6 +65,10 @@ public class KayaRow {
             tick.setTickType(TickType.SEND);
         }
         tick.setSourceApp(SourceApp.KAYA);
+        // Identity: the instant when Kaya gave one, else the day (laundered rows);
+        // name carries outdoor rows, gym+color carry gym rows. Six slots always. Order is frozen.
+        String when = parsedDate.instant() != null ? parsedDate.instant().toString() : parsedDate.date().toString();
+        tick.setExternalId(ImportHelpers.fingerprint(when, name, gymName, color, rawGrade, style));
         return tick;
 
     }

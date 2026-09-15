@@ -503,6 +503,48 @@ class ImporterTest {
         verify(tickRepository, never()).save(any(Tick.class));
     }
 
+    @Test
+    void mpFingerprintComesFromRouteIdDateAndStyle() throws Exception {
+        String goPogo = "2026-06-22,Go Pogo,5.9+,,https://www.mountainproject.com/route/106289394/go-pogo,1,Wasatch,3,3,Lead,Redpoint,Sport,,50,";
+        writeTicksCsv(
+            goPogo,
+            goPogo.replace("go-pogo", "go-pogo-renamed"),   // slug changed, id same -> same tick
+            goPogo.replace("Lead", "TR"),                    // same route+day, other style -> other tick
+            goPogo.replace("https://www.mountainproject.com/route/106289394/go-pogo", "")  // no URL -> name fallback
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository, times(4)).save(tickCaptor.capture());
+        List<Tick> ticks = tickCaptor.getAllValues();
+
+        assertThat(ticks.get(0).getExternalId()).hasSize(64);
+        assertThat(ticks.get(1).getExternalId()).isEqualTo(ticks.get(0).getExternalId());
+        assertThat(ticks.get(2).getExternalId()).isNotEqualTo(ticks.get(0).getExternalId());
+        assertThat(ticks.get(3).getExternalId()).isNotNull().isNotEqualTo(ticks.get(0).getExternalId());
+    }
+
+    @Test
+    void kayaFingerprintSeparatesOutdoorClimbsByName() throws Exception {
+        // Laundered rows: midnight stamp, no location. Only the name tells two V3s apart.
+        String slab = "Thu Sep 16 2021 00:00:00 GMT+0000 (GMT+00:00),0,,Redpoint,,v3,,Yosemite Slab,,,";
+        writeKayaCsv(
+            slab,
+            slab,
+            slab.replace("Yosemite Slab", "Yosemite Arete")
+        );
+
+        importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository, times(3)).save(tickCaptor.capture());
+        List<Tick> ticks = tickCaptor.getAllValues();
+
+        assertThat(ticks.get(1).getExternalId()).isEqualTo(ticks.get(0).getExternalId());
+        assertThat(ticks.get(2).getExternalId()).isNotEqualTo(ticks.get(0).getExternalId());
+    }
+
     private void writeTicksCsv(String... rows) throws IOException {
         Files.writeString(testCsv, HEADER + System.lineSeparator()
             + String.join(System.lineSeparator(), rows)

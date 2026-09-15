@@ -24,7 +24,7 @@ Open work only, most important first. **Completed items get deleted, never check
 
 - `Climb`, `Area` (hierarchy + aliases + lat/long/aspect/rock type — coords exist in the OpenBeta dump), `ClimbExternalRef` as the cross-source join.
 - Resolution pipeline at import: external-ref → normalized name+area → fuzzy with confidence → PROVISIONAL; reversible merge/split with log.
-- Cross-source laundered-tick dedup (Kaya ingests MP/8a/Sendage; the externalId constraint can't catch those — same user/climb/date heuristic lives here).
+- Cross-source laundered-tick dedup (Kaya ingests MP/8a/Sendage; the externalId constraint can't catch those — same user/climb/date heuristic lives here, style must not be required since Kaya flattens it). Flag laundered rows at import (midnight stamp + blank location/country) so the direct row wins the merge.
 - Location overhaul: `Tick.location` carries three dialects (MP breadcrumbs, Kaya join, free text); per-source splitters, raw string stays as provenance, `indoor` set at import time.
 - Resurrect the grade axis: GradeMappingRepository + seed (MP `Rating Code` is a free seed) → cross-system `difficultyScore`.
 - Test corpus: owner's MP + Kaya exports must resolve shared boulders to one Climb.
@@ -39,7 +39,7 @@ Open work only, most important first. **Completed items get deleted, never check
 ## Phase 5 — profiles, tags, privacy (design before recs)
 
 - ClimberProfile (height/wingspan/style self-ratings, **timezone** — moves the import-date zone off the global property), StyleTag vocabulary + morpho flags, ClimbTagVote.
-- Privacy/consent model: per-user visibility, cohort opt-in, min-cohort-size, public `username` (cross-user surfaces must never show email).
+- Privacy/consent model: per-user visibility, cohort opt-in, min-cohort-size, public `username` (cross-user surfaces must never show email); design for a person-to-person read grant (coach sees a climber's log, revocable) even if it ships later.
 - Per-tick `affinityScore` from implicit signals.
 
 ## Phase 6/7 — recommendations & data features (gated on data volume)

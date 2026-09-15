@@ -3,6 +3,8 @@ package com.riley.ticklist;
 
 import java.time.ZoneId;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.csv.CSVRecord;
 
@@ -66,8 +68,25 @@ public class MountainProjectRow {
         tick.setPersonalGrade(yourRating);
         tick.setClimbHeight(ImportHelpers.parseOptionalDouble(length));
         tick.setSourceApp(SourceApp.MOUNTAIN_PROJECT);
+        // Identity = which route, which day, which style. Raw Style (not the parsed
+        // enum) so a parser fix can't change every fingerprint. Order is frozen.
+        tick.setExternalId(ImportHelpers.fingerprint(routeId(url, route), parsedDate.date().toString(), style));
         return tick;
 
+    }
+
+    private static final Pattern ROUTE_ID = Pattern.compile("/route/(\\d+)");
+
+    // MP's numeric route id survives renames (and is OpenBeta's mp_id); the slug
+    // after it doesn't. Match loosely so a path change upstream still finds it.
+    static String routeId(String url, String routeName) {
+        if (url != null) {
+            Matcher matcher = ROUTE_ID.matcher(url);
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        }
+        return routeName;
     }
 
     static boolean isSupportedFile(List<String> headers) {
