@@ -503,6 +503,83 @@ class ImporterTest {
         verify(tickRepository, never()).save(any(Tick.class));
     }
 
+    @Test
+    void mpFingerprintComesFromRouteIdDateAndStyle() throws Exception {
+        String goPogo = "2026-06-22,Go Pogo,5.9+,,https://www.mountainproject.com/route/106289394/go-pogo,1,Wasatch,3,3,Lead,Redpoint,Sport,,50,";
+        writeTicksCsv(
+            goPogo,
+            goPogo.replace("go-pogo", "go-pogo-renamed"),   // slug changed, id same -> same tick, skipped as duplicate
+            goPogo.replace("Lead", "TR"),                    // same route+day, other style -> other tick
+            goPogo.replace("https://www.mountainproject.com/route/106289394/go-pogo", "")  // no URL -> name fallback
+        );
+
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository, times(3)).save(tickCaptor.capture());
+        List<Tick> ticks = tickCaptor.getAllValues();
+
+        assertThat(result.importedRows()).isEqualTo(3);
+        assertThat(result.duplicateRows()).isEqualTo(1);
+        assertThat(ticks.get(0).getExternalId()).hasSize(64);
+        assertThat(ticks.get(1).getExternalId()).isNotEqualTo(ticks.get(0).getExternalId());
+        assertThat(ticks.get(2).getExternalId()).isNotNull().isNotEqualTo(ticks.get(0).getExternalId());
+    }
+
+    @Test
+    void kayaFingerprintSeparatesOutdoorClimbsByName() throws Exception {
+        // Laundered rows: midnight stamp, no location. Only the name tells two V3s apart.
+        String slab = "Thu Sep 16 2021 00:00:00 GMT+0000 (GMT+00:00),0,,Redpoint,,v3,,Yosemite Slab,,,";
+        writeKayaCsv(
+            slab,
+            slab,                                          // exact repeat -> skipped as duplicate
+            slab.replace("Yosemite Slab", "Yosemite Arete")
+        );
+
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository, times(2)).save(tickCaptor.capture());
+        List<Tick> ticks = tickCaptor.getAllValues();
+
+        assertThat(result.importedRows()).isEqualTo(2);
+        assertThat(result.duplicateRows()).isEqualTo(1);
+        assertThat(ticks.get(1).getExternalId()).isNotEqualTo(ticks.get(0).getExternalId());
+    }
+
+    @Test
+    void reimportOfAlreadyImportedRowsSavesNothing() throws Exception {
+        // Simulates a second upload of the same file: every fingerprint is already in the DB.
+        when(tickRepository.existsByUserAndSourceAppAndExternalId(any(), any(), any())).thenReturn(true);
+        writeTicksCsv(
+            "2026-06-22,Go Pogo,5.9+,,https://www.mountainproject.com/route/106289394/go-pogo,1,Wasatch,3,3,Lead,Redpoint,Sport,,50,",
+            "2026-06-23,Other Route,5.10a,,https://www.mountainproject.com/route/106289395/other,1,Wasatch,3,3,Lead,Redpoint,Sport,,50,"
+        );
+
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
+
+        verify(tickRepository, never()).save(any(Tick.class));
+        assertThat(result.importedRows()).isZero();
+        assertThat(result.duplicateRows()).isEqualTo(2);
+        assertThat(result.skippedRows()).isEmpty();
+    }
+
+    @Test
+    void duplicateDoesNotSwallowTheRowAfterIt() throws Exception {
+        String goPogo = "2026-06-22,Go Pogo,5.9+,,https://www.mountainproject.com/route/106289394/go-pogo,1,Wasatch,3,3,Lead,Redpoint,Sport,,50,";
+        writeTicksCsv(
+            goPogo,
+            goPogo,
+            goPogo.replace("2026-06-22", "2026-06-23")   // new day -> must still import
+        );
+
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
+
+        verify(tickRepository, times(2)).save(any(Tick.class));
+        assertThat(result.importedRows()).isEqualTo(2);
+        assertThat(result.duplicateRows()).isEqualTo(1);
+    }
+
     private void writeTicksCsv(String... rows) throws IOException {
         Files.writeString(testCsv, HEADER + System.lineSeparator()
             + String.join(System.lineSeparator(), rows)

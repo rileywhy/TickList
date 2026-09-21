@@ -9,6 +9,7 @@ type ImportResponse = {
   filename: string | null;
   importedRows: number;
   skippedRows: SkippedRow[];
+  duplicateRows: number;
 };
 
 type SkippedRow = {
@@ -71,7 +72,7 @@ function UploadPage({ onAuthExpired, token }: UploadPageProps) {
 
       const result = (await response.json()) as ImportResponse;
       setMessage(
-        `Imported ${result.importedRows} ticks from ${result.filename ?? file.name}. Skipped ${result.skippedRows.length}.`,
+        `Imported ${result.importedRows} ticks from ${result.filename ?? file.name}. Skipped ${result.skippedRows.length}. Duplicate ${result.duplicateRows}.`,
       );
       setSkipped(result.skippedRows);
       setFile(null);

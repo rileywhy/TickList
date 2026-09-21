@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TickRepository extends JpaRepository<Tick, Long> {
     List<Tick> findByUser(User user);
     Optional<Tick> findByIdAndUser(Long id, User user);
-
+    boolean existsByUserAndSourceAppAndExternalId(User user, SourceApp sourceApp, String externalId);
 }

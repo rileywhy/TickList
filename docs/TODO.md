@@ -24,7 +24,7 @@ Open work only, most important first. **Completed items get deleted, never check
 
 - `Climb`, `Area` (hierarchy + aliases + lat/long/aspect/rock type — coords exist in the OpenBeta dump), `ClimbExternalRef` as the cross-source join.
 - Resolution pipeline at import: external-ref → normalized name+area → fuzzy with confidence → PROVISIONAL; reversible merge/split with log.
-- Cross-source laundered-tick dedup (Kaya ingests MP/8a/Sendage; the externalId constraint can't catch those — same user/climb/date heuristic lives here).
+- Cross-source laundered-tick dedup (Kaya ingests MP/8a/Sendage; the externalId constraint can't catch those — same user/climb/date heuristic lives here, style must not be required since Kaya flattens it). Flag laundered rows at import (midnight stamp + blank location/country) so the direct row wins the merge.
 - Location overhaul: `Tick.location` carries three dialects (MP breadcrumbs, Kaya join, free text); per-source splitters, raw string stays as provenance, `indoor` set at import time.
 - Resurrect the grade axis: GradeMappingRepository + seed (MP `Rating Code` is a free seed) → cross-system `difficultyScore`.
 - Test corpus: owner's MP + Kaya exports must resolve shared boulders to one Climb.
@@ -39,7 +39,7 @@ Open work only, most important first. **Completed items get deleted, never check
 ## Phase 5 — profiles, tags, privacy (design before recs)
 
 - ClimberProfile (height/wingspan/style self-ratings, **timezone** — moves the import-date zone off the global property), StyleTag vocabulary + morpho flags, ClimbTagVote.
-- Privacy/consent model: per-user visibility, cohort opt-in, min-cohort-size, public `username` (cross-user surfaces must never show email).
+- Privacy/consent model: per-user visibility, cohort opt-in, min-cohort-size, public `username` (cross-user surfaces must never show email); design for a person-to-person read grant (coach sees a climber's log, revocable) even if it ships later.
 - Per-tick `affinityScore` from implicit signals.
 
 ## Phase 6/7 — recommendations & data features (gated on data volume)
@@ -56,3 +56,4 @@ Open work only, most important first. **Completed items get deleted, never check
 - Repo: root README, `.env` in gitignores, rename `issuetracker` → `ticklist`, Dockerfile + compose when deployment matters.
 - iOS/Android (future): keep API client-agnostic; universal links (shared links open the app — needs clean URL paths); React Native over Swift if Android stays wanted.
 - Deferred consciously: H2/H4 (pre-leaderboard), tick.spec.ts parallel flake.
+- Duplicate review (low priority, revisit after the first real Kaya import): today a re-imported row with the same fingerprint is skipped and counted, first import wins. If `duplicate_rows` on import_batch shows content actually changing between exports (edited notes/stars), consider a `DuplicateRow` record (fingerprint, raw row, colliding tick id, content-differs flag) plus a post-import review screen with keep/replace per row. Not in the import loop — record there, decide later.

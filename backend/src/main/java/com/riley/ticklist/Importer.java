@@ -6,16 +6,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.csv.CSVParser;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Service
 public class Importer {
@@ -81,7 +82,9 @@ public class Importer {
         importBatchRepository.save(importBatch);
 
         int importedRows = 0;
+        int duplicateRows= 0;
         List<SkippedRowResponse> skippedRows = new ArrayList<>();
+        Set <String> seenFingerprints = new HashSet<>();
 
         for (CSVRecord record : records) {
             Tick tick;
@@ -106,6 +109,19 @@ public class Importer {
             }
             tick.setUser(user);
             tick.setImportBatch(importBatch);
+
+            String newFingerprint = tick.getExternalId();
+            boolean seenBefore = !seenFingerprints.add(newFingerprint);
+            boolean importedBefore = !seenBefore && tickRepository.existsByUserAndSourceAppAndExternalId(user, source, newFingerprint);
+
+
+            if (seenBefore || importedBefore)
+            {
+                duplicateRows++;
+                continue;
+            }
+
+
             gradeMappingService.applyGradeMapping(tick);
             tickRepository.save(tick);
             importedRows++;
@@ -113,12 +129,13 @@ public class Importer {
 
         importBatch.setSuccessfulRows(importedRows);
         importBatch.setFailedRows(skippedRows.size());
+        importBatch.setDuplicateRows(duplicateRows);
         importBatchRepository.save(importBatch);
 
-        return new ImportResult(importedRows, skippedRows);
+        return new ImportResult(importedRows, skippedRows, duplicateRows);
     }
 
-    public record ImportResult(int importedRows, List<SkippedRowResponse> skippedRows) {
+    public record ImportResult(int importedRows, List<SkippedRowResponse> skippedRows, int duplicateRows) {
     }
 
     private Path defaultCsvPath() {

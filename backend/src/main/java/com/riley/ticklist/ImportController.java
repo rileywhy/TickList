@@ -31,7 +31,7 @@ public class ImportController {
 
         try (Reader reader = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8)) {
             Importer.ImportResult result = importer.importCSV(reader, user, file.getOriginalFilename());
-            return new ImportResponse(file.getOriginalFilename(), result.importedRows(), result.skippedRows());
+            return new ImportResponse(file.getOriginalFilename(), result.importedRows(), result.skippedRows(), result.duplicateRows());
         } catch (IllegalArgumentException error) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error.getMessage(), error);
         } catch (IOException error) {
@@ -39,6 +39,6 @@ public class ImportController {
         }
     }
 
-    public record ImportResponse(String filename, int importedRows, List<SkippedRowResponse> skippedRows) {
+    public record ImportResponse(String filename, int importedRows, List<SkippedRowResponse> skippedRows, int duplicateRows) {
     }
 }

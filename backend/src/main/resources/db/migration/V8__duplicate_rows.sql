@@ -1,0 +1,1 @@
+ALTER TABLE import_batch ADD COLUMN duplicate_rows integer NOT NULL DEFAULT 0;
