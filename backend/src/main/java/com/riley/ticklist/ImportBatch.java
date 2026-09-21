@@ -31,6 +31,7 @@ public class ImportBatch {
     private String originalFilename;
     private Integer successfulRows;
     private Integer failedRows;
+    private Integer duplicateRows;
 
     @CreationTimestamp
     private LocalDateTime importedAt;
@@ -38,6 +39,7 @@ public class ImportBatch {
     public ImportBatch() {
         this.successfulRows = 0;
         this.failedRows = 0;
+        this.duplicateRows = 0;
     }
 
     public ImportBatch(User user, SourceApp sourceApp, String originalFilename) {
@@ -95,6 +97,14 @@ public class ImportBatch {
 
     public void setFailedRows(Integer failedRows) {
         this.failedRows = failedRows;
+    }
+
+    public Integer getDuplicateRows() {
+        return duplicateRows;
+    }
+
+    public void setDuplicateRows(Integer duplicateRows) {
+        this.duplicateRows = duplicateRows;
     }
 
     public LocalDateTime getImportedAt() {

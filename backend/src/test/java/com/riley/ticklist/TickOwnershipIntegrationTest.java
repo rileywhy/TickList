@@ -290,7 +290,8 @@ class TickOwnershipIntegrationTest {
                 .file(api.mountainProjectCsvUpload())
                 .header("Authorization", api.bearer(aliceToken)))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.importedRows").value(2));
+            .andExpect(jsonPath("$.importedRows").value(2))
+            .andExpect(jsonPath("$.duplicateRows").value(0));
 
         User alice = userRepository.findByEmail("alice@example.com");
         User bob = userRepository.findByEmail("bob@example.com");

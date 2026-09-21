@@ -56,3 +56,4 @@ Open work only, most important first. **Completed items get deleted, never check
 - Repo: root README, `.env` in gitignores, rename `issuetracker` → `ticklist`, Dockerfile + compose when deployment matters.
 - iOS/Android (future): keep API client-agnostic; universal links (shared links open the app — needs clean URL paths); React Native over Swift if Android stays wanted.
 - Deferred consciously: H2/H4 (pre-leaderboard), tick.spec.ts parallel flake.
+- Duplicate review (low priority, revisit after the first real Kaya import): today a re-imported row with the same fingerprint is skipped and counted, first import wins. If `duplicate_rows` on import_batch shows content actually changing between exports (edited notes/stars), consider a `DuplicateRow` record (fingerprint, raw row, colliding tick id, content-differs flag) plus a post-import review screen with keep/replace per row. Not in the import loop — record there, decide later.
