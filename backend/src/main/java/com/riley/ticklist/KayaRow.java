@@ -15,7 +15,7 @@ public class KayaRow {
 
     static Tick processKayaRow(CSVRecord record, ZoneId zone) {
         String date = record.get("date").trim();
-        String stiffness = record.get("stiffness").trim(); // unused still ig
+        String stiffness = record.get("stiffness").trim();
         String yourStars = record.get("rating").trim();
         String style = record.get("ascent_type").trim();
         String attempts = record.get("attempts").trim();
@@ -42,8 +42,10 @@ public class KayaRow {
         tick.setGrade(parsedGrade.rawGrade());
         tick.setGradeSystem(parsedGrade.gradeSystem());
         tick.setGradeValue(parsedGrade.gradeValue());
-        // tick.setStiffness(stiffness);
+        tick.setStiffness(ImportHelpers.parseOptionalInteger(stiffness));
         tick.setAttempts(ImportHelpers.parseOptionalInteger(attempts));
+        tick.setHoldColor(color.isEmpty() ? null : color);
+        tick.setIndoor(!gymName.isEmpty());
 
         String location;
         if (!locationName.isEmpty()) {

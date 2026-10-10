@@ -5,8 +5,6 @@ Open work only, most important first. **Completed items get deleted, never check
 
 ## Next — before the first real Kaya import
 
-- Idempotent import: deterministic `externalId` per row (MP: route URL id + date + style; Kaya: full timestamp + gym + color + grade + ascent_type), check-before-insert (existsBy + in-batch set — never insert-and-catch under `@Transactional`), skip-and-count duplicates. Import-twice → 0 new.
-- Wire the new columns in both row parsers (Kaya stiffness/color/timestamp; indoor from gym column). Fingerprint hashes the instant, not the derived date.
 - Import robustness: `@Transactional` import, raise 1 MB multipart cap (N4/N12), strip UTF-8 BOM.
 - Manual `POST /ticks` accepts a client-supplied `externalId` (`TickController.java:89`) — provenance fields shouldn't be settable on the manual path; once the V7 constraint is live a collision there is a raw 500.
 - Remaining MP parser bugs: `-1` "no rating" sentinel stored as real −1.0 stars; protection ratings (`5.9 PG13`, `V5 R`) parse to UNKNOWN grade.

@@ -410,6 +410,9 @@ class ImporterTest {
         assertThat(tick.getRopeStyle()).isEqualTo(RopeStyle.FLASH);
         assertThat(tick.getAttempts()).isEqualTo(1);
         assertThat(tick.getUserStars()).isNull();
+        assertThat(tick.getStiffness()).isEqualTo(0);
+        assertThat(tick.getHoldColor()).isEqualTo("Pink");
+        assertThat(tick.getIndoor()).isTrue();
         assertThat(tick.getSourceApp()).isEqualTo(SourceApp.KAYA);
         assertThat(tick.getUser()).isSameAs(importingUser);
         verify(gradeMappingService).applyGradeMapping(tick);
@@ -434,6 +437,8 @@ class ImporterTest {
         assertThat(tick.getDiscipline()).isEqualTo(Discipline.UNKNOWN);
         assertThat(tick.getTickType()).isEqualTo(TickType.SEND);
         assertThat(tick.getRopeStyle()).isEqualTo(RopeStyle.ONSIGHT);
+        assertThat(tick.getHoldColor()).isNull();
+        assertThat(tick.getIndoor()).isFalse();
     }
 
     @Test
