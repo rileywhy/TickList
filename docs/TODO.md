@@ -5,7 +5,7 @@ Open work only, most important first. **Completed items get deleted, never check
 
 ## Next — before the first real Kaya import
 
-- Import robustness: `@Transactional` import, raise 1 MB multipart cap (N4/N12).
+- Import robustness: `@Transactional` import plus `spring.jpa.open-in-view=false` (N12).
 - Manual `POST /ticks` accepts a client-supplied `externalId` (`TickController.java:89`) — provenance fields shouldn't be settable on the manual path; once the V7 constraint is live a collision there is a raw 500.
 - Remaining MP parser bugs: `-1` "no rating" sentinel stored as real −1.0 stars; protection ratings (`5.9 PG13`, `V5 R`) parse to UNKNOWN grade.
 - Import summary UI: show "Detected: Kaya export" + imported/duplicate/failed with row errors. Open question: surface unrecognized ascent_type values to the user via ImportResult (currently log-only).

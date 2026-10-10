@@ -18,6 +18,11 @@ type SkippedRow = {
   rawRow: string;
 };
 
+// Keep in step with spring.servlet.multipart.max-file-size in
+// backend/src/main/resources/application.properties. Checking here rejects an
+// oversized file immediately instead of after uploading all of it.
+const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
+
 function UploadPage({ onAuthExpired, token }: UploadPageProps) {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
@@ -36,6 +41,11 @@ function UploadPage({ onAuthExpired, token }: UploadPageProps) {
 
     if (file === null) {
       setMessage("Choose a CSV file first.");
+      return;
+    }
+
+    if (file.size > MAX_UPLOAD_BYTES) {
+      setMessage("That file is larger than the 25 MB upload limit.");
       return;
     }
 
@@ -66,7 +76,12 @@ function UploadPage({ onAuthExpired, token }: UploadPageProps) {
           return;
         }
 
-        setMessage(`Could not import CSV (${response.status}).`);
+        // The API returns {"message": "..."} for errors it wrote for the user,
+        // such as an unrecognized CSV format or a file over the size limit.
+        // Fall back to the status code when the body is missing or not JSON,
+        // for example a proxy error page.
+        const detail = (await response.json().catch(() => null)) as { message?: string } | null;
+        setMessage(detail?.message ?? `Could not import CSV (${response.status}).`);
         return;
       }
 
