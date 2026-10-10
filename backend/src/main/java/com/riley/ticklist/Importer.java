@@ -18,10 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+// @Transactional makes each import all-or-nothing: if something blows up partway through,
+// no partial batch is left in the database. rollbackFor covers the checked IOException too.
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class Importer {
-    // function to import the csv file and parse the data
     private static final Path DEFAULT_CSV_PATH = Path.of("inputs", "ticks.csv");
     private static final Path BACKEND_DEFAULT_CSV_PATH = Path.of("..", "inputs", "ticks.csv");
     private final ImportBatchRepository importBatchRepository;
