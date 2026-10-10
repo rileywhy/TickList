@@ -585,6 +585,34 @@ class ImporterTest {
         assertThat(result.duplicateRows()).isEqualTo(1);
     }
 
+    @Test
+    void stripsUtf8ByteOrderMarkBeforeDetectingMountainProjectHeaders() throws Exception {
+        Files.writeString(testCsv, "\uFEFF" + HEADER + System.lineSeparator()
+            + "2026-06-15,The Bulge,5.10a,,https://mountainproject.com/route/123,1,Eldorado Canyon,,,Lead,Redpoint,Trad,,,"
+            + System.lineSeparator());
+
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+        assertThat(result.importedRows()).isEqualTo(1);
+        assertThat(tickCaptor.getValue().getClimbName()).isEqualTo("The Bulge");
+    }
+
+    @Test
+    void stripsUtf8ByteOrderMarkBeforeDetectingKayaHeaders() throws Exception {
+        Files.writeString(testCsv, "\uFEFF" + KAYA_HEADER + System.lineSeparator()
+            + "Sun Mar 26 2023 16:30:56 GMT+0000 (GMT+00:00),0,,Flash,1,v2,Pink,,The Proving Ground Bouldering Gym ,,"
+            + System.lineSeparator());
+
+        Importer.ImportResult result = importer.importCSV(testCsv, importingUser);
+
+        ArgumentCaptor<Tick> tickCaptor = ArgumentCaptor.forClass(Tick.class);
+        verify(tickRepository).save(tickCaptor.capture());
+        assertThat(result.importedRows()).isEqualTo(1);
+        assertThat(tickCaptor.getValue().getSourceApp()).isEqualTo(SourceApp.KAYA);
+    }
+
     private void writeTicksCsv(String... rows) throws IOException {
         Files.writeString(testCsv, HEADER + System.lineSeparator()
             + String.join(System.lineSeparator(), rows)

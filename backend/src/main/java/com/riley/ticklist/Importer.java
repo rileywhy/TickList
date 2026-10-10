@@ -1,6 +1,7 @@
 package com.riley.ticklist;
 
 import java.io.IOException;
+import java.io.PushbackReader;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,6 +51,18 @@ public class Importer {
         }
     }
 
+    // Some tools (Excel's "CSV UTF-8" save, for one) start the file with an invisible marker
+    // character, the byte order mark U+FEFF. Java reads it as an ordinary character, so if
+    // we leave it in, the first header becomes "<BOM>Date" and format detection fails.
+    static Reader skipByteOrderMark(Reader reader) throws IOException {
+        PushbackReader pushback = new PushbackReader(reader, 1);
+        int first = pushback.read();
+        if (first != -1 && first != '\uFEFF') {
+            pushback.unread(first);
+        }
+        return pushback;
+    }
+
     public ImportResult importCSV(Reader reader, User user, String filename) throws IOException {
         if (user == null) {
             throw new IllegalArgumentException("Import requires an authenticated user.");
@@ -60,7 +73,7 @@ public class Importer {
                 .setHeader()
                 .setSkipHeaderRecord(true)
                 .get()
-                .parse(reader);
+                .parse(skipByteOrderMark(reader));
 
         SourceApp source;
         List<String> headers = records.getHeaderNames();
