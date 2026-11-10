@@ -3,6 +3,10 @@
 Open work only, most important first. **Completed items get deleted, never checked off or struck through** — history lives in git and `docs/roadmap.md`, not here. Detail and rationale for most items: [roadmap.md](roadmap.md).
 
 
+## Now — port to Supabase + Expo + PowerSync (RIL-118)
+
+- Work packages, decisions and hand-off context: [port-plan.md](port-plan.md). Several items below are made obsolete or absorbed by the port — mapping in port-plan §5.
+
 ## Next — before the first real Kaya import
 
 - Manual `POST /ticks` accepts a client-supplied `externalId` (`TickController.java:89`) — provenance fields shouldn't be settable on the manual path; once the V7 constraint is live a collision there is a raw 500.
